@@ -1,0 +1,94 @@
+classDiagram
+    class Songs {
+        +Guid Id
+        +Name Name
+        +TimeSpan Duration
+        +DateOnly CreateAt
+        +DateOnly UpdateAt
+        +string FilePath
+        +ICollection~BookSong~ BookSongs
+    }
+    class User {
+        +Guid UserId
+        +Name Name
+        +DateOnly CreateAt
+        +DateOnly UpdateAt
+        +string Email
+        +string Password
+        +string Salt
+        +ICollection~Transactions~ Transactions
+    }
+
+    class Author {
+        +Guid Id
+        +Name Name
+        +DateOnly BirthDate
+        +string Nationality
+        +ICollection~Books~ Books
+    }
+    class Books{
+        +string Title 
+        +Guid Id 
+        +DateOnly PublishedDate 
+        +Guid AuthorId 
+        +int CategoryId 
+        +Author Author 
+        +Category Category 
+        +string FilePath 
+        +string ImagePath 
+        +ICollection<BookSong> BookSongs 
+    }
+    class BookSong {
+        Guid Id
+        Guid BookId
+        Guid SongId
+        +Books Book
+        +Songs Song
+    }
+
+    class Category {
+        int id
+        string CategoryName
+        +ICollection<Books> Books
+    }
+
+    class Plans {
+        int Id
+        string Name
+        string Description
+        int Price
+        int Duration
+        +ICollection<UserPlan> UserPlans
+    }
+    class Transactions {
+        Guid Id
+        Guid UserId
+        DateOnly CreateAt
+        DateOnly UpdateAt
+        int Price
+        States States
+        +User User
+    }
+
+    class UserPlan {
+        Guid Id
+        Guid PlanId
+        Guid TransationId
+        DateOnly CreateAt
+        DateOnly EndsAt
+        +Plans Plan
+        +Transactions Transactions
+    }
+
+    class Views {
+        Guid UserId
+        Guid BookId
+        DateTime ViewAt
+    }
+    Songs --> BookSong :"One-To-Many"
+    BookSong --> Books :"Many-to-One"
+    Books --> Author :"One-To-One"
+    Books --> Category :One-to-One"
+    User --> Transactions :"many-to-one"
+    UserPlan --> Plans :"one-to-one"
+    UserPlan --> Transactions :"one-to-one"
