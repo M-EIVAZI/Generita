@@ -15,7 +15,7 @@ public class Songs
     public DateOnly CreateAt { get; set; }
     public DateOnly UpdateAt { get; set; }
     public string FilePath { get; set; }
-    public OwnerShip Owner { get; set}
+    public OwnerShip Owner { get; set; }
     public virtual ICollection<BookSong> BookSongs { get; set; }
     public virtual SongCategory Category { get; set; }
 }
