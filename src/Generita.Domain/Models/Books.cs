@@ -18,6 +18,7 @@ public class Books:AggregateRoot
     public string FilePath { get; set; }
     public string ImagePath { get; set; }
     public virtual ICollection<BookSong> BookSongs { get; set; }
+    public virtual Entity Entity { get; set; }
 
 
 }

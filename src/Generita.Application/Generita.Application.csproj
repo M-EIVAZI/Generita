@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Generita.Domain\Generita.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
