@@ -11,9 +11,9 @@ namespace Generita.Domain.Common.Abstractions
     public class BaseEntity
     {
         protected Guid _id;
-        protected BaseEntity(Guid Id)
+        protected BaseEntity(Guid id)
         {
-            this._id = Id;
+            this._id = id;
         }
 
         public override bool Equals(object? obj)

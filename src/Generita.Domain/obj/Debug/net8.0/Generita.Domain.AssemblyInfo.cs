@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Generita.Domain")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a2df8c609e88ef7e79eaf5796ea54305f3eda212")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+35a9083e77b94d7962f4139a6a092ec9ec9700a1")]
 [assembly: System.Reflection.AssemblyProductAttribute("Generita.Domain")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Generita.Domain")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
