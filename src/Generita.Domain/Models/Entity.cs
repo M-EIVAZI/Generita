@@ -1,7 +1,13 @@
-﻿namespace Generita.Domain.Models;
+﻿using Generita.Domain.Common.Abstractions;
 
-public class Entity
+namespace Generita.Domain.Models;
+
+public class Entity:AggregateRoot
 {
+    protected Entity(Guid Id) : base(Id)
+    {
+    }
+
     public Guid Id { get; set; }
     public string Name { get; set; }
     public ICollection<string> Descriptions { get; set; }

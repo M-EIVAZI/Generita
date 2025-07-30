@@ -30,7 +30,5 @@ namespace Generita.Domain.Common.Abstractions
         {
             return _id.GetHashCode();
         }
-
-        protected BaseEntity() { }
     }
 }

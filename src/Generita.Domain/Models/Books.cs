@@ -1,7 +1,13 @@
-﻿namespace Generita.Domain.Models;
+﻿using Generita.Domain.Common.Abstractions;
 
-public class Books
+namespace Generita.Domain.Models;
+
+public class Books:AggregateRoot
 {
+    protected Books(Guid Id) : base(Id)
+    {
+    }
+
     public Guid Id { get; set; }
     public string Title { get; set; }
     public DateOnly PublishedDate { get; set; }

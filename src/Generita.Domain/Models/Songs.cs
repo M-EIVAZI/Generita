@@ -1,14 +1,18 @@
 ﻿using System.Reflection.Metadata.Ecma335;
 using System.Security.AccessControl;
 
+using Generita.Domain.Common.Abstractions;
 using Generita.Domain.Enums;
 using Generita.Domain.ValueObjects;
 
 namespace Generita.Domain.Models;
 
-public class Songs
+public class Songs:AggregateRoot
 {
-    public Guid Id { get; set; }
+    protected Songs(Guid Id) : base(Id)
+    {
+    }
+
     public Name Name { get; set; }
     public Guid CategoryId { get; set; }
     public TimeSpan Duration { get; set; }

@@ -1,10 +1,14 @@
-﻿using Generita.Domain.ValueObjects;
+﻿using Generita.Domain.Common.Abstractions;
+using Generita.Domain.ValueObjects;
 
 namespace Generita.Domain.Models;
 
-public class User
+public class User:AggregateRoot
 {
-    public Guid UserId { get;  set; }
+    protected User(Guid Id) : base(Id)
+    {
+    }
+
     public Name Name { get; set; }
     public DateOnly CreateAt{ get; set; }
     public DateOnly UpdateAt{ get; set; }

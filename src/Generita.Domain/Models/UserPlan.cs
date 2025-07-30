@@ -4,11 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Generita.Domain.Common.Abstractions;
+
 namespace Generita.Domain.Models
 {
-    public class UserPlan
+    public class UserPlan:AggregateRoot
     {
-        public Guid Id { get; set; }
+        protected UserPlan(Guid Id) : base(Id)
+        {
+        }
+
         public Guid PlanId { get; set; }
         public Guid TransationId { get; set; }
         public DateOnly CreateAt { get; set; }

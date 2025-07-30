@@ -1,6 +1,8 @@
-﻿namespace Generita.Domain.Models;
+﻿using Generita.Domain.Common.Abstractions;
 
-public class BookCategory
+namespace Generita.Domain.Models;
+
+public class BookCategory:BaseEntity
 {
     public int id { get; set; }
     public string CategoryName { get; set; }

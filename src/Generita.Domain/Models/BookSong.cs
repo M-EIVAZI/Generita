@@ -4,11 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Generita.Domain.Common.Abstractions;
+
 namespace Generita.Domain.Models
 {
-    public class BookSong
+    public class BookSong:BaseEntity
     {
-        public Guid Id { get; set; }
+        protected BookSong(Guid id) : base(id)
+        {
+        }
+
         public Guid BookId { get; set; }
         public Guid SongId { get; set; }
         public virtual Books Book { get; set; }

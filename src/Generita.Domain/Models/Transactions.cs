@@ -8,9 +8,12 @@ using Generita.Domain.Enums;
 
 namespace Generita.Domain.Models
 {
-    public class Transactions
+    public class Transactions:Entity
     {
-        public Guid Id { get; set; }
+        protected Transactions(Guid Id) : base(Id)
+        {
+        }
+
         public Guid UserId { get; set; }
         public DateOnly CreateAt {  get; set; }
         public DateOnly UpdateAt { get; set; }

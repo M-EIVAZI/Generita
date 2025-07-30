@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace Generita.Domain.Common.Interfaces
 {
-    internal interface IUnitOfWork
+    public interface IUnitOfWork
     {
+        public void SaveChangesAsync();
+        public void Commit();
+        public void Rollback();
     }
 }
