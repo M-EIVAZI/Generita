@@ -3,6 +3,28 @@
   "WorkspaceRootPath": "D:\\Projects\\Asp.Net Core\\Generita\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{5F2A2C5B-3A91-484E-AEFB-397F99A77B18}|src\\Generita.Domain\\Generita.Domain.csproj|d:\\projects\\asp.net core\\generita\\src\\generita.domain\\common\\abstractions\\baseentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5F2A2C5B-3A91-484E-AEFB-397F99A77B18}|src\\Generita.Domain\\Generita.Domain.csproj|solutionrelative:src\\generita.domain\\common\\abstractions\\baseentity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Courses\\dome-gym\\src\\DomeGym.Domain\\Common\\Entity.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Courses\\dome-gym\\src\\DomeGym.Domain\\Common\\AggregateRoot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5F2A2C5B-3A91-484E-AEFB-397F99A77B18}|src\\Generita.Domain\\Generita.Domain.csproj|d:\\projects\\asp.net core\\generita\\src\\generita.domain\\common\\abstractions\\aggregateroot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5F2A2C5B-3A91-484E-AEFB-397F99A77B18}|src\\Generita.Domain\\Generita.Domain.csproj|solutionrelative:src\\generita.domain\\common\\abstractions\\aggregateroot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5F2A2C5B-3A91-484E-AEFB-397F99A77B18}|src\\Generita.Domain\\Generita.Domain.csproj|d:\\projects\\asp.net core\\generita\\src\\generita.domain\\generita.domain.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{5F2A2C5B-3A91-484E-AEFB-397F99A77B18}|src\\Generita.Domain\\Generita.Domain.csproj|solutionrelative:src\\generita.domain\\generita.domain.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{90745A64-5604-4C55-942C-A12FD2BC1693}|Solution Items{90745A64-5604-4C55-942C-A12FD2BC1693}|D:\\Projects\\Asp.Net Core\\Generita\\.gitignore||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "RelativeMoniker": "D:0:0:{90745A64-5604-4C55-942C-A12FD2BC1693}|Solution Items{90745A64-5604-4C55-942C-A12FD2BC1693}|solutionrelative:.gitignore||{3B902123-F8A7-4915-9F01-361F908088D0}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{5F2A2C5B-3A91-484E-AEFB-397F99A77B18}|src\\Generita.Domain\\Generita.Domain.csproj|d:\\projects\\asp.net core\\generita\\src\\generita.domain\\models\\transactions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{5F2A2C5B-3A91-484E-AEFB-397F99A77B18}|src\\Generita.Domain\\Generita.Domain.csproj|solutionrelative:src\\generita.domain\\models\\transactions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -39,12 +61,8 @@
       "RelativeMoniker": "D:0:0:{5F2A2C5B-3A91-484E-AEFB-397F99A77B18}|src\\Generita.Domain\\Generita.Domain.csproj|solutionrelative:src\\generita.domain\\enums\\states.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{5F2A2C5B-3A91-484E-AEFB-397F99A77B18}|src\\Generita.Domain\\Generita.Domain.csproj|d:\\projects\\asp.net core\\generita\\src\\generita.domain\\generita.domain.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
-      "RelativeMoniker": "D:0:0:{5F2A2C5B-3A91-484E-AEFB-397F99A77B18}|src\\Generita.Domain\\Generita.Domain.csproj|solutionrelative:src\\generita.domain\\generita.domain.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5F2A2C5B-3A91-484E-AEFB-397F99A77B18}|src\\Generita.Domain\\Generita.Domain.csproj|d:\\projects\\asp.net core\\generita\\src\\generita.domain\\models\\category.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5F2A2C5B-3A91-484E-AEFB-397F99A77B18}|src\\Generita.Domain\\Generita.Domain.csproj|solutionrelative:src\\generita.domain\\models\\category.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Projects\\Asp.Net Core\\Generita\\src\\Generita.Domain\\Models\\Category.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\Generita.Domain\\Models\\Category.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -54,85 +72,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 9,
+          "SelectedChildIndex": 7,
           "Children": [
             {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "BookSong.cs",
-              "DocumentMoniker": "D:\\Projects\\Asp.Net Core\\Generita\\src\\Generita.Domain\\Models\\BookSong.cs",
-              "RelativeDocumentMoniker": "src\\Generita.Domain\\Models\\BookSong.cs",
-              "ToolTip": "D:\\Projects\\Asp.Net Core\\Generita\\src\\Generita.Domain\\Models\\BookSong.cs",
-              "RelativeToolTip": "src\\Generita.Domain\\Models\\BookSong.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAgAAAAKAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-17T13:28:15.773Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "UserPlan.cs",
-              "DocumentMoniker": "D:\\Projects\\Asp.Net Core\\Generita\\src\\Generita.Domain\\Models\\UserPlan.cs",
-              "RelativeDocumentMoniker": "src\\Generita.Domain\\Models\\UserPlan.cs",
-              "ToolTip": "D:\\Projects\\Asp.Net Core\\Generita\\src\\Generita.Domain\\Models\\UserPlan.cs",
-              "RelativeToolTip": "src\\Generita.Domain\\Models\\UserPlan.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAuwA8AAAAvAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-17T13:24:15.514Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Plans.cs",
-              "DocumentMoniker": "D:\\Projects\\Asp.Net Core\\Generita\\src\\Generita.Domain\\Models\\Plans.cs",
-              "RelativeDocumentMoniker": "src\\Generita.Domain\\Models\\Plans.cs",
-              "ToolTip": "D:\\Projects\\Asp.Net Core\\Generita\\src\\Generita.Domain\\Models\\Plans.cs",
-              "RelativeToolTip": "src\\Generita.Domain\\Models\\Plans.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAmAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-17T12:39:54.891Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "Views.cs",
-              "DocumentMoniker": "D:\\Projects\\Asp.Net Core\\Generita\\src\\Generita.Domain\\Models\\Views.cs",
-              "RelativeDocumentMoniker": "src\\Generita.Domain\\Models\\Views.cs",
-              "ToolTip": "D:\\Projects\\Asp.Net Core\\Generita\\src\\Generita.Domain\\Models\\Views.cs",
-              "RelativeToolTip": "src\\Generita.Domain\\Models\\Views.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-17T12:38:31.954Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "States.cs",
-              "DocumentMoniker": "D:\\Projects\\Asp.Net Core\\Generita\\src\\Generita.Domain\\Enums\\States.cs",
-              "RelativeDocumentMoniker": "src\\Generita.Domain\\Enums\\States.cs",
-              "ToolTip": "D:\\Projects\\Asp.Net Core\\Generita\\src\\Generita.Domain\\Enums\\States.cs",
-              "RelativeToolTip": "src\\Generita.Domain\\Enums\\States.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-17T12:26:29.089Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "Generita.Domain",
-              "DocumentMoniker": "D:\\Projects\\Asp.Net Core\\Generita\\src\\Generita.Domain\\Generita.Domain.csproj",
-              "RelativeDocumentMoniker": "src\\Generita.Domain\\Generita.Domain.csproj",
-              "ToolTip": "D:\\Projects\\Asp.Net Core\\Generita\\src\\Generita.Domain\\Generita.Domain.csproj",
-              "RelativeToolTip": "src\\Generita.Domain\\Generita.Domain.csproj",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2024-12-17T12:26:13.637Z",
-              "EditorCaption": ""
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{b1e99781-ab81-11d0-b683-00aa00a3ee26}"
             },
             {
               "$type": "Bookmark",
@@ -148,20 +92,158 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Entity.cs",
+              "DocumentMoniker": "D:\\Courses\\dome-gym\\src\\DomeGym.Domain\\Common\\Entity.cs",
+              "RelativeDocumentMoniker": "..\\..\\..\\Courses\\dome-gym\\src\\DomeGym.Domain\\Common\\Entity.cs",
+              "ToolTip": "D:\\Courses\\dome-gym\\src\\DomeGym.Domain\\Common\\Entity.cs",
+              "RelativeToolTip": "..\\..\\..\\Courses\\dome-gym\\src\\DomeGym.Domain\\Common\\Entity.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-29T17:17:14.088Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "AggregateRoot.cs",
+              "DocumentMoniker": "D:\\Projects\\Asp.Net Core\\Generita\\src\\Generita.Domain\\Common\\Abstractions\\AggregateRoot.cs",
+              "RelativeDocumentMoniker": "src\\Generita.Domain\\Common\\Abstractions\\AggregateRoot.cs",
+              "ToolTip": "D:\\Projects\\Asp.Net Core\\Generita\\src\\Generita.Domain\\Common\\Abstractions\\AggregateRoot.cs",
+              "RelativeToolTip": "src\\Generita.Domain\\Common\\Abstractions\\AggregateRoot.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-29T17:13:30.776Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "AggregateRoot.cs",
+              "DocumentMoniker": "D:\\Courses\\dome-gym\\src\\DomeGym.Domain\\Common\\AggregateRoot.cs",
+              "RelativeDocumentMoniker": "..\\..\\..\\Courses\\dome-gym\\src\\DomeGym.Domain\\Common\\AggregateRoot.cs",
+              "ToolTip": "D:\\Courses\\dome-gym\\src\\DomeGym.Domain\\Common\\AggregateRoot.cs",
+              "RelativeToolTip": "..\\..\\..\\Courses\\dome-gym\\src\\DomeGym.Domain\\Common\\AggregateRoot.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-29T17:12:46.572Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "BaseEntity.cs",
+              "DocumentMoniker": "D:\\Projects\\Asp.Net Core\\Generita\\src\\Generita.Domain\\Common\\Abstractions\\BaseEntity.cs",
+              "RelativeDocumentMoniker": "src\\Generita.Domain\\Common\\Abstractions\\BaseEntity.cs",
+              "ToolTip": "D:\\Projects\\Asp.Net Core\\Generita\\src\\Generita.Domain\\Common\\Abstractions\\BaseEntity.cs",
+              "RelativeToolTip": "src\\Generita.Domain\\Common\\Abstractions\\BaseEntity.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-29T17:10:57.095Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": ".gitignore",
+              "DocumentMoniker": "D:\\Projects\\Asp.Net Core\\Generita\\.gitignore",
+              "RelativeDocumentMoniker": ".gitignore",
+              "ToolTip": "D:\\Projects\\Asp.Net Core\\Generita\\.gitignore",
+              "RelativeToolTip": ".gitignore",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2025-07-29T17:03:15.799Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "BookSong.cs",
+              "DocumentMoniker": "D:\\Projects\\Asp.Net Core\\Generita\\src\\Generita.Domain\\Models\\BookSong.cs",
+              "RelativeDocumentMoniker": "src\\Generita.Domain\\Models\\BookSong.cs",
+              "ToolTip": "D:\\Projects\\Asp.Net Core\\Generita\\src\\Generita.Domain\\Models\\BookSong.cs",
+              "RelativeToolTip": "src\\Generita.Domain\\Models\\BookSong.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAgAAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-17T13:28:15.773Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "UserPlan.cs",
+              "DocumentMoniker": "D:\\Projects\\Asp.Net Core\\Generita\\src\\Generita.Domain\\Models\\UserPlan.cs",
+              "RelativeDocumentMoniker": "src\\Generita.Domain\\Models\\UserPlan.cs",
+              "ToolTip": "D:\\Projects\\Asp.Net Core\\Generita\\src\\Generita.Domain\\Models\\UserPlan.cs",
+              "RelativeToolTip": "src\\Generita.Domain\\Models\\UserPlan.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAuwA8AAAAvAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-17T13:24:15.514Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "Plans.cs",
+              "DocumentMoniker": "D:\\Projects\\Asp.Net Core\\Generita\\src\\Generita.Domain\\Models\\Plans.cs",
+              "RelativeDocumentMoniker": "src\\Generita.Domain\\Models\\Plans.cs",
+              "ToolTip": "D:\\Projects\\Asp.Net Core\\Generita\\src\\Generita.Domain\\Models\\Plans.cs",
+              "RelativeToolTip": "src\\Generita.Domain\\Models\\Plans.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAmAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-17T12:39:54.891Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "Views.cs",
+              "DocumentMoniker": "D:\\Projects\\Asp.Net Core\\Generita\\src\\Generita.Domain\\Models\\Views.cs",
+              "RelativeDocumentMoniker": "src\\Generita.Domain\\Models\\Views.cs",
+              "ToolTip": "D:\\Projects\\Asp.Net Core\\Generita\\src\\Generita.Domain\\Models\\Views.cs",
+              "RelativeToolTip": "src\\Generita.Domain\\Models\\Views.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-17T12:38:31.954Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "States.cs",
+              "DocumentMoniker": "D:\\Projects\\Asp.Net Core\\Generita\\src\\Generita.Domain\\Enums\\States.cs",
+              "RelativeDocumentMoniker": "src\\Generita.Domain\\Enums\\States.cs",
+              "ToolTip": "D:\\Projects\\Asp.Net Core\\Generita\\src\\Generita.Domain\\Enums\\States.cs",
+              "RelativeToolTip": "src\\Generita.Domain\\Enums\\States.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-17T12:26:29.089Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Generita.Domain.csproj",
+              "DocumentMoniker": "D:\\Projects\\Asp.Net Core\\Generita\\src\\Generita.Domain\\Generita.Domain.csproj",
+              "RelativeDocumentMoniker": "src\\Generita.Domain\\Generita.Domain.csproj",
+              "ToolTip": "D:\\Projects\\Asp.Net Core\\Generita\\src\\Generita.Domain\\Generita.Domain.csproj",
+              "RelativeToolTip": "src\\Generita.Domain\\Generita.Domain.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2024-12-17T12:26:13.637Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
               "Title": "Transactions.cs",
               "DocumentMoniker": "D:\\Projects\\Asp.Net Core\\Generita\\src\\Generita.Domain\\Models\\Transactions.cs",
               "RelativeDocumentMoniker": "src\\Generita.Domain\\Models\\Transactions.cs",
               "ToolTip": "D:\\Projects\\Asp.Net Core\\Generita\\src\\Generita.Domain\\Models\\Transactions.cs",
               "RelativeToolTip": "src\\Generita.Domain\\Models\\Transactions.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAsAAAAFAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAuwA4AAAAvAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-12-17T12:19:44.762Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 15,
               "Title": "Category.cs",
               "DocumentMoniker": "D:\\Projects\\Asp.Net Core\\Generita\\src\\Generita.Domain\\Models\\Category.cs",
               "RelativeDocumentMoniker": "src\\Generita.Domain\\Models\\Category.cs",
@@ -169,12 +251,11 @@
               "RelativeToolTip": "src\\Generita.Domain\\Models\\Category.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-17T12:18:18.433Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-17T12:18:18.433Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 7,
               "Title": "User.cs",
               "DocumentMoniker": "D:\\Projects\\Asp.Net Core\\Generita\\src\\Generita.Domain\\Models\\User.cs",
               "RelativeDocumentMoniker": "src\\Generita.Domain\\Models\\User.cs",
@@ -182,12 +263,11 @@
               "RelativeToolTip": "src\\Generita.Domain\\Models\\User.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAABHAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-17T12:17:57.376Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-17T12:17:57.376Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 11,
               "Title": "Books.cs",
               "DocumentMoniker": "D:\\Projects\\Asp.Net Core\\Generita\\src\\Generita.Domain\\Models\\Books.cs",
               "RelativeDocumentMoniker": "src\\Generita.Domain\\Models\\Books.cs",
@@ -195,12 +275,11 @@
               "RelativeToolTip": "src\\Generita.Domain\\Models\\Books.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAnAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-17T12:16:44.977Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-17T12:16:44.977Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 10,
               "Title": "Songs.cs",
               "DocumentMoniker": "D:\\Projects\\Asp.Net Core\\Generita\\src\\Generita.Domain\\Models\\Songs.cs",
               "RelativeDocumentMoniker": "src\\Generita.Domain\\Models\\Songs.cs",
@@ -208,8 +287,7 @@
               "RelativeToolTip": "src\\Generita.Domain\\Models\\Songs.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAoAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-17T12:10:29.067Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-12-17T12:10:29.067Z"
             }
           ]
         },
