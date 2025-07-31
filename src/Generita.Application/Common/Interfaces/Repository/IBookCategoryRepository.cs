@@ -8,8 +8,7 @@ using Generita.Domain.Models;
 
 namespace Generita.Application.Common.Interfaces.Repository
 {
-    public interface IAuthorRepository:IGenericRepository<Author>
+    public interface IBookCategoryRepository : IGenericRepository<BookCategory>
     {
-
     }
 }

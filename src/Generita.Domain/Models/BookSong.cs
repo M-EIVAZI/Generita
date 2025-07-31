@@ -16,7 +16,7 @@ namespace Generita.Domain.Models
 
         public Guid BookId { get; set; }
         public Guid SongId { get; set; }
-        public virtual Books Book { get; set; }
+        public virtual Book Book { get; set; }
         public virtual Songs Song { get; set; }
     }
 }

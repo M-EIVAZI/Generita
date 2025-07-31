@@ -12,7 +12,7 @@ public class Entity:AggregateRoot
     public string Name { get; set; }
     public ICollection<string> Descriptions { get; set; }
     public Author AuthorId {get; set; }
-    public Books BookId { get; set; }
-    public Books Books { get; set; }
+    public Book BookId { get; set; }
+    public Book Books { get; set; }
     public virtual Author Author { get; set; }
 }

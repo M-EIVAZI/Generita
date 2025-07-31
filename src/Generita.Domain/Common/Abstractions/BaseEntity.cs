@@ -10,10 +10,10 @@ namespace Generita.Domain.Common.Abstractions
 {
     public class BaseEntity
     {
-        protected Guid _id;
+        public Guid Id;
         protected BaseEntity(Guid id)
         {
-            this._id = id;
+            this.Id = id;
         }
 
         public override bool Equals(object? obj)
@@ -23,12 +23,12 @@ namespace Generita.Domain.Common.Abstractions
                 return false;
             }
 
-            return ((Entity)obj).Id == _id;
+            return ((Entity)obj).Id == Id;
         }
 
         public override int GetHashCode()
         {
-            return _id.GetHashCode();
+            return Id.GetHashCode();
         }
     }
 }

@@ -10,12 +10,12 @@ namespace Generita.Domain.Common.Abstractions
 {
     public  class AggregateRoot:BaseEntity
     {
-        protected Guid _baseEntity;
-        protected AggregateRoot(Guid Id)
-        {
-            _baseEntity = Id;   
-        }
+
         protected readonly List<IDomainEvent> _domainEvents = new();
+
+        protected AggregateRoot(Guid id) : base(id)
+        {
+        }
 
         public List<IDomainEvent> PopDomainEvents()
         {

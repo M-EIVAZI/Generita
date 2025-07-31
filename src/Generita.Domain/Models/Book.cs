@@ -2,17 +2,19 @@
 
 namespace Generita.Domain.Models;
 
-public class Books:AggregateRoot
+public class Book:AggregateRoot
 {
-    protected Books(Guid Id) : base(Id)
+    protected Book(Guid Id) : base(Id)
     {
     }
 
-    public Guid Id { get; set; }
     public string Title { get; set; }
     public DateOnly PublishedDate { get; set; }
     public Guid AuthorId { get; set; }
-    public int CategoryId { get; set; }
+    public Guid CategoryId { get; set; }
+    public string Synopsis { get; set; }
+    public string Cover {  get; set; }
+    public string Subscription { get; set; }
     public virtual Author Author { get; set; }
     public virtual BookCategory BookCategory { get; set; }
     public string FilePath { get; set; }

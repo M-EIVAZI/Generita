@@ -8,8 +8,8 @@ using Generita.Domain.Models;
 
 namespace Generita.Application.Common.Interfaces.Repository
 {
-    public interface IBookRepository : IGenericRepository<Books>
+    public interface IBookRepository : IGenericRepository<Book>
     {
-        Task<ICollection<Books>> SearchBook();
+        Task<ICollection<Book>> SearchBook(string bookName);
     }
 }
