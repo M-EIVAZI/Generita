@@ -14,8 +14,4 @@
     <ProjectReference Include="..\Generita.Domain\Generita.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Books\Commands\" />
-  </ItemGroup>
-
 </Project>
