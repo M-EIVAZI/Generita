@@ -11,6 +11,7 @@ public class Author:AggregateRoot
 
     public Name Name { get; set; }
     public DateOnly BirthDate { get;}
+    public int age { get; set; }
     public string Nationality { get; set;} 
     public virtual ICollection<Book> Books { get; set; }
     public virtual ICollection<Entity> Entities { get; set; }

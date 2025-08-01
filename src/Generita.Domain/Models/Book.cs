@@ -19,7 +19,7 @@ public class Book:AggregateRoot
     public virtual BookCategory BookCategory { get; set; }
     public string FilePath { get; set; }
     public string ImagePath { get; set; }
-    public virtual ICollection<BookSong> BookSongs { get; set; }
+    public virtual ICollection<Songs> Songs { get; set; }
     public virtual Entity Entity { get; set; }
 
 
