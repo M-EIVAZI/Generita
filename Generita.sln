@@ -13,7 +13,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.gitignore = .gitignore
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Generita.Application", "src\Generita.Application\Generita.Application.csproj", "{C1B1B2DC-C465-43AF-B6F4-ABBE948CCFE4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Generita.Application", "src\Generita.Application\Generita.Application.csproj", "{C1B1B2DC-C465-43AF-B6F4-ABBE948CCFE4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Generita.Infrustructure", "src\Generita.Infrustructure\Generita.Infrustructure.csproj", "{7601B534-E2B0-4494-B520-5CA9AD64ABDC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,6 +31,10 @@ Global
 		{C1B1B2DC-C465-43AF-B6F4-ABBE948CCFE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C1B1B2DC-C465-43AF-B6F4-ABBE948CCFE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C1B1B2DC-C465-43AF-B6F4-ABBE948CCFE4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7601B534-E2B0-4494-B520-5CA9AD64ABDC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7601B534-E2B0-4494-B520-5CA9AD64ABDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7601B534-E2B0-4494-B520-5CA9AD64ABDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7601B534-E2B0-4494-B520-5CA9AD64ABDC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -36,6 +42,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{5F2A2C5B-3A91-484E-AEFB-397F99A77B18} = {DA2DECCB-6829-41B0-BC18-C79928F83D44}
 		{C1B1B2DC-C465-43AF-B6F4-ABBE948CCFE4} = {DA2DECCB-6829-41B0-BC18-C79928F83D44}
+		{7601B534-E2B0-4494-B520-5CA9AD64ABDC} = {DA2DECCB-6829-41B0-BC18-C79928F83D44}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {321165EF-F083-46DE-8B63-E4BDBAF922A3}
