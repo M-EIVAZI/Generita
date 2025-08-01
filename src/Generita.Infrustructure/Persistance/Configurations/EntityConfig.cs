@@ -23,6 +23,7 @@ namespace Generita.Infrustructure.Persistance.Configurations
             builder.HasOne(x => x.Song)
                 .WithOne(x => x.Entity)
                 .HasForeignKey<Entity>(x => x.SongId);
+
         }
     }
 }

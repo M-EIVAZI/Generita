@@ -29,6 +29,9 @@ namespace Generita.Infrustructure.Persistance.Configurations
                 .HasForeignKey(x => x.CategoryId);
             builder.Property(x => x.FilePath)
                 .IsRequired();
+            builder.Property(x=>x.Access)
+                .HasConversion<string>()
+                .IsRequired();
         }
     }
 }
