@@ -1,5 +1,8 @@
 var builder = WebApplication.CreateBuilder(args);
-
+builder.Configuration
+    .AddJsonFile("appsettings.json", optional: true)
+    .AddUserSecrets<Program>(optional: true)
+    .AddEnvironmentVariables();
 // Add services to the container.
 
 builder.Services.AddControllers();

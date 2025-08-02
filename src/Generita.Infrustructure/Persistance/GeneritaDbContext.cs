@@ -25,6 +25,7 @@ namespace Generita.Application.Common.Messaging
         public DbSet<BookCategory> BookCategory { get; set; }
         public DbSet<SongCategory> SongCategory { get; set; }
         public DbSet<Views> Views { get; set; }
+        public DbSet<Songs> Songs { get; set; }
         public DbSet<Plans> Plans { get; set; }
         //public DbSet<BookSong> BookSong { get; set; }
         //public DbSet<UserPlan> UserPlan { get; set; }

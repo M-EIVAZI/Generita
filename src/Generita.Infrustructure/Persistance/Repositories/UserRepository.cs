@@ -47,10 +47,10 @@ namespace Generita.Infrustructure.Persistance.Repositories
 
         public async Task<User> GetUserByEmail(string email)
         {
-            return await _dbContext.Users.FirstOrDefaultAsync(x=>EF.Functions.Like(x.Email,$"{email}%"))
+            return await _dbContext.Users.FirstOrDefaultAsync(x => EF.Functions.Like(x.Email, $"{email}%"));
         }
 
-        public async Task<bool> Update(User value)
+        public  Task<bool> Update(User value)
         {
             _dbContext.Users.Update(value);
             return Task.FromResult(true);
