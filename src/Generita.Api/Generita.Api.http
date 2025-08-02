@@ -1,0 +1,6 @@
+@Generita.Api_HostAddress = http://localhost:5062
+
+GET {{Generita.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
