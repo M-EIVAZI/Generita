@@ -43,7 +43,7 @@ namespace Generita.Application.Books.Queries.SearchBook
                         Title = book.Title,
                         Author = author.Name.firtName + ' ' + author.Name.LastName,
                         Cover = book.Cover,
-                        access = book.Subscription,
+                        access = book.Access.ToString(),
                     };
                 }
                 ));

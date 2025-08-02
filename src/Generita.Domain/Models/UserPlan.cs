@@ -10,7 +10,7 @@ namespace Generita.Domain.Models
 {
     public class UserPlan:AggregateRoot
     {
-        protected UserPlan(Guid Id) : base(Id)
+        public UserPlan(Guid Id) : base(Id)
         {
         }
 

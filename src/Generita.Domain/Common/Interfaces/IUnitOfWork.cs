@@ -8,8 +8,7 @@ namespace Generita.Domain.Common.Interfaces
 {
     public interface IUnitOfWork
     {
-        public void SaveChangesAsync();
-        public void Commit();
-        public void Rollback();
+        Task CommitAsync(CancellationToken cancellationToken = default);
+        void Rollback();
     }
 }

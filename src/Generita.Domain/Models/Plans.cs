@@ -10,15 +10,14 @@ namespace Generita.Domain.Models
 {
     public class Plans:AggregateRoot
     {
-        protected Plans(Guid Id) : base(Id)
+        public Plans(Guid Id) : base(Id)
         {
         }
 
-        public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public int Price { get; set; }
-        public int Duration { get; set; }
-        public virtual ICollection<UserPlan> UserPlans { get; set; }
+        public TimeSpan Duration { get; set; }
+        public virtual ICollection<Transactions> Transactions { get; set; }
     }
 }

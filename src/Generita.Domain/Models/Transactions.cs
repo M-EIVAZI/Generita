@@ -10,15 +10,16 @@ namespace Generita.Domain.Models
 {
     public class Transactions:Entity
     {
-        protected Transactions(Guid Id) : base(Id)
+        public Transactions(Guid Id) : base(Id)
         {
         }
 
         public Guid UserId { get; set; }
-        public DateOnly CreateAt {  get; set; }
-        public DateOnly UpdateAt { get; set; }
+        public Guid PlanId { get; set; }
+        public DateTime CreateAt {  get; set; }
         public int Price { get; set; }
         public States States { get; set; }
         public virtual User User { get; set; }
+        public virtual Plans Plan { get; set; }
     }
 }

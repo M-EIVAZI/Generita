@@ -8,8 +8,7 @@ using Generita.Domain.Models;
 
 namespace Generita.Application.Common.Interfaces.Repository
 {
-    public interface IPlansRepository:IGenericRepository<Plans>
+    public interface ITransactionsRepository:IGenericRepository<Transactions>
     {
-        Task<Plans> GetPlanByName(string name);
     }
 }

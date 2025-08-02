@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Generita.Application.Common.Messaging
 {
-    public class GeneritaDbContext:DbContext
+    public class GeneritaDbContext:DbContext,
     {
         public GeneritaDbContext(DbContextOptions options)
             :base(options)

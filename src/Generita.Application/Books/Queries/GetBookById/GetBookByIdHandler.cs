@@ -44,7 +44,7 @@ namespace Generita.Application.Books.Queries.GetBookById
                 synopsis = book.Synopsis,
                 Category = bookcategory.CategoryName,
                 Cover=book.Cover,
-                access=book.Subscription,
+                access=book.Access.ToString(),
             };
             return res;
         }

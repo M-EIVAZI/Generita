@@ -9,6 +9,7 @@ using ErrorOr;
 using Generita.Application.Books.Commands.AddBook;
 using Generita.Application.Common.Interfaces.Repository;
 using Generita.Application.Common.Messaging;
+using Generita.Domain.Common.Enums;
 using Generita.Domain.Models;
 
 namespace Generita.Application.Dtos
@@ -21,7 +22,7 @@ namespace Generita.Application.Dtos
         public Guid CategoryId { get; set; }
         public string Synopsis { get; set; }
         public string Cover { get; set; }
-        public string Subscription { get; set; }
+        public BookAccess Subscription { get; set; }
         public string FilePath { get; set; }
         public string ImagePath { get; set; }
     }

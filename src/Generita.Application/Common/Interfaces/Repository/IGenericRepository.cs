@@ -10,7 +10,6 @@ namespace Generita.Application.Common.Interfaces.Repository
      where T : class
     {
         Task Add(T value);
-        Task<bool> Delete(T value);
         Task<bool> Delete(Guid id);
         Task<bool> Update(T value);
         Task<ICollection<T>> GetAll();

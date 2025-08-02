@@ -1,10 +1,11 @@
 ﻿using Generita.Domain.Common.Abstractions;
+using Generita.Domain.Common.Enums;
 
 namespace Generita.Domain.Models;
 
 public class Book:AggregateRoot
 {
-    protected Book(Guid Id) : base(Id)
+    public Book(Guid Id) : base(Id)
     {
     }
 
@@ -14,7 +15,7 @@ public class Book:AggregateRoot
     public Guid CategoryId { get; set; }
     public string Synopsis { get; set; }
     public string Cover {  get; set; }
-    public string Subscription { get; set; }
+    public BookAccess Access { get; set; }
     public virtual Author Author { get; set; }
     public virtual BookCategory BookCategory { get; set; }
     public string FilePath { get; set; }

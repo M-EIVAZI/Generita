@@ -5,7 +5,7 @@ namespace Generita.Domain.Models;
 
 public class Author:AggregateRoot
 {
-    protected Author(Guid id) : base(id)
+    public Author(Guid id) : base(id)
     {
     }
 

@@ -9,13 +9,8 @@ using Generita.Domain.Models;
 
 namespace Generita.Application.Common.Interfaces.Repository
 {
-    public interface IBookRepository 
+    public interface IBookRepository :IGenericRepository<Book>
     {
-        Task Add(AddBookDto value);
-        Task<bool> Delete(Guid id);
-        Task<bool> Update(Book value);
-        Task<ICollection<GetBookDto>> GetAll();
-        Task<Book> GetById(Guid id);
         Task<ICollection<Book>> SearchBook(string bookName);
     }
 }
