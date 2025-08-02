@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Generita.Application.Common.Messaging
 {
-    public class GeneritaDbContext:DbContext,
+    public class GeneritaDbContext:DbContext
     {
         public GeneritaDbContext(DbContextOptions options)
             :base(options)
@@ -27,7 +27,7 @@ namespace Generita.Application.Common.Messaging
         public DbSet<Views> Views { get; set; }
         public DbSet<Plans> Plans { get; set; }
         //public DbSet<BookSong> BookSong { get; set; }
-        public DbSet<UserPlan> UserPlan { get; set; }
+        //public DbSet<UserPlan> UserPlan { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(GeneritaDbContext).Assembly);

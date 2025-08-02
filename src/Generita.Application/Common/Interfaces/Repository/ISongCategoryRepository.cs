@@ -8,7 +8,7 @@ using Generita.Domain.Models;
 
 namespace Generita.Application.Common.Interfaces.Repository
 {
-    public interface ISongCategory:IGenericRepository<SongCategory>
+    public interface ISongCategoryRepository:IGenericRepository<SongCategory>
     {
     }
 }
