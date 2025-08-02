@@ -5,7 +5,7 @@ namespace Generita.Domain.Models;
 
 public class User:AggregateRoot
 {
-    protected User(Guid Id) : base(Id)
+    public User(Guid Id) : base(Id)
     {
     }
 
@@ -16,4 +16,5 @@ public class User:AggregateRoot
     public string Password { get; set; }
     public string Salt { get; set; }
     public virtual ICollection<Transactions> Transactions { get; set; }
+    public virtual ICollection<Views> Views { get; set; }
 }

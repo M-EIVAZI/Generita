@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Generita.Application.Common.Interfaces.Repository;
-using Generita.Application.Common.Messaging;
 using Generita.Application.Dtos;
 using Generita.Domain.Models;
 

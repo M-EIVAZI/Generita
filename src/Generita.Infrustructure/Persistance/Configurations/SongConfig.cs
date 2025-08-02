@@ -25,7 +25,7 @@ namespace Generita.Infrustructure.Persistance.Configurations
                 .WithMany(x => x.Songs);
             builder.HasOne(x => x.Category)
                 .WithMany(x => x.Songs)
-                .HasForeignKey(x => x.Category.Id);
+                .HasForeignKey(x => x.CategoryId);
             builder.Property(x => x.FilePath)
                 .IsRequired();
         }

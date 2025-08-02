@@ -20,8 +20,6 @@ namespace Generita.Infrustructure.Persistance.Configurations
             builder.Property(x => x.CategoryName)
                 .IsRequired()
                 .HasMaxLength(50);
-            builder.HasMany(x => x.Books)
-                .WithOne(x => x.BookCategory);
 
         }
     }

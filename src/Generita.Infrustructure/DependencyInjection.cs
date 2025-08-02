@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Generita.Application.Common.Interfaces.Repository;
-using Generita.Application.Common.Messaging;
 using Generita.Domain.Common.Interfaces;
 using Generita.Infrustructure.Persistance;
 using Generita.Infrustructure.Persistance.Repositories;
@@ -30,9 +29,8 @@ namespace Generita.Infrustructure
             services.AddScoped<IBookRepository,BookRepository>();
             services.AddScoped<IBookCategoryRepository,BookCategoryRepository>();
             services.AddScoped<ITransactionsRepository,TransactionRepository>();
-            services.AddScoped<IPlansRepository,IPlansRepository>();
+            services.AddScoped<IPlansRepository,PlansRepository>();
             services.AddScoped<IAuthorRepository,AuthorRepository>();
-
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             return services;
         }

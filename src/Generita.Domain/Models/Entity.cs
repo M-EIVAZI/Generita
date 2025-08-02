@@ -4,7 +4,7 @@ namespace Generita.Domain.Models;
 
 public class Entity:AggregateRoot
 {
-    protected Entity(Guid Id) : base(Id)
+    public Entity(Guid Id) : base(Id)
     {
     }
 

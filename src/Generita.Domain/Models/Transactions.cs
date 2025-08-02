@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Generita.Domain.Common.Abstractions;
 using Generita.Domain.Enums;
 
 namespace Generita.Domain.Models
 {
-    public class Transactions:Entity
+    public class Transactions:BaseEntity
     {
         public Transactions(Guid Id) : base(Id)
         {

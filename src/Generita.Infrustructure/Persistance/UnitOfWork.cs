@@ -13,9 +13,9 @@ namespace Generita.Infrustructure.Persistance
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private DbContext _dbContext;
+        private GeneritaDbContext _dbContext;
 
-        public UnitOfWork(DbContext dbContext)
+        public UnitOfWork(GeneritaDbContext dbContext)
         {
             _dbContext = dbContext;
         }

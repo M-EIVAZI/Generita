@@ -22,8 +22,6 @@ namespace Generita.Infrustructure.Persistance.Configurations
             builder.HasOne(x => x.Author)
                 .WithMany(x => x.Books)
                 .HasForeignKey(x=>x.AuthorId);
-            builder.HasOne(b => b.Entity)
-                .WithOne(e => e.Book);
             builder.HasOne(b => b.BookCategory)
                 .WithMany(x => x.Books)
                 .HasForeignKey(x => x.CategoryId);

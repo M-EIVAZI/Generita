@@ -10,12 +10,14 @@ namespace Generita.Domain.Models
 {
     public class Views:BaseEntity
     {
-        protected Views(Guid id) : base(id)
+        public Views(Guid id) : base(id)
         {
         }
 
         public Guid UserId { get; set; }
         public Guid BookId { get; set; }
         public DateTime ViewAt { get; set; }
+        public virtual Book Book { get; set; }
+        public virtual User User { get; set; }
     }
 }

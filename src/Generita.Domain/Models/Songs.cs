@@ -9,11 +9,11 @@ namespace Generita.Domain.Models;
 
 public class Songs:AggregateRoot
 {
-    protected Songs(Guid Id) : base(Id)
+    public Songs(Guid Id) : base(Id)
     {
     }
 
-    public Name Name { get; set; }
+    public string Name { get; set; }
     public Guid CategoryId { get; set; }
     public TimeSpan Duration { get; set; }
     public DateOnly CreateAt { get; set; }

@@ -10,7 +10,7 @@ namespace Generita.Domain.Models
 {
     public class BookSong:BaseEntity
     {
-        protected BookSong(Guid id) : base(id)
+        public BookSong(Guid id) : base(id)
         {
         }
 

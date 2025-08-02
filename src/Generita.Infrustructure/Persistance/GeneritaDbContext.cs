@@ -8,14 +8,14 @@ using Generita.Domain.Models;
 
 using Microsoft.EntityFrameworkCore;
 
-namespace Generita.Application.Common.Messaging
+namespace Generita.Infrustructure.Persistance
 {
-    public class GeneritaDbContext:DbContext
+    public class GeneritaDbContext : DbContext
     {
         public GeneritaDbContext(DbContextOptions options)
-            :base(options)
+            : base(options)
         {
-            
+
         }
         public DbSet<Author> Author { get; set; }
         public DbSet<Book> Book { get; set; }

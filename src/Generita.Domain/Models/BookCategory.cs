@@ -5,11 +5,10 @@ namespace Generita.Domain.Models;
 
 public class BookCategory:BaseEntity
 {
-    protected BookCategory(Guid id) : base(id)
+    public BookCategory(Guid id) : base(id)
     {
     }
 
-    public int id { get; set; }
     public string CategoryName { get; set; }
     public virtual ICollection<Book> Books { get; set; }
 }
