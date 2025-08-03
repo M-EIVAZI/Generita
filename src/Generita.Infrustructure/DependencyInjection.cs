@@ -34,6 +34,7 @@ namespace Generita.Infrustructure
             services.AddScoped<ITransactionsRepository,TransactionRepository>();
             services.AddScoped<IPlansRepository,PlansRepository>();
             services.AddScoped<IAuthorRepository,AuthorRepository>();
+            services.AddScoped<IRefreshTokenRepository,RefreshTokenRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddSingleton<IPasswordHasher, PasswordHasher>();
             services.AddSingleton<ITokenGenerator, TokenGenerator>();

@@ -16,4 +16,5 @@ public class User:AggregateRoot
     public string Password { get; set; }
     public virtual ICollection<Transactions> Transactions { get; set; }
     public virtual ICollection<Views> Views { get; set; }
+    public virtual ICollection<RefreshTokens> RefreshTokens { get; set; }
 }

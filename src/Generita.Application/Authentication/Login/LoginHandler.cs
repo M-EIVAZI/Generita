@@ -10,6 +10,7 @@ using Generita.Application.Common.Interfaces;
 using Generita.Application.Common.Interfaces.Repository;
 using Generita.Application.Common.Messaging;
 using Generita.Domain.Common.Interfaces;
+using Generita.Domain.Models;
 
 namespace Generita.Application.Authentication.Login
 {
@@ -19,13 +20,15 @@ namespace Generita.Application.Authentication.Login
         private IPasswordHasher _passwordHasher;
         private ITokenGenerator _tokenGenerator;
         private IUnitOfWork _unitOfWork;
+        private IRefreshTokenRepository _refreshTokenRepository;
 
-        public LoginHandler(IUserRepository userRepository, IPasswordHasher passwordHasher, ITokenGenerator tokenGenerator, IUnitOfWork unitOfWork)
+        public LoginHandler(IUserRepository userRepository, IPasswordHasher passwordHasher, ITokenGenerator tokenGenerator, IUnitOfWork unitOfWork, IRefreshTokenRepository refreshTokenRepository)
         {
             _userRepository = userRepository;
             _passwordHasher = passwordHasher;
             _tokenGenerator = tokenGenerator;
             _unitOfWork = unitOfWork;
+            _refreshTokenRepository = refreshTokenRepository;
         }
 
         public async  Task<ErrorOr<LoginResponse>> Handle(LoginCommand request, CancellationToken cancellationToken)
@@ -40,7 +43,15 @@ namespace Generita.Application.Authentication.Login
                 return Error.Conflict(description: "Password is incorrect");
             }
             var token = _tokenGenerator.GenerateToken(user);
-            return 
+            var refreshtoken = _tokenGenerator.RefreshToken();
+            RefreshTokens rtmodel = new(Guid.NewGuid())
+            {
+                ExpiresOnUtc = DateTime.UtcNow.AddDays(7),
+                UserId = user.Id,
+                Token = _tokenGenerator.RefreshToken(),
+            };
+            await _refreshTokenRepository.Add(rtmodel);
+            return new LoginResponse() { accessToken=token,refreshToken=refreshtoken} ;
 
         }
     }

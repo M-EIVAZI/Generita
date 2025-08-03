@@ -6,12 +6,9 @@ using System.Threading.Tasks;
 
 using Generita.Domain.Models;
 
-namespace Generita.Application.Common.Interfaces
+namespace Generita.Application.Common.Interfaces.Repository
 {
-    public interface ITokenGenerator
+    public interface IRefreshTokenRepository:IGenericRepository<RefreshTokens>
     {
-        string GenerateToken(User user);
-        string RefreshToken();
-
     }
 }

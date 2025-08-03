@@ -15,5 +15,10 @@ namespace Generita.Infrustructure.Authentication.TokenGenerator
         {
             throw new NotImplementedException();
         }
+
+        public string RefreshToken()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

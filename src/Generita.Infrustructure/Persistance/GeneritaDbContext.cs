@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Generita.Domain.Models;
 
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Internal;
 
 namespace Generita.Infrustructure.Persistance
 {
@@ -26,6 +27,7 @@ namespace Generita.Infrustructure.Persistance
         public DbSet<SongCategory> SongCategory { get; set; }
         public DbSet<Views> Views { get; set; }
         public DbSet<Songs> Songs { get; set; }
+        public DbSet<RefreshTokens> RefreshTokens { get; set; }
         public DbSet<Plans> Plans { get; set; }
         //public DbSet<BookSong> BookSong { get; set; }
         //public DbSet<UserPlan> UserPlan { get; set; }
