@@ -13,4 +13,5 @@ namespace Generita.Application.Common.Messaging
     interface ICommand:IRequest<ErrorOr<Success>>
     {
     }
+    interface ICommand<TResponse>:IRequest<ErrorOr<TResponse>>;
 }

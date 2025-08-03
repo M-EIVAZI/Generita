@@ -14,4 +14,7 @@ namespace Generita.Application.Common.Messaging
         where TRequest: IRequest<ErrorOr<Success>>
     {
     }
+    internal interface ICommandHandler<TRequest,TResponse>:IRequestHandler<TRequest,ErrorOr<TResponse>>
+        where TRequest:IRequest<ErrorOr<TResponse>>
+    { }
 }

@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Generita.Infrustructure.Migrations
 {
     [DbContext(typeof(GeneritaDbContext))]
-    [Migration("20250802145549_Init")]
+    [Migration("20250802183636_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -208,8 +208,8 @@ namespace Generita.Infrustructure.Migrations
                     b.Property<Guid>("CategoryId")
                         .HasColumnType("uuid");
 
-                    b.Property<DateOnly>("CreateAt")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("CreateAt")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<TimeSpan>("Duration")
                         .HasColumnType("interval");
@@ -226,8 +226,8 @@ namespace Generita.Infrustructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateOnly>("UpdateAt")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("UpdateAt")
+                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
 
@@ -273,27 +273,31 @@ namespace Generita.Infrustructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<DateOnly>("CreateAt")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("CreateAt")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("character varying(30)");
 
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
-                    b.Property<string>("Salt")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<DateOnly>("UpdateAt")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("UpdateAt")
+                        .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
 
                     b.ToTable("Users", (string)null);
                 });
@@ -436,35 +440,6 @@ namespace Generita.Infrustructure.Migrations
                     b.Navigation("Plan");
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Generita.Domain.Models.User", b =>
-                {
-                    b.OwnsOne("Generita.Domain.ValueObjects.Name", "Name", b1 =>
-                        {
-                            b1.Property<Guid>("UserId")
-                                .HasColumnType("uuid");
-
-                            b1.Property<string>("LastName")
-                                .IsRequired()
-                                .HasMaxLength(30)
-                                .HasColumnType("character varying(30)");
-
-                            b1.Property<string>("firtName")
-                                .IsRequired()
-                                .HasMaxLength(30)
-                                .HasColumnType("character varying(30)");
-
-                            b1.HasKey("UserId");
-
-                            b1.ToTable("Users");
-
-                            b1.WithOwner()
-                                .HasForeignKey("UserId");
-                        });
-
-                    b.Navigation("Name")
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Generita.Domain.Models.Views", b =>

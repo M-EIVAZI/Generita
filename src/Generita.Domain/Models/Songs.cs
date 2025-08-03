@@ -16,8 +16,8 @@ public class Songs:AggregateRoot
     public string Name { get; set; }
     public Guid CategoryId { get; set; }
     public TimeSpan Duration { get; set; }
-    public DateOnly CreateAt { get; set; }
-    public DateOnly UpdateAt { get; set; }
+    public DateTime CreateAt { get; set; }
+    public DateTime UpdateAt { get; set; }
     public string FilePath { get; set; }
     public OwnerShip Owner { get; set; }
     public Entity Entity { get; set; }

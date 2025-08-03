@@ -70,13 +70,11 @@ namespace Generita.Infrustructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Name_firtName = table.Column<string>(type: "character varying(30)", maxLength: 30, nullable: false),
-                    Name_LastName = table.Column<string>(type: "character varying(30)", maxLength: 30, nullable: false),
-                    CreateAt = table.Column<DateOnly>(type: "date", nullable: false),
-                    UpdateAt = table.Column<DateOnly>(type: "date", nullable: false),
+                    Name = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    CreateAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UpdateAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     Email = table.Column<string>(type: "character varying(30)", maxLength: 30, nullable: false),
-                    Password = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
-                    Salt = table.Column<string>(type: "text", nullable: false)
+                    Password = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -123,8 +121,8 @@ namespace Generita.Infrustructure.Migrations
                     Name = table.Column<string>(type: "text", nullable: false),
                     CategoryId = table.Column<Guid>(type: "uuid", nullable: false),
                     Duration = table.Column<TimeSpan>(type: "interval", nullable: false),
-                    CreateAt = table.Column<DateOnly>(type: "date", nullable: false),
-                    UpdateAt = table.Column<DateOnly>(type: "date", nullable: false),
+                    CreateAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UpdateAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     FilePath = table.Column<string>(type: "text", nullable: false),
                     Owner = table.Column<string>(type: "text", nullable: false)
                 },
@@ -296,6 +294,12 @@ namespace Generita.Infrustructure.Migrations
                 name: "IX_Transactions_UserId",
                 table: "Transactions",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_Email",
+                table: "Users",
+                column: "Email",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Views_BookId",

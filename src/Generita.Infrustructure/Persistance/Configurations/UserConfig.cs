@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Schema;
 
 using Generita.Domain.Models;
 
@@ -17,18 +18,14 @@ namespace Generita.Infrustructure.Persistance.Configurations
         {
             builder.ToTable("Users");
             builder.HasKey(x => x.Id);
-            builder.OwnsOne(x => x.Name, name =>
-            {
-                name.Property(x => x.firtName)
+            builder.Property(x => x.Name)
                 .IsRequired()
-                .HasMaxLength(30);
-                name.Property(x => x.LastName)
-                .IsRequired()
-                .HasMaxLength(30);
-            });
+                .HasMaxLength(50);
             builder.Property(x=> x.Email)
                 .IsRequired()
                 .HasMaxLength(30);
+            builder.HasIndex(x => x.Email)
+                .IsUnique();
             builder.Property(x=>x.Password)
                 .IsRequired()
                 .HasMaxLength(50);

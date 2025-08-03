@@ -54,5 +54,10 @@ namespace Generita.Infrustructure.Persistance.Repositories
             _dbContext.Users.Update(value);
             return Task.FromResult(true);
         }
+        public async Task<bool> IsExistsByEmail(string email)
+        {
+            var res = await _dbContext.Users.AnyAsync(x => x.Email.ToLower() == email.ToLower());
+            return res;
+        }
     }
 }

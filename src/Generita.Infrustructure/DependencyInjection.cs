@@ -4,8 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Generita.Application.Common.Interfaces;
 using Generita.Application.Common.Interfaces.Repository;
 using Generita.Domain.Common.Interfaces;
+using Generita.Infrustructure.Authentication;
+using Generita.Infrustructure.Authentication.TokenGenerator;
 using Generita.Infrustructure.Persistance;
 using Generita.Infrustructure.Persistance.Repositories;
 
@@ -32,6 +35,8 @@ namespace Generita.Infrustructure
             services.AddScoped<IPlansRepository,PlansRepository>();
             services.AddScoped<IAuthorRepository,AuthorRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddSingleton<IPasswordHasher, PasswordHasher>();
+            services.AddSingleton<ITokenGenerator, TokenGenerator>();
             return services;
         }
 

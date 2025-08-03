@@ -9,12 +9,11 @@ public class User:AggregateRoot
     {
     }
 
-    public Name Name { get; set; }
-    public DateOnly CreateAt{ get; set; }
-    public DateOnly UpdateAt{ get; set; }
+    public string Name { get; set; }
+    public DateTime CreateAt{ get; set; }
+    public DateTime UpdateAt { get; set; }
     public string Email { get; set; }
     public string Password { get; set; }
-    public string Salt { get; set; }
     public virtual ICollection<Transactions> Transactions { get; set; }
     public virtual ICollection<Views> Views { get; set; }
 }

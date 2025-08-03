@@ -11,6 +11,6 @@ namespace Generita.Application.Common.Interfaces.Repository
     public interface IUserRepository:IGenericRepository<User>
     {
         Task<User> GetUserByEmail(string email);
-        //Task<bool> IsExistsByEmail(string email);
+        Task<bool> IsExistsByEmail(string email);
     }
 }
