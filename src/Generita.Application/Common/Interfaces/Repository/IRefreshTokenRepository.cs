@@ -10,5 +10,6 @@ namespace Generita.Application.Common.Interfaces.Repository
 {
     public interface IRefreshTokenRepository:IGenericRepository<RefreshTokens>
     {
+        public Task<RefreshTokens> GetByToken(string token);
     }
 }

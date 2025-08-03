@@ -1,5 +1,7 @@
 ﻿using ErrorOr;
 
+using Generita.Application.Authentication.Login;
+using Generita.Application.Authentication.Refresh;
 using Generita.Application.Authentication.Register;
 using Generita.Application.Dtos;
 
@@ -29,14 +31,18 @@ namespace Generita.Api.Controllers
             return result.Match(Ok, Problem);
         }
         [HttpPost]
-        public Task<IActionResult> Login([FromBody] LoginDto loginDto)
+        public async Task<IActionResult> Login([FromBody] LoginDto loginDto)
         {
-            throw new NotImplementedException();
+            var command=new LoginCommand(loginDto);
+            var result=await _mediator.Send(command);
+            return result.Match(Ok, Problem);
         }
         [HttpGet]
-        public Task<IActionResult> Refresh(RefreshDto refreshDto)
+        public async Task<IActionResult> Refresh(RefreshRequest refreshRequest)
         {
-            throw new NotImplementedException();
+            var command = new RefreshCommand(refreshRequest);
+            var result=await _mediator.Send(command);
+            return (result.Match(Ok, Problem));
         }
         [HttpGet]
         public Task<IActionResult> Me()
