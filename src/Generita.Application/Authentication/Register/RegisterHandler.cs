@@ -41,8 +41,8 @@ namespace Generita.Application.Authentication.Register
             {
                 Password = hashedpassword.Value,
                 Email = request.registerDto.email,
-                CreateAt = DateTime.Now,
-                UpdateAt=DateTime.Now,
+                CreateAt = DateTime.UtcNow,
+                UpdateAt=DateTime.UtcNow,
                 Name=request.registerDto.name,
             };
             await _userRepository.Add(user);

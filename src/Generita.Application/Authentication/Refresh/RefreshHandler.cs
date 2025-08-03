@@ -28,11 +28,11 @@ namespace Generita.Application.Authentication.Refresh
         public async Task<ErrorOr<RefreshResponse>> Handle(RefreshCommand request, CancellationToken cancellationToken)
         {
             var savedtoken =await  _refreshRepository.GetByToken(request.refreshRequest.refreshToken);
-            if (savedtoken == null || savedtoken.ExpiresAt < DateTime.UtcNow)
+            if (savedtoken == null || savedtoken.ExpiresOnUtc < DateTime.UtcNow)
             {
                 return Error.Unauthorized(description: "Refresh Token is invalid");
             }
-            var  user =await _userRepository.GetById(savedtoken.Id);
+            var  user =await _userRepository.GetById(savedtoken.UserId);
             if (user == null)
             {
                 return Error.Unauthorized(description: "User Not found");

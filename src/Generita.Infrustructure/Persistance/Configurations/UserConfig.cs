@@ -26,9 +26,8 @@ namespace Generita.Infrustructure.Persistance.Configurations
                 .HasMaxLength(30);
             builder.HasIndex(x => x.Email)
                 .IsUnique();
-            builder.Property(x=>x.Password)
-                .IsRequired()
-                .HasMaxLength(50);
+            builder.Property(x => x.Password)
+                .IsRequired();
 
         }
     }

@@ -1,4 +1,6 @@
-﻿using ErrorOr;
+﻿using System.Security.Claims;
+
+using ErrorOr;
 
 using Generita.Application.Authentication.Login;
 using Generita.Application.Authentication.Refresh;
@@ -7,6 +9,7 @@ using Generita.Application.Dtos;
 
 using MediatR;
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -37,7 +40,7 @@ namespace Generita.Api.Controllers
             var result=await _mediator.Send(command);
             return result.Match(Ok, Problem);
         }
-        [HttpGet]
+        [HttpPost]
         public async Task<IActionResult> Refresh(RefreshRequest refreshRequest)
         {
             var command = new RefreshCommand(refreshRequest);
@@ -45,10 +48,11 @@ namespace Generita.Api.Controllers
             return (result.Match(Ok, Problem));
         }
         [HttpGet]
+        [Authorize]
         public Task<IActionResult> Me()
         {
             throw new NotImplementedException();
         }
-        
+
     }
 }

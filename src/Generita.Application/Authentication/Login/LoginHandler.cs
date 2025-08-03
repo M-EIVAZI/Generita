@@ -38,7 +38,7 @@ namespace Generita.Application.Authentication.Login
                 return Error.Unauthorized(description: "Email Doesn't Exists");
             }
             var user=await _userRepository.GetUserByEmail(request.LoginDto.email);
-            if(_passwordHasher.IsCorrectPassword(request.LoginDto.password,user.Password))
+            if(!_passwordHasher.IsCorrectPassword(request.LoginDto.password,user.Password))
             {
                 return Error.Conflict(description: "Password is incorrect");
             }
@@ -48,9 +48,10 @@ namespace Generita.Application.Authentication.Login
             {
                 ExpiresOnUtc = DateTime.UtcNow.AddDays(7),
                 UserId = user.Id,
-                Token = _tokenGenerator.RefreshToken(),
+                Token = refreshtoken,
             };
             await _refreshTokenRepository.Add(rtmodel);
+            await _unitOfWork.CommitAsync();
             return new LoginResponse() { accessToken=token,refreshToken=refreshtoken} ;
 
         }
