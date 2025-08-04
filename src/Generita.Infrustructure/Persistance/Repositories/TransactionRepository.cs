@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 
 using Generita.Application.Common.Interfaces.Repository;
 using Generita.Domain.Models;
@@ -49,5 +50,12 @@ namespace Generita.Infrustructure.Persistance.Repositories
             _context.Transactions.Update(value);
             return Task.FromResult(true);
         }
+        public async Task<Transactions> GetByUserId(Guid userId)
+        {
+            var Trans=await _context.Transactions.Include(x=>x.Plan).FirstOrDefaultAsync(x=>x.UserId==userId);
+            return Trans;
+
+        }
+
     }
 }

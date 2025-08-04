@@ -17,7 +17,8 @@ namespace Generita.Domain.Models
         public string Name { get; set; }
         public string Description { get; set; }
         public int Price { get; set; }
-        public TimeSpan Duration { get; set; }
+        //Duration is in Days 
+        public int Duration { get; set; }
         public virtual ICollection<Transactions> Transactions { get; set; }
     }
 }

@@ -8,7 +8,8 @@ using Generita.Domain.Models;
 
 namespace Generita.Application.Common.Interfaces.Repository
 {
-    public interface ITransactionsRepository:IGenericRepository<Transactions>
+    public interface ITransactionsRepository : IGenericRepository<Transactions>
     {
+        Task<Transactions> GetByUserId(Guid userId);
     }
 }

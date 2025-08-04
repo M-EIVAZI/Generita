@@ -1,8 +1,11 @@
-﻿using System.Security.Claims;
+﻿using System.ComponentModel.Design;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 
 using ErrorOr;
 
 using Generita.Application.Authentication.Login;
+using Generita.Application.Authentication.Me;
 using Generita.Application.Authentication.Refresh;
 using Generita.Application.Authentication.Register;
 using Generita.Application.Dtos;
@@ -49,9 +52,12 @@ namespace Generita.Api.Controllers
         }
         [HttpGet]
         [Authorize]
-        public Task<IActionResult> Me()
+        public async Task<IActionResult> Me()
         {
-            throw new NotImplementedException();
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var command =new MeCommand(Guid.Parse(userId!));
+            var result=await _mediator.Send(command);
+            return result.Match(Ok,Problem);
         }
 
     }

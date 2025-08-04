@@ -8,6 +8,7 @@ using Generita.Domain.Models;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Generita.Infrustructure.Persistance.Configurations
 {
@@ -30,6 +31,8 @@ namespace Generita.Infrustructure.Persistance.Configurations
             builder.Property(x=>x.Access)
                 .HasConversion<string>()
                 .IsRequired();
+            builder.HasMany(x => x.Users)
+                .WithMany(x => x.Books);
         }
     }
 }

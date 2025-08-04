@@ -23,5 +23,6 @@ public class Book:AggregateRoot
     public virtual ICollection<Songs> Songs { get; set; }
     public virtual Entity Entity { get; set; }
     public virtual ICollection<Views> Views { get; set; }
+    public virtual ICollection<User> Users { get; set; }
 
 }
