@@ -15,4 +15,8 @@
     <ProjectReference Include="..\Generita.Domain\Generita.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Home\" />
+  </ItemGroup>
+
 </Project>

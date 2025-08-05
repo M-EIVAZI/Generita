@@ -2,17 +2,19 @@
 
 namespace Generita.Domain.Models;
 
-public class Entity:AggregateRoot
+public class Entity:BaseEntity
 {
     public Entity(Guid Id) : base(Id)
     {
     }
 
-    public string Name { get; set; }
-    public ICollection<string> Descriptions { get; set; }
-    public Guid SongId {get; set; }
-    public Guid BookId { get; set; }
-    public Book Book { get; set; }
-    public virtual Songs Song { get; set; }
+    public string type { get; set; }
+    public string sample { get; set; }
+    public int Position { get; set; }
+    public Guid ParagraphId { get; set; }
+    public Guid MusicId { get; set; }
+    public virtual Paragraph Paragraph { get; set; }
+    public virtual Songs Songs { get; set; }
+
     //public virtual Songs Songs { get; set; }
 }

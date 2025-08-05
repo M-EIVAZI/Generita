@@ -1,4 +1,5 @@
 ﻿using System.Reflection.Metadata.Ecma335;
+using System.Runtime.InteropServices.Marshalling;
 using System.Security.AccessControl;
 
 using Generita.Domain.Common.Abstractions;
@@ -20,7 +21,8 @@ public class Songs:AggregateRoot
     public DateTime UpdateAt { get; set; }
     public string FilePath { get; set; }
     public OwnerShip Owner { get; set; }
-    public Entity Entity { get; set; }
+    public ICollection<Paragraph> Paragraphs { get; set; }
+    public ICollection<Entity> Entity { get; set; }
     public virtual ICollection<Book> Books { get; set; }
     public virtual SongCategory Category { get; set; }
 }
