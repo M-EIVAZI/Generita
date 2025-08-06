@@ -49,5 +49,13 @@ namespace Generita.Infrustructure.Persistance.Repositories
             _dbContext.Update(value);
             return Task.FromResult(true);
         }
+        public async Task<Author?> GetByAuthorName(string authorName)
+        {
+            return await _dbContext.Author
+                .Include(x => x.Books)
+                .Where(x =>
+                    EF.Functions.Like((x.Name.firtName + " " + x.Name.LastName).ToLower(), $"%{authorName.ToLower()}%"))
+                .FirstOrDefaultAsync();
+        }
     }
 }

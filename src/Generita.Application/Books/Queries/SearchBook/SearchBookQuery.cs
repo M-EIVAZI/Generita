@@ -10,7 +10,7 @@ using Generita.Domain.Models;
 
 namespace Generita.Application.Books.Queries.SearchBook
 {
-    public record SearchBookQuery(string Name) : IQuery<ICollection<GetBookDto>>
+    public record SearchBookQuery(SearchBookRequest BookRequest) : IQuery<ICollection<GetBookDto>>
     {
     }
 }

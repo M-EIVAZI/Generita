@@ -46,6 +46,16 @@ namespace Generita.Infrustructure.Persistance.Repositories
             return await _db.Book.FirstOrDefaultAsync(b => b.Id == id);
         }
 
+        public async Task<Dictionary<Guid, int>> GetLikesNumber(IEnumerable<Guid> bookIds)
+        {
+            return await _db.BookLikes
+                .Where(bl => bookIds.Contains(bl.BookId))
+                .GroupBy(bl => bl.BookId)
+                .Select(g => new { BookId = g.Key, Count = g.Count() })
+                .ToDictionaryAsync(x => x.BookId, x => x.Count);
+        }
+
+
         public async Task<ICollection<Book>> SearchBook(string bookName)
         {
             return await _db.Book
@@ -57,6 +67,13 @@ namespace Generita.Infrustructure.Persistance.Repositories
         {
             _db.Book.Update(value);
             return Task.FromResult(true);
+        }
+        public async Task<ICollection<Book>> GetByPublishedDate(DateOnly dateOnly)
+        {
+            return await _db.Book
+                .Include(b => b.Author)
+                .Where(x => x.PublishedDate == dateOnly)
+                .ToListAsync();
         }
     }
 }

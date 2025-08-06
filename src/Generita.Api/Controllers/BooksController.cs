@@ -1,16 +1,40 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Generita.Application.Books.Queries.SearchBook;
+using Generita.Application.Common.Dtos;
+
+using MediatR;
+
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Generita.Api.Controllers
 {
     [ApiController]
     [Route("books")]
-    public class BooksController : ControllerBase
+    public class BooksController : ApiController
     {
-        [HttpGet("search")]
-        public Task<IActionResult> Search([FromQuery(Name = "q")] string bookName)
+        private IMediator _mediator;
+
+        public BooksController(IMediator mediator)
         {
-           throw new NotImplementedException();
+            _mediator = mediator;
+        }
+
+        [HttpGet("search")]
+        [Authorize]
+        public async Task<IActionResult> Search([FromQuery(Name = "q")] string Name,SearchBookDto searchBook)
+        {
+
+            SearchBookRequest searchBookRequest = new()
+            {
+                Name = Name,
+                Order = searchBook.Order,
+                SearchMode = searchBook.SearchMode,
+                PublishedDate = searchBook.PublishedDate,
+            };
+            var query = new SearchBookQuery(searchBookRequest);
+            var result = await _mediator.Send(query);
+            return result.Match(Ok,Problem);
         }
         [HttpGet("{id}")]
 

@@ -8,6 +8,7 @@ using Generita.Application.Common.Interfaces.Repository;
 using Generita.Domain.Models;
 
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Http.Logging;
 
 namespace Generita.Infrustructure.Persistance.Repositories
 {
@@ -46,5 +47,15 @@ namespace Generita.Infrustructure.Persistance.Repositories
             _dbContext.BookCategory.Update(value);
             return Task.FromResult(true);
         }
+
+        public async Task<ICollection<BookCategory>> GetByName(string name)
+        {
+            return await _dbContext.BookCategory
+                .Include(x => x.Books)
+                .Where(x => EF.Functions.Like(x.CategoryName, $"%{name}%"))
+                .ToListAsync();
+        }
+
+
     }
 }

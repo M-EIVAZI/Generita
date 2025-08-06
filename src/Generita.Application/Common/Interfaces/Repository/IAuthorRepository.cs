@@ -8,8 +8,8 @@ using Generita.Domain.Models;
 
 namespace Generita.Application.Common.Interfaces.Repository
 {
-    public interface IAuthorRepository:IGenericRepository<Author>
+    public interface IAuthorRepository : IGenericRepository<Author>
     {
-
+        Task<Author?> GetByAuthorName(string authorName);
     }
 }

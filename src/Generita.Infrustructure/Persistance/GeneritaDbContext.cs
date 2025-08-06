@@ -24,6 +24,7 @@ namespace Generita.Infrustructure.Persistance
         public DbSet<Transactions> Transactions { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<BookCategory> BookCategory { get; set; }
+        public DbSet<BookLikes> BookLikes { get; set; }
         public DbSet<SongCategory> SongCategory { get; set; }
         public DbSet<Paragraph> Paragraph { get; set; }
         public DbSet<Views> Views { get; set; }
