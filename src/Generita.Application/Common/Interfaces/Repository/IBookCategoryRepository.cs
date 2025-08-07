@@ -10,6 +10,6 @@ namespace Generita.Application.Common.Interfaces.Repository
 {
     public interface IBookCategoryRepository : IGenericRepository<BookCategory>
     {
-        public Task<BookCategory> GetByName(string name);
+        public Task<ICollection<BookCategory>> GetByName(string name);
     }
 }

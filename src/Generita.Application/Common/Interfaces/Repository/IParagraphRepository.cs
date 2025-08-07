@@ -8,7 +8,8 @@ using Generita.Domain.Models;
 
 namespace Generita.Application.Common.Interfaces.Repository
 {
-    public interface IParagraphRepository:IGenericRepository<Paragraph>
+    public interface IParagraphRepository : IGenericRepository<Paragraph>
     {
+        Task<ICollection<Paragraph>> GetByBookId(Guid bookId);
     }
 }

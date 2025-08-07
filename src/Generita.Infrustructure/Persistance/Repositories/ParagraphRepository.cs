@@ -50,5 +50,9 @@ namespace Generita.Infrustructure.Persistance.Repositories
             _context.Paragraph.Update(value);
             return Task.FromResult(true);
         }
+        public async Task<ICollection<Paragraph>> GetByBookId(Guid bookId)
+        {
+            return await _context.Paragraph.Include(x=>x.Entities).Where(x=>x.BookId == bookId).ToListAsync();
+        }
     }
 }
