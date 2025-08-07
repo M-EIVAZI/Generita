@@ -17,6 +17,6 @@ public class User:AggregateRoot
     public virtual ICollection<Transactions> Transactions { get; set; }
     public virtual ICollection<Views> Views { get; set; }
     public virtual ICollection<RefreshTokens> RefreshTokens { get; set; }
-    public virtual ICollection<Book> Books { get; set; }
+    public virtual ICollection<UserBook> UserBooks { get; set; }
     public virtual ICollection<BookLikes> BookLikes { get; set; }
 }

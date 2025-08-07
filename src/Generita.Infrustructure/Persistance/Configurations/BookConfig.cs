@@ -31,8 +31,8 @@ namespace Generita.Infrustructure.Persistance.Configurations
             builder.Property(x=>x.Access)
                 .HasConversion<string>()
                 .IsRequired();
-            builder.HasMany(x => x.Users)
-                .WithMany(x => x.Books);
+            builder.HasMany(x => x.UserBooks)
+                .WithOne(x => x.Book);
         }
     }
 }

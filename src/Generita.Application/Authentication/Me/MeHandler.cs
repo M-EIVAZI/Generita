@@ -31,8 +31,8 @@ namespace Generita.Application.Authentication.Me
         }
         public async Task<ErrorOr<MeResponse>> Handle(MeCommand request, CancellationToken cancellationToken)
         {
-            var user = await _userRepository.GetByIdWithBooks(request.Id);
-
+            var userbook = await _userRepository.GetByIdWithBooks(request.Id);
+            var user = await _userRepository.GetById(request.Id);
             if (user == null)
             {
                 return Error.NotFound(description: "user with these information doesn't found");
@@ -53,7 +53,7 @@ namespace Generita.Application.Authentication.Me
                     Email = user.Email,
                     Name = user.Name,
                     Subscription = MeResponseSubscription,
-                    LibraryBookIds = user.Books.Select(x => x.Id).ToList(),
+                    LibraryBookIds = userbook.Select(x => x.BookId).ToList(),
                 };
                 return res;
             }
@@ -65,7 +65,7 @@ namespace Generita.Application.Authentication.Me
                     Email = user.Email,
                     Name = user.Name,
                     Subscription = null,
-                    LibraryBookIds = user.Books.Select(x => x.Id).ToList(),
+                    LibraryBookIds = userbook.Select(x => x.BookId).ToList(),
                 };
             return res;
             }

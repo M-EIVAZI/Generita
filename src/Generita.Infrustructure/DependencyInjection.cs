@@ -35,6 +35,8 @@ namespace Generita.Infrustructure
             services.AddScoped<IBookCategoryRepository,BookCategoryRepository>();
             services.AddScoped<ITransactionsRepository,TransactionRepository>();
             services.AddScoped<IPlansRepository,PlansRepository>();
+            services.AddScoped<IParagraphRepository,ParagraphRepository>();
+            services.AddScoped<IEntityRepository,EntityRepository>();
             services.AddScoped<IAuthorRepository,AuthorRepository>();
             services.AddScoped<IRefreshTokenRepository,RefreshTokenRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();

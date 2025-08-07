@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <Folder Include="Home\" />
+    <Folder Include="Users\Queries\GetUserLibrary\" />
   </ItemGroup>
 
 </Project>

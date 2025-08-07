@@ -23,6 +23,6 @@ public class Book:AggregateRoot
     public virtual ICollection<Songs> Songs { get; set; }
     public virtual ICollection<Paragraph> Paragraphs { get; set; }
     public virtual ICollection<Views> Views { get; set; }
-    public virtual ICollection<User> Users { get; set; }
+    public virtual ICollection<UserBook> UserBooks { get; set; }
     public virtual ICollection<BookLikes> BookLikes { get; set; }
 }

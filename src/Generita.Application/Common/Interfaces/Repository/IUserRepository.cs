@@ -10,7 +10,7 @@ namespace Generita.Application.Common.Interfaces.Repository
 {
     public interface IUserRepository:IGenericRepository<User>
     {
-        Task<User> GetByIdWithBooks(Guid id);
+        Task<ICollection<UserBook>> GetByIdWithBooks(Guid id);
         Task<User> GetUserByEmail(string email);
         Task<bool> IsExistsByEmail(string email);
     }

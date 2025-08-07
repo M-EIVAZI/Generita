@@ -59,9 +59,9 @@ namespace Generita.Infrustructure.Persistance.Repositories
             var res = await _dbContext.Users.AnyAsync(x => x.Email.ToLower() == email.ToLower());
             return res;
         }
-        public async Task<User> GetByIdWithBooks(Guid id)
+        public async Task<ICollection<UserBook>> GetByIdWithBooks(Guid id)
         {
-            return await _dbContext.Users.Include(x => x.Books).FirstOrDefaultAsync(x => x.Id == id);
+            return await _dbContext.UsersBook.Include(x => x.Book).Where(x => x.UserId == id).ToListAsync();
         }
     }
 }

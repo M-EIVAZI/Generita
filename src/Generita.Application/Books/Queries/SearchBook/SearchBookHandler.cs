@@ -67,7 +67,7 @@ namespace Generita.Application.Books.Queries.SearchBook
             else if (request.BookRequest.SearchMode == SearchMode.ByCategory)
             {
                 var catbooks = await _categoryRepository.GetByName(request.BookRequest.Name);
-                var books = catbooks.Books;
+                var books = catbooks.SelectMany(x=>x.Books).ToList();
                 var likes = await _bookRepository.GetLikesNumber(books.Select(x => x.Id));
                 books = request.BookRequest.Order switch
                 {

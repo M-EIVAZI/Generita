@@ -10,7 +10,7 @@ using MediatR;
 
 namespace Generita.Application.Common.Messaging
 {
-    public interface IQuery<TRequest>:IRequest<ErrorOr<TRequest>>
+    public interface IQuery<TResponse>:IRequest<ErrorOr<TResponse>>
     {
     }
 }

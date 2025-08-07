@@ -9,6 +9,7 @@ using Generita.Domain.Models;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Generita.Infrustructure.Persistance.Configurations
 {
@@ -28,6 +29,8 @@ namespace Generita.Infrustructure.Persistance.Configurations
                 .IsUnique();
             builder.Property(x => x.Password)
                 .IsRequired();
+            builder.HasMany(x => x.UserBooks)
+                .WithOne(x => x.User);
 
         }
     }
