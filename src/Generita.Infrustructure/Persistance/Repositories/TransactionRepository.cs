@@ -52,7 +52,7 @@ namespace Generita.Infrustructure.Persistance.Repositories
         }
         public async Task<Transactions> GetByUserId(Guid userId)
         {
-            var Trans=await _context.Transactions.Include(x=>x.Plan).FirstOrDefaultAsync(x=>x.UserId==userId);
+            var Trans=await _context.Transactions.Include(x=>x.Plan).OrderBy(x=>x.CreateAt).FirstOrDefaultAsync(x=>x.UserId==userId);
             return Trans;
 
         }

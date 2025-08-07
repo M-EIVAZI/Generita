@@ -63,5 +63,10 @@ namespace Generita.Infrustructure.Persistance.Repositories
         {
             return await _dbContext.UsersBook.Include(x => x.Book).Where(x => x.UserId == id).ToListAsync();
         }
+        public async Task AddBookToLibrary(UserBook userbook)
+        {
+            await _dbContext.UsersBook.AddAsync(userbook);
+        }
+       
     }
 }
