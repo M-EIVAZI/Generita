@@ -2,6 +2,8 @@
 
 using Generita.Application.Common.Dtos;
 using Generita.Application.Users.Commands.AddBookToLibrary;
+using Generita.Application.Users.Commands.RemvoeBookFromLibrary;
+using Generita.Domain.Models;
 
 using MediatR;
 
@@ -40,7 +42,16 @@ namespace Generita.Api.Controllers
         [HttpDelete("Library/{bookId}")]
         public async Task<IActionResult> Library([FromRoute] Guid bookId)
         {
-            throw new NotImplementedException();
+             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            AddUserLibraryRequest request = new()
+            {
+                BookId = bookId,
+                UserId = Guid.Parse(userId!),
+            };
+            var query=new RemoveBookFromLibraryQuery(request);
+            var result=await _mediator.Send(query);
+            return result.Match(Ok,Problem);
+
         }
 
 

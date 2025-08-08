@@ -14,5 +14,8 @@ namespace Generita.Application.Common.Interfaces.Repository
         Task<ICollection<Book>> SearchBook(string bookName);
         public Task<Dictionary<Guid, int>> GetLikesNumber(IEnumerable<Guid> bookIds);
         Task<ICollection<Book>> GetByPublishedDate(DateOnly dateOnly);
+        Task<ICollection<Book>> GetNewestBooks();
+        Task<ICollection<Book>> GetSubscriptionOnly();
+        Task<ICollection<Book>> GetFreeOnly();
     }
 }

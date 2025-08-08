@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Generita.Application.Common.Dtos;
 using Generita.Application.Common.Interfaces.Repository;
 using Generita.Domain.Models;
 
@@ -49,7 +50,7 @@ namespace Generita.Infrustructure.Persistance.Repositories
             return await _dbContext.Users.FirstOrDefaultAsync(x => EF.Functions.Like(x.Email, $"{email}%"));
         }
 
-        public  Task<bool> Update(User value)
+        public Task<bool> Update(User value)
         {
             _dbContext.Users.Update(value);
             return Task.FromResult(true);
@@ -67,14 +68,28 @@ namespace Generita.Infrustructure.Persistance.Repositories
         {
             await _dbContext.UsersBook.AddAsync(userbook);
         }
-        public async Task<bool> DeleteBookFromLibrary(Guid bookId,Guid UserId)
+        public async Task<bool> DeleteBookFromLibrary(Guid bookId, Guid UserId)
         {
-            var item = await _dbContext.UsersBook.FirstOrDefaultAsync(x=>x.UserId==UserId && x.BookId==bookId );
+            var item = await _dbContext.UsersBook.FirstOrDefaultAsync(x => x.UserId == UserId && x.BookId == bookId);
             if (item == null)
-                return false ;
+                return false;
             _dbContext.UsersBook.Remove(item);
             return true;
         }
-       
+        public async Task<ICollection<BannerBookDto>> GetPopularBooks()
+        {
+            var popularBooks = await _dbContext.UsersBook
+                .Include(x => x.Book)
+            .GroupBy(ub => ub.Book) 
+            .Select(g => new BannerBookDto
+            {
+                Book = g.Key,
+                UserCount = g.Count()
+            })
+            .OrderByDescending(g => g.UserCount)
+            .Take(10)
+            .ToListAsync();
+            return popularBooks;
+        }
     }
 }

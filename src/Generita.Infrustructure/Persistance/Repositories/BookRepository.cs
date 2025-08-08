@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 using Generita.Application.Common.Interfaces.Repository;
 using Generita.Application.Dtos;
+using Generita.Domain.Common.Enums;
 using Generita.Domain.Models;
 
 using Microsoft.EntityFrameworkCore;
@@ -74,6 +75,18 @@ namespace Generita.Infrustructure.Persistance.Repositories
                 .Include(b => b.Author)
                 .Where(x => x.PublishedDate == dateOnly)
                 .ToListAsync();
+        }
+        public async Task<ICollection<Book>> GetNewestBooks()
+        {
+            return await _db.Book.Include(b => b.Author).Include(b => b.BookCategory).OrderByDescending(x=>x.PublishedDate).Take(10).ToListAsync();
+        }
+        public async Task<ICollection<Book>> GetSubscriptionOnly()
+        {
+            return await _db.Book.Include(x => x.Author).Include(x => x.BookCategory).Where(x => x.Access == BookAccess.Subscription).ToListAsync();
+        }
+        public async Task<ICollection<Book>> GetFreeOnly()
+        {
+            return await _db.Book.Include(x => x.Author).Include(x => x.BookCategory).Where(x => x.Access == BookAccess.Free).ToListAsync();
         }
     }
 }
