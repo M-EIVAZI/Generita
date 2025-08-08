@@ -49,7 +49,7 @@ namespace Generita.Application.Users.Commands.AddBookToLibrary
                     UserId = request.GetUserLibraryRequest.UserId,
                 };
                 await _userRepository.AddBookToLibrary(userbook);
-                await _unitOfWork.CommitAsync();
+                await _unitOfWork.CommitAsync(cancellationToken);
                 var newbooks = await _userRepository.GetByIdWithBooks(request.GetUserLibraryRequest.UserId);
                 AddUserLibrarayResponse res = new()
                 { LibraryBookIds = newbooks.Select(x => x.BookId).ToList() };

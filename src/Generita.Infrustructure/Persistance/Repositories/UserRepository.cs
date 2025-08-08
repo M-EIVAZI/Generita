@@ -67,6 +67,14 @@ namespace Generita.Infrustructure.Persistance.Repositories
         {
             await _dbContext.UsersBook.AddAsync(userbook);
         }
+        public async Task<bool> DeleteBookFromLibrary(Guid bookId,Guid UserId)
+        {
+            var item = await _dbContext.UsersBook.FirstOrDefaultAsync(x=>x.UserId==UserId && x.BookId==bookId );
+            if (item == null)
+                return false ;
+            _dbContext.UsersBook.Remove(item);
+            return true;
+        }
        
     }
 }
