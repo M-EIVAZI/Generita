@@ -18,7 +18,7 @@ namespace Generita.Application.Users.Commands.AddBookToLibrary
     {
         private IUserRepository _userRepository;
         private IBookRepository _bookRepository;
-        private IUnitOfWork _unitOfWork
+        private IUnitOfWork _unitOfWork;
         private ITransactionsRepository _transactionsRepository;
 
         public AddUserLibraryHandler(IUserRepository userRepository, IBookRepository bookRepository, IUnitOfWork unitOfWork, ITransactionsRepository transactionsRepository)

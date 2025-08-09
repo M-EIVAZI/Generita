@@ -55,5 +55,9 @@ namespace Generita.Infrustructure.Persistance.Repositories
             _context.Entity.Update(value);
             return Task.FromResult(true);
         }
+        public async Task<Entity> GetByType(string type)
+        {
+            return await _context.Entity.Include(x => x.Songs).FirstOrDefaultAsync(x => x.type == type);
+        }
     }
 }

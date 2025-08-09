@@ -10,6 +10,7 @@ namespace Generita.Application.Common.Interfaces.Repository
 {
     public interface IEntityRepository:IGenericRepository<Entity>
     {
+        Task<Entity> GetByType(string type);
         Task<Entity> GetEntityByBookId(int bookId);
     }
 }

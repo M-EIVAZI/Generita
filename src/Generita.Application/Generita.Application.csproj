@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Audios\Commands\" />
     <Folder Include="Transactions\" />
     <Folder Include="Users\Queries\GetUserLibrary\" />
   </ItemGroup>

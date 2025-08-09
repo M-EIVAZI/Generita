@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Generita.Application.Common.Interfaces.Repository;
+using Generita.Domain.Common.Enums;
 using Generita.Domain.Models;
 
 using Microsoft.EntityFrameworkCore;
@@ -53,6 +54,10 @@ namespace Generita.Infrustructure.Persistance.Repositories
         public async Task<ICollection<Paragraph>> GetByBookId(Guid bookId)
         {
             return await _context.Paragraph.Include(x=>x.Entities).Where(x=>x.BookId == bookId).ToListAsync();
+        }
+        public async Task<Paragraph> GetBySenseAndAge(MusicSense  sense,AgeClasses age)
+        {
+            return await _context.Paragraph.Include(x=>x.Songs).FirstOrDefaultAsync(x => x.AgeClass == age && x.MusicSense == sense);
         }
     }
 }
