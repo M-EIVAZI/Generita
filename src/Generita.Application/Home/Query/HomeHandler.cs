@@ -34,27 +34,27 @@ namespace Generita.Application.Home.Query
             var featuredbooks = await _bookRepository.GetNewestBooks();
             var subsciptiononly = await _bookRepository.GetSubscriptionOnly();
             var freeonly=await _bookRepository.GetFreeOnly();
-            var bannerhomebooksTasks = bannerbooks.Select(async x =>
+            var bannerhomebooks = new List<HomeBookDto>();
+
+            foreach (var x in bannerbooks)
             {
                 var author = await _authorRepository.GetById(x.Book.AuthorId);
-                var category=await _bookCategoryRepository.GetById(x.Book.CategoryId);
-                return new HomeBookDto()
+                var category = await _bookCategoryRepository.GetById(x.Book.CategoryId);
+
+                bannerhomebooks.Add(new HomeBookDto
                 {
-                    AuthorName=author.Name.firtName+' '+author.Name.LastName,
-                    Title=x.Book.Title,
-                    Access=x.Book.Access.ToString(),
-                    CategoryName=category.CategoryName,
-                    Cover=x.Book.Cover,
-                    FilePath=x.Book.FilePath,
-                    Id=x.Book.Id,
-                    ImagePath=x.Book.ImagePath,
-                    PublishedDate=x.Book.PublishedDate,
+                    AuthorName = author.Name.firtName + " " + author.Name.LastName,
+                    Title = x.Book.Title,
+                    Access = x.Book.Access.ToString(),
+                    CategoryName = category.CategoryName,
+                    Cover = x.Book.Cover,
+                    FilePath = x.Book.FilePath,
+                    Id = x.Book.Id,
+                    ImagePath = x.Book.ImagePath,
+                    PublishedDate = x.Book.PublishedDate,
                     Synopsis = x.Book.Synopsis
-
-                };
-
-            });
-            var bannerhomebooks = await Task.WhenAll(bannerhomebooksTasks);
+                });
+            }
             HomeResponse res = new HomeResponse()
             {
                 BannerBook=bannerhomebooks,
