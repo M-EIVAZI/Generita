@@ -1,6 +1,7 @@
 ﻿using Generita.Application.Audios.Queries.GetEntityAudioTags;
 using Generita.Application.Audios.Queries.GetParagraphAudioTags;
 using Generita.Application.Common.Dtos;
+using Generita.Application.Dtos;
 
 using MediatR;
 
@@ -22,6 +23,10 @@ namespace Generita.Api.Controllers
             _mediator = mediator;
         }
         [HttpGet("Audio/tags")]
+        [ProducesResponseType(typeof(AudioTagsResponse), StatusCodes.Status200OK)]
+
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+
         public async Task<IActionResult> GetAudioTags([FromQuery] string age, [FromQuery] string sense)
         {
             AudioTagsRequest model = new()
@@ -34,6 +39,9 @@ namespace Generita.Api.Controllers
             return result.Match(Ok, Problem);
         }
         [HttpGet("Audio/entity")]
+        [ProducesResponseType(typeof(AudioTagsResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+
         public async Task<IActionResult> GetEntityTags([FromQuery] string type)
         {
             var query=new GetEntityAudioQuery(type);

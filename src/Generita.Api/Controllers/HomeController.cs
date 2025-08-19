@@ -19,6 +19,8 @@ namespace Generita.Api.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType(typeof(HomeResponse), StatusCodes.Status200OK)]
+
         public async Task<IActionResult> Home()
         {
             var query = new HomeQuery();

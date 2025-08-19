@@ -1,6 +1,7 @@
 ﻿using System.Security.Claims;
 
 using Generita.Application.Common.Dtos;
+using Generita.Application.Dtos;
 using Generita.Application.Users.Commands.AddBookToLibrary;
 using Generita.Application.Users.Commands.RemvoeBookFromLibrary;
 using Generita.Domain.Models;
@@ -25,6 +26,12 @@ namespace Generita.Api.Controllers
         }
 
         [HttpPost("Library")]
+        [ProducesResponseType(typeof(AddUserLibrarayResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+
+
         [Authorize]
         public async Task<IActionResult> AddToLibrary([FromBody]AddTolibraryControllerDto dto)
         {
@@ -40,6 +47,10 @@ namespace Generita.Api.Controllers
 
         }
         [HttpDelete("Library/{bookId}")]
+        [ProducesResponseType(typeof(RegisterResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+
         public async Task<IActionResult> Library([FromRoute] Guid bookId)
         {
              var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);

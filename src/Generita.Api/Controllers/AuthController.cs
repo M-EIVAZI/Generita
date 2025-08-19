@@ -30,6 +30,9 @@ namespace Generita.Api.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType(typeof(RegisterResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
         public async Task<IActionResult> Register([FromBody]RegisterDto registerDto)
         {
             var command=new RegisterCommand(registerDto);
@@ -37,6 +40,9 @@ namespace Generita.Api.Controllers
             return result.Match(Ok, Problem);
         }
         [HttpPost]
+        [ProducesResponseType(typeof(LoginResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<IActionResult> Login([FromBody] LoginDto loginDto)
         {
             var command=new LoginCommand(loginDto);
@@ -44,6 +50,8 @@ namespace Generita.Api.Controllers
             return result.Match(Ok, Problem);
         }
         [HttpPost]
+        [ProducesResponseType(typeof(RefreshResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<IActionResult> Refresh(RefreshRequest refreshRequest)
         {
             var command = new RefreshCommand(refreshRequest);
@@ -52,6 +60,9 @@ namespace Generita.Api.Controllers
         }
         [HttpGet]
         [Authorize]
+        [ProducesResponseType(typeof(MeResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+
         public async Task<IActionResult> Me()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);

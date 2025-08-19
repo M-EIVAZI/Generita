@@ -2,6 +2,7 @@
 using Generita.Application.Books.Queries.GetBookContent;
 using Generita.Application.Books.Queries.SearchBook;
 using Generita.Application.Common.Dtos;
+using Generita.Application.Dtos;
 
 using MediatR;
 
@@ -22,8 +23,9 @@ namespace Generita.Api.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet("search")]
+        [HttpPost("search")]
         [Authorize]
+        [ProducesResponseType(typeof(GetBookDto), StatusCodes.Status200OK)]
         public async Task<IActionResult> Search([FromQuery(Name = "q")] string Name,SearchBookDto searchBook)
         {
 
@@ -40,7 +42,8 @@ namespace Generita.Api.Controllers
         }
         [HttpGet("{id}")]
         [Authorize]
-
+        [ProducesResponseType(typeof(GetBookDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetBookById(Guid id) 
         {
             var query = new GetBookByIdQuery(id);
@@ -48,6 +51,10 @@ namespace Generita.Api.Controllers
             return result.Match(Ok,Problem);
         }
         [HttpGet("{bookId}/content")]
+        [ProducesResponseType(typeof(BookConentResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+
         public async Task<IActionResult> GetBookContent(Guid bookId)
         {
             var query = new GetBookByContentQuery(bookId);
