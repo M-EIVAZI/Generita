@@ -19,6 +19,7 @@ namespace Generita.Infrustructure.Persistance
 
         }
         public DbSet<Author> Author { get; set; }
+        public DbSet<Jobs> Jobs { get; set; }
         public DbSet<Book> Book { get; set; }
         public DbSet<Entity> Entity { get; set; }
         public DbSet<Transactions> Transactions { get; set; }
@@ -31,6 +32,8 @@ namespace Generita.Infrustructure.Persistance
         public DbSet<Views> Views { get; set; }
         public DbSet<Songs> Songs { get; set; }
         public DbSet<RefreshTokens> RefreshTokens { get; set; }
+        public DbSet<CanonicalEntity> CanonicalEntities { get; set; }
+        public DbSet<CanonicalEntityVariant> CanonicalEntityVariants { get; set; }
         public DbSet<Plans> Plans { get; set; }
         //public DbSet<BookSong> BookSong { get; set; }
         //public DbSet<UserPlan> UserPlan { get; set; }

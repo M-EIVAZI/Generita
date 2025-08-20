@@ -1,5 +1,6 @@
 ﻿using Generita.Domain.Common.Abstractions;
 using Generita.Domain.Common.Enums;
+using Generita.Domain.Common.Interfaces;
 
 namespace Generita.Domain.Models;
 
@@ -25,4 +26,10 @@ public class Book:AggregateRoot
     public virtual ICollection<Views> Views { get; set; }
     public virtual ICollection<UserBook> UserBooks { get; set; }
     public virtual ICollection<BookLikes> BookLikes { get; set; }
+    public virtual ICollection<Jobs> Jobs { get; set; }
+
+    public void AddDomainEvent(IDomainEvent @event)
+        => _domainEvents.Add(@event);
+
+    public void ClearDomainEvents() => _domainEvents.Clear();
 }

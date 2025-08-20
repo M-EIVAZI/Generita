@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 using Generita.Application.Common.Interfaces.Repository;
+using Generita.Domain.Common.Enums;
 using Generita.Domain.Models;
 
 using Microsoft.EntityFrameworkCore;
@@ -48,6 +50,14 @@ namespace Generita.Infrustructure.Persistance.Repositories
         {
             _dbContext.Songs.Update(value);
             return Task.FromResult(true);
+        }
+        public async Task<Songs> GetBySenseAndAge(MusicSense musicSense,AgeClasses ageClasses)
+        {
+            return await _dbContext.Songs.FirstOrDefaultAsync(x=>x.AgeClasses==ageClasses && x.Music==musicSense);
+        }
+        public async Task<Songs> GetByEntityType(string type)
+        {
+            return await _dbContext.Songs.FirstOrDefaultAsync(x=>x.EntityType==type);
         }
     }
 }

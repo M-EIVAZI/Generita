@@ -15,6 +15,6 @@ public class Entity:BaseEntity
     public Guid MusicId { get; set; }
     public virtual Paragraph Paragraph { get; set; }
     public virtual Songs Songs { get; set; }
-
+    public virtual CanonicalEntity EntityInstances { get; set; }
     //public virtual Songs Songs { get; set; }
 }

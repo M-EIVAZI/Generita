@@ -25,7 +25,7 @@ namespace Generita.Api
                 .RuleFor(a => a.BirthDate, f => DateOnly.FromDateTime(f.Date.Past(80, DateTime.Now.AddYears(-18)))) 
                 .RuleFor(a => a.age, (f, a) => DateTime.Now.Year - a.BirthDate.Year)
                 .RuleFor(a => a.Nationality, f => f.Address.Country());
-            var authors = authorFaker.Generate(10); // ۱۰ نویسنده ساختیم
+            var authors = authorFaker.Generate(10); 
             var bookAccessValues = Enum.GetValues(typeof(BookAccess)).Cast<BookAccess>().ToArray();
 
             var bookFaker = new Faker<Book>()
@@ -118,37 +118,29 @@ namespace Generita.Api
                 .RuleFor(e => e.ParagraphId, f => f.PickRandom(paragraphs).Id) 
                 .RuleFor(e => e.MusicId, f => f.PickRandom(songs).Id);
             var entities = entityFaker.Generate(10);
-            // دسته‌بندی کتاب و نویسنده‌ها
             dbContext.BookCategory.AddRange(bookCategories);
             dbContext.Author.AddRange(authors);
             dbContext.SaveChanges();
 
-            // کتاب‌ها
             dbContext.Book.AddRange(books);
             dbContext.SaveChanges();
 
-            // پلن‌ها و کاربران
             dbContext.Plans.AddRange(plans);
             dbContext.Users.AddRange(users);
             dbContext.SaveChanges();
 
-            // تراکنش‌ها
             dbContext.Transactions.AddRange(transactions);
             dbContext.SaveChanges();
 
-            // آهنگ‌ها
             dbContext.Songs.AddRange(songs);
             dbContext.SaveChanges();
 
-            // پاراگراف‌ها
             dbContext.Paragraph.AddRange(paragraphs);
             dbContext.SaveChanges();
 
-            // Entityها
             dbContext.Entity.AddRange(entities);
             dbContext.SaveChanges();
 
-            // UserBook
             dbContext.UsersBook.AddRange(userbooks);
             dbContext.SaveChanges();
             }

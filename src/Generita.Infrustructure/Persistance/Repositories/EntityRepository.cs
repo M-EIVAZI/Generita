@@ -31,7 +31,7 @@ namespace Generita.Infrustructure.Persistance.Repositories
             if (entity is null)
                 return false;
 
-             _context.Remove(id);
+             _context.Remove(entity);
             return true;
         }
 
@@ -58,6 +58,11 @@ namespace Generita.Infrustructure.Persistance.Repositories
         public async Task<Entity> GetByType(string type)
         {
             return await _context.Entity.Include(x => x.Songs).FirstOrDefaultAsync(x => x.type == type);
+        }
+
+        public async Task AddCanonicalEntityRange(ICollection<CanonicalEntity> entity)
+        {
+            await _context.CanonicalEntities.AddRangeAsync(entity);
         }
     }
 }

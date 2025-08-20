@@ -59,5 +59,9 @@ namespace Generita.Infrustructure.Persistance.Repositories
         {
             return await _context.Paragraph.Include(x=>x.Songs).FirstOrDefaultAsync(x => x.AgeClass == age && x.MusicSense == sense);
         }
+        public async Task AddList(IEnumerable<Paragraph> list)
+        {
+            await _context.Paragraph.AddRangeAsync(list);
+        }
     }
 }
