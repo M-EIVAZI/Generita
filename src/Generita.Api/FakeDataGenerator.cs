@@ -21,7 +21,7 @@ namespace Generita.Api
             var bookCategories = bookCategoryFaker.Generate(6); 
             var authorFaker = new Faker<Author>()
                 .CustomInstantiator(f => new Author(Guid.NewGuid()))
-                .RuleFor(a => a.Name, f => new Name(f.Person.FirstName, f.Person.LastName))
+                .RuleFor(a => a.Name, f=>f.Person.FullName)
                 .RuleFor(a => a.BirthDate, f => DateOnly.FromDateTime(f.Date.Past(80, DateTime.Now.AddYears(-18)))) 
                 .RuleFor(a => a.age, (f, a) => DateTime.Now.Year - a.BirthDate.Year)
                 .RuleFor(a => a.Nationality, f => f.Address.Country());
@@ -113,11 +113,18 @@ namespace Generita.Api
             var entityFaker = new Faker<Entity>()
                 .CustomInstantiator(f => new Entity(Guid.NewGuid()))
                 .RuleFor(e => e.type, f => f.PickRandom(entityTypes))
+                .RuleFor(e => e.MusicId, f => f.PickRandom(songs).Id);
+
+            var entities = entityFaker.Generate(10);
+
+            var entityInstancesFacker = new Faker<EntityInstances>()
+                .CustomInstantiator(f => new EntityInstances(Guid.NewGuid()))
                 .RuleFor(e => e.sample, f => f.Lorem.Sentence(3))
                 .RuleFor(e => e.Position, f => f.Random.Int(1, 100))
-                .RuleFor(e => e.ParagraphId, f => f.PickRandom(paragraphs).Id) 
-                .RuleFor(e => e.MusicId, f => f.PickRandom(songs).Id);
-            var entities = entityFaker.Generate(10);
+                .RuleFor(e => e.ParagraphId, f => f.PickRandom(paragraphs).Id)
+                .RuleFor(e => e.EntityId, f => f.PickRandom(entities).Id);
+            var entityinstances = entityInstancesFacker.Generate(10);
+
             dbContext.BookCategory.AddRange(bookCategories);
             dbContext.Author.AddRange(authors);
             dbContext.SaveChanges();
@@ -141,6 +148,8 @@ namespace Generita.Api
             dbContext.Entity.AddRange(entities);
             dbContext.SaveChanges();
 
+            dbContext.EntityInstances.AddRange(entityinstances);
+            dbContext.SaveChanges();
             dbContext.UsersBook.AddRange(userbooks);
             dbContext.SaveChanges();
             }

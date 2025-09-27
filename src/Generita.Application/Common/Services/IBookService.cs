@@ -17,5 +17,6 @@ namespace Generita.Application.Common.Services
         Task<ErrorOr<GetJobStatusResponse>> GetJobStatus(Guid jobId);
         Task<ErrorOr<Root>> DownloadResult(Guid jobId);
         Task<ErrorOr<PostJobResponse>> PostBook(PostJobRequest request);
+
     }
 }

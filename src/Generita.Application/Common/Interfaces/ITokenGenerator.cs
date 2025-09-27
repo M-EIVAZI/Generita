@@ -11,6 +11,7 @@ namespace Generita.Application.Common.Interfaces
     public interface ITokenGenerator
     {
         string GenerateToken(User user);
+        string GenerateToken(Author author);
         string RefreshToken();
 
     }

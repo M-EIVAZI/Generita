@@ -9,12 +9,8 @@ public class Entity:BaseEntity
     }
 
     public string type { get; set; }
-    public string sample { get; set; }
-    public int Position { get; set; }
-    public Guid ParagraphId { get; set; }
     public Guid MusicId { get; set; }
-    public virtual Paragraph Paragraph { get; set; }
     public virtual Songs Songs { get; set; }
-    public virtual CanonicalEntity EntityInstances { get; set; }
+    public virtual ICollection<EntityInstances> Instances { get; set; }
     //public virtual Songs Songs { get; set; }
 }

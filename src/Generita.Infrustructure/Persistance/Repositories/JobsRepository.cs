@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Diagnostics.Eventing.Reader;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 
-using Generita.Application.Common.Interfaces;
+using Generita.Application.Common.Interfaces.Repository;
 using Generita.Domain.Common.Interfaces;
 using Generita.Domain.Models;
 

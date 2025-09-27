@@ -24,7 +24,7 @@ namespace Generita.Infrustructure.Persistance.Configurations
             builder.HasOne(x => x.Songs)
                 .WithMany(x => x.Paragraphs)
                 .HasForeignKey(x => x.SongId);
-            builder.HasMany(x => x.Entities)
+            builder.HasMany(x => x.EntityInstances)
                 .WithOne(x => x.Paragraph);
             builder.Property(x => x.MusicSense)
                 .HasConversion<string>();

@@ -40,7 +40,7 @@ namespace Generita.Application.Books.Queries.GetBookById
             {
                 Id = book.Id,
                 Title = book.Title,
-                Author = author.Name.firtName+' '+author.Name.LastName,
+                Author = author.Name,
                 synopsis = book.Synopsis,
                 Category = bookcategory.CategoryName,
                 Cover=book.Cover,

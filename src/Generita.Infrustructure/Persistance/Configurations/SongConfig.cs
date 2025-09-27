@@ -23,7 +23,7 @@ namespace Generita.Infrustructure.Persistance.Configurations
                 .HasConversion<string>();
             builder.HasMany(x => x.Books)
                 .WithMany(x => x.Songs);
-            builder.Property(x => x.Music)
+            builder.Property(x => x.MusicSense)
                 .HasConversion<string>();
             builder.Property(x=>x.AgeClasses).HasConversion<string>();
             //builder.HasOne(x => x.Category)

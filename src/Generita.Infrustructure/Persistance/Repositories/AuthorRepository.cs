@@ -54,8 +54,16 @@ namespace Generita.Infrustructure.Persistance.Repositories
             return await _dbContext.Author
                 .Include(x => x.Books)
                 .Where(x =>
-                    EF.Functions.Like((x.Name.firtName + " " + x.Name.LastName).ToLower(), $"%{authorName.ToLower()}%"))
+                    EF.Functions.Like((x.Name).ToLower(), $"%{authorName.ToLower()}%"))
                 .FirstOrDefaultAsync();
+        }
+        public async Task<bool> IsExistsByEmail(string email)
+        {
+            return await _dbContext.Author.AnyAsync(x => x.Email.ToLower() == email.ToLower());
+        }
+        public async Task<Author> GetAuthorByEmail(string email)
+        {
+            return await _dbContext.Author.FirstOrDefaultAsync(x=>x.Email.ToLower()==email.ToLower());
         }
     }
 }

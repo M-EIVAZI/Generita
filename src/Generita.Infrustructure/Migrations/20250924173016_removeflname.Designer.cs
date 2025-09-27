@@ -3,6 +3,7 @@ using System;
 using Generita.Infrustructure.Persistance;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Generita.Infrustructure.Migrations
 {
     [DbContext(typeof(GeneritaDbContext))]
-    partial class GeneritaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250924173016_removeflname")]
+    partial class removeflname
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -220,9 +223,6 @@ namespace Generita.Infrustructure.Migrations
 
                     b.Property<Guid>("BookId")
                         .HasColumnType("uuid");
-
-                    b.Property<DateTime>("CreateAt")
-                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("JobStatus")
                         .IsRequired()

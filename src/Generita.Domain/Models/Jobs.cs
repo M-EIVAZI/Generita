@@ -18,6 +18,7 @@ namespace Generita.Domain.Models
         public Guid AuthorId { get; set; }
         public Guid BookId { get; set; }
         public JobStatus JobStatus { get; set; }
+        public DateTime CreateAt { get; set; }
         public virtual Author Author { get; set; }
         public virtual Book Book { get; set; }
 

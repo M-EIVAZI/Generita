@@ -22,7 +22,7 @@ public class Songs:AggregateRoot
     public DateTime UpdateAt { get; set; }
     public string FilePath { get; set; }
     public OwnerShip Owner { get; set; }
-    public MusicSense Music { get; set; }
+    public MusicSense MusicSense { get; set; }
     public AgeClasses AgeClasses { get; set; }
     public string? EntityType { get; set; }
     public ICollection<Paragraph> Paragraphs { get; set; }

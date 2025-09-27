@@ -60,9 +60,9 @@ namespace Generita.Infrustructure.Persistance.Repositories
             return await _context.Entity.Include(x => x.Songs).FirstOrDefaultAsync(x => x.type == type);
         }
 
-        public async Task AddCanonicalEntityRange(ICollection<CanonicalEntity> entity)
+        public async Task AddEntityInstancesRange(ICollection<EntityInstances> entity)
         {
-            await _context.CanonicalEntities.AddRangeAsync(entity);
+            await _context.EntityInstances.AddRangeAsync(entity);
         }
     }
 }

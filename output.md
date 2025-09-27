@@ -57,39 +57,48 @@
     │   │       ├── RegisterCommand.cs
     │   │       ├── RegisterCommandValidator.cs
     │   │       └── RegisterHandler.cs
-    │   ├── Books/
-    │   │   ├── Commands/
-    │   │   │   ├── AddBook/
-    │   │   │   │   ├── AddBookCommand.cs
-    │   │   │   │   └── AddBookHandler.cs
-    │   │   │   ├── RemoveBook/
-    │   │   │   │   ├── RemoveBookCommand.cs
-    │   │   │   │   └── RemoveBookHandler.cs
-    │   │   │   └── UpdateBook/
-    │   │   │       ├── UpdateBookCommand.cs
-    │   │   │       └── UpdateBookHandler.cs
-    │   │   └── Queries/
-    │   │       ├── GetBookById/
-    │   │       │   ├── GetBookByIdHandler.cs
-    │   │       │   └── GetBookByIdQuery.cs
-    │   │       ├── GetBookContent/
-    │   │       │   ├── BookConentResponse.cs
-    │   │       │   ├── GetBookByContentHandler.cs
-    │   │       │   ├── GetBookByContentQuery.cs
-    │   │       │   └── GetBookContentValidator.cs
-    │   │       └── SearchBook/
-    │   │           ├── SearchBookHandler.cs
-    │   │           ├── SearchBookQuery.cs
-    │   │           ├── SearchBookRequest.cs
-    │   │           ├── SearchBookValidator.cs
-    │   │           ├── SearchMode.cs
-    │   │           └── SearchResultOrder.cs
+    │   ├── Authors/
+    │   │   ├── AddBook/
+    │   │   │   ├── AddBookCommand.cs
+    │   │   │   ├── AddBookCommandHandler.cs
+    │   │   │   └── AuthorAddBookDto.cs
+    │   │   └── Books/
+    │   │       ├── Commands/
+    │   │       │   ├── AddBook/
+    │   │       │   │   ├── AddBookCommand.cs
+    │   │       │   │   └── AddBookHandler.cs
+    │   │       │   ├── RemoveBook/
+    │   │       │   │   ├── RemoveBookCommand.cs
+    │   │       │   │   └── RemoveBookHandler.cs
+    │   │       │   └── UpdateBook/
+    │   │       │       ├── UpdateBookCommand.cs
+    │   │       │       └── UpdateBookHandler.cs
+    │   │       └── Queries/
+    │   │           ├── GetBookById/
+    │   │           │   ├── GetBookByIdHandler.cs
+    │   │           │   └── GetBookByIdQuery.cs
+    │   │           ├── GetBookContent/
+    │   │           │   ├── BookConentResponse.cs
+    │   │           │   ├── GetBookByContentHandler.cs
+    │   │           │   ├── GetBookByContentQuery.cs
+    │   │           │   └── GetBookContentValidator.cs
+    │   │           └── SearchBook/
+    │   │               ├── SearchBookHandler.cs
+    │   │               ├── SearchBookQuery.cs
+    │   │               ├── SearchBookRequest.cs
+    │   │               ├── SearchBookValidator.cs
+    │   │               ├── SearchMode.cs
+    │   │               └── SearchResultOrder.cs
     │   ├── Common/
     │   │   ├── Behaviors/
     │   │   │   └── ValidationPipelineBehavior.cs
     │   │   ├── Dtos/
     │   │   │   ├── AddBookDto.cs
     │   │   │   ├── AddTolibraryControllerDto.cs
+    │   │   │   ├── ApiDtos/
+    │   │   │   │   ├── DownloadResultEntity.cs
+    │   │   │   │   ├── DownloadResultParagraph.cs
+    │   │   │   │   └── Root.cs
     │   │   │   ├── AudioTagsDto.cs
     │   │   │   ├── AudioTagsResponse.cs
     │   │   │   ├── BannerBookDto.cs
@@ -97,9 +106,12 @@
     │   │   │   ├── EntityDto.cs
     │   │   │   ├── GetAudioTagsDto.cs
     │   │   │   ├── GetBookDto.cs
+    │   │   │   ├── GetJobStatusResponse.cs
     │   │   │   ├── HomeBookDto.cs
     │   │   │   ├── LoginDto.cs
     │   │   │   ├── ParagraphDto.cs
+    │   │   │   ├── PostJobRequest.cs
+    │   │   │   ├── PostJobResponse.cs
     │   │   │   ├── RefreshDto.cs
     │   │   │   ├── RegisterDto.cs
     │   │   │   ├── RegisterResponse.cs
@@ -113,6 +125,7 @@
     │   │   │       ├── IBookRepository.cs
     │   │   │       ├── IEntityRepository.cs
     │   │   │       ├── IGenericRepository.cs
+    │   │   │       ├── IJobRepository.cs
     │   │   │       ├── IParagraphRepository.cs
     │   │   │       ├── IPlansRepository.cs
     │   │   │       ├── IRefreshTokenRepository.cs
@@ -120,11 +133,13 @@
     │   │   │       ├── ISongRepository.cs
     │   │   │       ├── ITransactionsRepository.cs
     │   │   │       └── IUserRepository.cs
-    │   │   └── Messaging/
-    │   │       ├── ICommand.cs
-    │   │       ├── ICommandHandler.cs
-    │   │       ├── IQuery.cs
-    │   │       └── IQueryHandler.cs
+    │   │   ├── Messaging/
+    │   │   │   ├── ICommand.cs
+    │   │   │   ├── ICommandHandler.cs
+    │   │   │   ├── IQuery.cs
+    │   │   │   └── IQueryHandler.cs
+    │   │   └── Services/
+    │   │       └── IBookService.cs
     │   ├── DependencyInjection.cs
     │   ├── Generita.Application.csproj
     │   ├── Home/
@@ -153,9 +168,12 @@
     │   │   ├── Enums/
     │   │   │   ├── AgeClasses.cs
     │   │   │   ├── BookAccess.cs
+    │   │   │   ├── JobStatus.cs
     │   │   │   ├── MusicSense.cs
     │   │   │   ├── OwnerShip.cs
     │   │   │   └── States.cs
+    │   │   ├── Events/
+    │   │   │   └── BookUploadedDomainEvent.cs
     │   │   ├── Interfaces/
     │   │   │   ├── IDomainEvent.cs
     │   │   │   └── IUnitOfWork.cs
@@ -170,6 +188,8 @@
     │       ├── BookSong.cs
     │       ├── Diagram.mmd
     │       ├── Entity.cs
+    │       ├── EntityInstances.cs
+    │       ├── Jobs.cs
     │       ├── Paragraph.cs
     │       ├── Plans.cs
     │       ├── RefreshTokens.cs
@@ -203,6 +223,10 @@
         │   ├── 20250807175148_EditUserBookTable.Designer.cs
         │   ├── 20250810114541_removesongcategory.cs
         │   ├── 20250810114541_removesongcategory.Designer.cs
+        │   ├── 20250820200920_addjobsandcanonicalentity.cs
+        │   ├── 20250820200920_addjobsandcanonicalentity.Designer.cs
+        │   ├── 20250821173945_AddEntityInstancesRemoveCanonicalEntity.cs
+        │   ├── 20250821173945_AddEntityInstancesRemoveCanonicalEntity.Designer.cs
         │   └── GeneritaDbContextModelSnapshot.cs
         └── Persistance/
             ├── Configurations/
@@ -211,6 +235,8 @@
             │   ├── BookConfig.cs
             │   ├── BookLikesConfig.cs
             │   ├── EntityConfig.cs
+            │   ├── EntityInstancesConfig.cs
+            │   ├── JobConfig.cs
             │   ├── ParagraphConfig.cs
             │   ├── PlansConfig.cs
             │   ├── RefreshTokenConfig.cs
@@ -226,6 +252,7 @@
             │   ├── BookCategoryRepository.cs
             │   ├── BookRepository.cs
             │   ├── EntityRepository.cs
+            │   ├── JobsRepository.cs
             │   ├── ParagraphRepository.cs
             │   ├── PlansRepository.cs
             │   ├── RefreshTokenRepository.cs
@@ -233,6 +260,9 @@
             │   ├── SongsRepository.cs
             │   ├── TransactionRepository.cs
             │   └── UserRepository.cs
+            ├── Services/
+            │   ├── BookServices.cs
+            │   └── JobStatusCheckerService.cs
             └── UnitOfWork.cs
 ```
 
@@ -1375,11 +1405,18 @@ namespace Generita.Api
             var entityFaker = new Faker<Entity>()
                 .CustomInstantiator(f => new Entity(Guid.NewGuid()))
                 .RuleFor(e => e.type, f => f.PickRandom(entityTypes))
+                .RuleFor(e => e.MusicId, f => f.PickRandom(songs).Id);
+
+            var entities = entityFaker.Generate(10);
+
+            var entityInstancesFacker = new Faker<EntityInstances>()
+                .CustomInstantiator(f => new EntityInstances(Guid.NewGuid()))
                 .RuleFor(e => e.sample, f => f.Lorem.Sentence(3))
                 .RuleFor(e => e.Position, f => f.Random.Int(1, 100))
-                .RuleFor(e => e.ParagraphId, f => f.PickRandom(paragraphs).Id) 
-                .RuleFor(e => e.MusicId, f => f.PickRandom(songs).Id);
-            var entities = entityFaker.Generate(10);
+                .RuleFor(e => e.ParagraphId, f => f.PickRandom(paragraphs).Id)
+                .RuleFor(e => e.EntityId, f => f.PickRandom(entities).Id);
+            var entityinstances = entityInstancesFacker.Generate(10);
+
             dbContext.BookCategory.AddRange(bookCategories);
             dbContext.Author.AddRange(authors);
             dbContext.SaveChanges();
@@ -1403,6 +1440,8 @@ namespace Generita.Api
             dbContext.Entity.AddRange(entities);
             dbContext.SaveChanges();
 
+            dbContext.EntityInstances.AddRange(entityinstances);
+            dbContext.SaveChanges();
             dbContext.UsersBook.AddRange(userbooks);
             dbContext.SaveChanges();
             }
@@ -1611,11 +1650,13 @@ using System.Threading.Tasks;
 
 using Generita.Application.Common.Interfaces;
 using Generita.Application.Common.Interfaces.Repository;
+using Generita.Application.Common.Services;
 using Generita.Domain.Common.Interfaces;
 using Generita.Infrustructure.Authentication;
 using Generita.Infrustructure.Authentication.TokenGenerator;
 using Generita.Infrustructure.Persistance;
 using Generita.Infrustructure.Persistance.Repositories;
+using Generita.Infrustructure.Persistance.Services;
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -1644,9 +1685,12 @@ namespace Generita.Infrustructure
             services.AddScoped<IEntityRepository,EntityRepository>();
             services.AddScoped<IAuthorRepository,AuthorRepository>();
             services.AddScoped<IRefreshTokenRepository,RefreshTokenRepository>();
+            services.AddScoped<IJobRepository, JobsRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddHttpClient<IBookService, BookServices>();
             services.AddSingleton<IPasswordHasher, PasswordHasher>();
             services.AddSingleton<ITokenGenerator, TokenGenerator>();
+            services.AddHostedService<JobStatusCheckerService>();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(o =>
@@ -6882,13 +6926,186 @@ namespace Generita.Infrustructure.Migrations
     }
 }
 ```
-## File: src\Generita.Infrustructure\Migrations\GeneritaDbContextModelSnapshot.cs
+## File: src\Generita.Infrustructure\Migrations\20250820200920_addjobsandcanonicalentity.cs
+```csharp
+﻿using System;
+
+using Microsoft.EntityFrameworkCore.Migrations;
+
+#nullable disable
+
+namespace Generita.Infrustructure.Migrations
+{
+    public partial class addjobsandcanonicalentity : Migration
+    {
+        protected override void Up(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.AddColumn<string>(
+                name: "AgeClasses",
+                table: "Songs",
+                type: "text",
+                nullable: false,
+                defaultValue: "");
+
+            migrationBuilder.AddColumn<string>(
+                name: "EntityType",
+                table: "Songs",
+                type: "text",
+                nullable: true);
+
+            migrationBuilder.AddColumn<string>(
+                name: "Music",
+                table: "Songs",
+                type: "text",
+                nullable: false,
+                defaultValue: "");
+
+            migrationBuilder.AddColumn<Guid>(
+                name: "EntityInstancesId",
+                table: "Entity",
+                type: "uuid",
+                nullable: false,
+                defaultValue: Guid.Empty); // 00000000-... 
+
+            // ابتدا جدول CanonicalEntity بساز
+            migrationBuilder.CreateTable(
+                name: "CanonicalEntity",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Type = table.Column<string>(type: "text", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CanonicalEntity", x => x.Id);
+                });
+
+            // رکورد پیش‌فرض برای جلوگیری از خطای FK اضافه کن
+            migrationBuilder.InsertData(
+                table: "CanonicalEntity",
+                columns: new[] { "Id", "Type" },
+                values: new object[] { Guid.Empty, "Default" });
+
+            migrationBuilder.CreateTable(
+                name: "Jobs",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    AuthorId = table.Column<Guid>(type: "uuid", nullable: false),
+                    BookId = table.Column<Guid>(type: "uuid", nullable: false),
+                    JobStatus = table.Column<string>(type: "text", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Jobs", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Jobs_Authors_AuthorId",
+                        column: x => x.AuthorId,
+                        principalTable: "Authors",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Jobs_Books_BookId",
+                        column: x => x.BookId,
+                        principalTable: "Books",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CanonicalEntityVariant",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Value = table.Column<string>(type: "text", nullable: false),
+                    CanonicalEntityId = table.Column<Guid>(type: "uuid", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CanonicalEntityVariant", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_CanonicalEntityVariant_CanonicalEntity_CanonicalEntityId",
+                        column: x => x.CanonicalEntityId,
+                        principalTable: "CanonicalEntity",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Entity_EntityInstancesId",
+                table: "Entity",
+                column: "EntityInstancesId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CanonicalEntityVariant_CanonicalEntityId",
+                table: "CanonicalEntityVariant",
+                column: "CanonicalEntityId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Jobs_AuthorId",
+                table: "Jobs",
+                column: "AuthorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Jobs_BookId",
+                table: "Jobs",
+                column: "BookId");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_Entity_CanonicalEntity_EntityInstancesId",
+                table: "Entity",
+                column: "EntityInstancesId",
+                principalTable: "CanonicalEntity",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Cascade);
+        }
+
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.DropForeignKey(
+                name: "FK_Entity_CanonicalEntity_EntityInstancesId",
+                table: "Entity");
+
+            migrationBuilder.DropTable(
+                name: "CanonicalEntityVariant");
+
+            migrationBuilder.DropTable(
+                name: "Jobs");
+
+            migrationBuilder.DropTable(
+                name: "CanonicalEntity");
+
+            migrationBuilder.DropIndex(
+                name: "IX_Entity_EntityInstancesId",
+                table: "Entity");
+
+            migrationBuilder.DropColumn(
+                name: "AgeClasses",
+                table: "Songs");
+
+            migrationBuilder.DropColumn(
+                name: "EntityType",
+                table: "Songs");
+
+            migrationBuilder.DropColumn(
+                name: "Music",
+                table: "Songs");
+
+            migrationBuilder.DropColumn(
+                name: "EntityInstancesId",
+                table: "Entity");
+        }
+    }
+}
+```
+## File: src\Generita.Infrustructure\Migrations\20250820200920_addjobsandcanonicalentity.Designer.cs
 ```csharp
 ﻿// <auto-generated />
 using System;
 using Generita.Infrustructure.Persistance;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -6897,9 +7114,1002 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Generita.Infrustructure.Migrations
 {
     [DbContext(typeof(GeneritaDbContext))]
-    partial class GeneritaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250820200920_addjobsandcanonicalentity")]
+    partial class addjobsandcanonicalentity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        {
+#pragma warning disable 612, 618
+            modelBuilder
+                .HasAnnotation("ProductVersion", "9.0.7")
+                .HasAnnotation("Relational:MaxIdentifierLength", 63);
+
+            NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+
+            modelBuilder.Entity("BookSongs", b =>
+                {
+                    b.Property<Guid>("BooksId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("SongsId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("BooksId", "SongsId");
+
+                    b.HasIndex("SongsId");
+
+                    b.ToTable("BookSongs");
+                });
+
+            modelBuilder.Entity("Generita.Domain.Models.Author", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Nationality")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("age")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Authors", (string)null);
+                });
+
+            modelBuilder.Entity("Generita.Domain.Models.Book", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Access")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("AuthorId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("CategoryId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Cover")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("FilePath")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("ImagePath")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateOnly>("PublishedDate")
+                        .HasColumnType("date");
+
+                    b.Property<string>("Synopsis")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AuthorId");
+
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("Books", (string)null);
+                });
+
+            modelBuilder.Entity("Generita.Domain.Models.BookCategory", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("CategoryName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("BookCategories", (string)null);
+                });
+
+            modelBuilder.Entity("Generita.Domain.Models.BookLikes", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("BookId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreateAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BookId");
+
+                    b.HasIndex("UserId", "BookId")
+                        .IsUnique();
+
+                    b.ToTable("BookLikes", (string)null);
+                });
+
+            modelBuilder.Entity("Generita.Domain.Models.CanonicalEntity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CanonicalEntity", (string)null);
+                });
+
+            modelBuilder.Entity("Generita.Domain.Models.CanonicalEntityVariant", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("CanonicalEntityId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Value")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CanonicalEntityId");
+
+                    b.ToTable("CanonicalEntityVariant", (string)null);
+                });
+
+            modelBuilder.Entity("Generita.Domain.Models.Entity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("AuthorId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("EntityInstancesId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("MusicId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("ParagraphId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("Position")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("sample")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("type")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AuthorId");
+
+                    b.HasIndex("EntityInstancesId");
+
+                    b.HasIndex("MusicId");
+
+                    b.HasIndex("ParagraphId");
+
+                    b.ToTable("Entity", (string)null);
+                });
+
+            modelBuilder.Entity("Generita.Domain.Models.Jobs", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("AuthorId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("BookId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("JobStatus")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AuthorId");
+
+                    b.HasIndex("BookId");
+
+                    b.ToTable("Jobs", (string)null);
+                });
+
+            modelBuilder.Entity("Generita.Domain.Models.Paragraph", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("AgeClass")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("BookId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("MusicSense")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("SongId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BookId");
+
+                    b.HasIndex("SongId");
+
+                    b.ToTable("Paragraphs", (string)null);
+                });
+
+            modelBuilder.Entity("Generita.Domain.Models.Plans", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("Duration")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("Price")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Plans", (string)null);
+                });
+
+            modelBuilder.Entity("Generita.Domain.Models.RefreshTokens", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("ExpiresOnUtc")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Token")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Token")
+                        .IsUnique();
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("RefreshTokens", (string)null);
+                });
+
+            modelBuilder.Entity("Generita.Domain.Models.Songs", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("AgeClasses")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreateAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<TimeSpan>("Duration")
+                        .HasColumnType("interval");
+
+                    b.Property<string>("EntityType")
+                        .HasColumnType("text");
+
+                    b.Property<string>("FilePath")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Music")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Owner")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("UpdateAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Songs", (string)null);
+                });
+
+            modelBuilder.Entity("Generita.Domain.Models.Transactions", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreateAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("PlanId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("Price")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("States")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PlanId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Transactions", (string)null);
+                });
+
+            modelBuilder.Entity("Generita.Domain.Models.User", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreateAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("UpdateAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
+
+                    b.ToTable("Users", (string)null);
+                });
+
+            modelBuilder.Entity("Generita.Domain.Models.UserBook", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("AddedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("BookId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BookId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserBook", (string)null);
+                });
+
+            modelBuilder.Entity("Generita.Domain.Models.Views", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("BookId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("ViewAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BookId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Views", (string)null);
+                });
+
+            modelBuilder.Entity("BookSongs", b =>
+                {
+                    b.HasOne("Generita.Domain.Models.Book", null)
+                        .WithMany()
+                        .HasForeignKey("BooksId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Generita.Domain.Models.Songs", null)
+                        .WithMany()
+                        .HasForeignKey("SongsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Generita.Domain.Models.Author", b =>
+                {
+                    b.OwnsOne("Generita.Domain.ValueObjects.Name", "Name", b1 =>
+                        {
+                            b1.Property<Guid>("AuthorId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<string>("LastName")
+                                .IsRequired()
+                                .HasMaxLength(30)
+                                .HasColumnType("character varying(30)");
+
+                            b1.Property<string>("firtName")
+                                .IsRequired()
+                                .HasMaxLength(30)
+                                .HasColumnType("character varying(30)");
+
+                            b1.HasKey("AuthorId");
+
+                            b1.ToTable("Authors");
+
+                            b1.WithOwner()
+                                .HasForeignKey("AuthorId");
+                        });
+
+                    b.Navigation("Name")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Generita.Domain.Models.Book", b =>
+                {
+                    b.HasOne("Generita.Domain.Models.Author", "Author")
+                        .WithMany("Books")
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Generita.Domain.Models.BookCategory", "BookCategory")
+                        .WithMany("Books")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Author");
+
+                    b.Navigation("BookCategory");
+                });
+
+            modelBuilder.Entity("Generita.Domain.Models.BookLikes", b =>
+                {
+                    b.HasOne("Generita.Domain.Models.Book", "Book")
+                        .WithMany("BookLikes")
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Generita.Domain.Models.User", "User")
+                        .WithMany("BookLikes")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Book");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Generita.Domain.Models.CanonicalEntityVariant", b =>
+                {
+                    b.HasOne("Generita.Domain.Models.CanonicalEntity", "CanonicalEntity")
+                        .WithMany("Variants")
+                        .HasForeignKey("CanonicalEntityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CanonicalEntity");
+                });
+
+            modelBuilder.Entity("Generita.Domain.Models.Entity", b =>
+                {
+                    b.HasOne("Generita.Domain.Models.Author", null)
+                        .WithMany("Entities")
+                        .HasForeignKey("AuthorId");
+
+                    b.HasOne("Generita.Domain.Models.CanonicalEntity", "EntityInstances")
+                        .WithMany()
+                        .HasForeignKey("EntityInstancesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Generita.Domain.Models.Songs", "Songs")
+                        .WithMany("Entity")
+                        .HasForeignKey("MusicId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Generita.Domain.Models.Paragraph", "Paragraph")
+                        .WithMany("Entities")
+                        .HasForeignKey("ParagraphId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("EntityInstances");
+
+                    b.Navigation("Paragraph");
+
+                    b.Navigation("Songs");
+                });
+
+            modelBuilder.Entity("Generita.Domain.Models.Jobs", b =>
+                {
+                    b.HasOne("Generita.Domain.Models.Author", "Author")
+                        .WithMany("jobs")
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Generita.Domain.Models.Book", "Book")
+                        .WithMany("Jobs")
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Author");
+
+                    b.Navigation("Book");
+                });
+
+            modelBuilder.Entity("Generita.Domain.Models.Paragraph", b =>
+                {
+                    b.HasOne("Generita.Domain.Models.Book", "Book")
+                        .WithMany("Paragraphs")
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Generita.Domain.Models.Songs", "Songs")
+                        .WithMany("Paragraphs")
+                        .HasForeignKey("SongId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Book");
+
+                    b.Navigation("Songs");
+                });
+
+            modelBuilder.Entity("Generita.Domain.Models.RefreshTokens", b =>
+                {
+                    b.HasOne("Generita.Domain.Models.User", "User")
+                        .WithMany("RefreshTokens")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Generita.Domain.Models.Transactions", b =>
+                {
+                    b.HasOne("Generita.Domain.Models.Plans", "Plan")
+                        .WithMany("Transactions")
+                        .HasForeignKey("PlanId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Generita.Domain.Models.User", "User")
+                        .WithMany("Transactions")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Plan");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Generita.Domain.Models.UserBook", b =>
+                {
+                    b.HasOne("Generita.Domain.Models.Book", "Book")
+                        .WithMany("UserBooks")
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Generita.Domain.Models.User", "User")
+                        .WithMany("UserBooks")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Book");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Generita.Domain.Models.Views", b =>
+                {
+                    b.HasOne("Generita.Domain.Models.Book", "Book")
+                        .WithMany("Views")
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Generita.Domain.Models.User", "User")
+                        .WithMany("Views")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Book");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Generita.Domain.Models.Author", b =>
+                {
+                    b.Navigation("Books");
+
+                    b.Navigation("Entities");
+
+                    b.Navigation("jobs");
+                });
+
+            modelBuilder.Entity("Generita.Domain.Models.Book", b =>
+                {
+                    b.Navigation("BookLikes");
+
+                    b.Navigation("Jobs");
+
+                    b.Navigation("Paragraphs");
+
+                    b.Navigation("UserBooks");
+
+                    b.Navigation("Views");
+                });
+
+            modelBuilder.Entity("Generita.Domain.Models.BookCategory", b =>
+                {
+                    b.Navigation("Books");
+                });
+
+            modelBuilder.Entity("Generita.Domain.Models.CanonicalEntity", b =>
+                {
+                    b.Navigation("Variants");
+                });
+
+            modelBuilder.Entity("Generita.Domain.Models.Paragraph", b =>
+                {
+                    b.Navigation("Entities");
+                });
+
+            modelBuilder.Entity("Generita.Domain.Models.Plans", b =>
+                {
+                    b.Navigation("Transactions");
+                });
+
+            modelBuilder.Entity("Generita.Domain.Models.Songs", b =>
+                {
+                    b.Navigation("Entity");
+
+                    b.Navigation("Paragraphs");
+                });
+
+            modelBuilder.Entity("Generita.Domain.Models.User", b =>
+                {
+                    b.Navigation("BookLikes");
+
+                    b.Navigation("RefreshTokens");
+
+                    b.Navigation("Transactions");
+
+                    b.Navigation("UserBooks");
+
+                    b.Navigation("Views");
+                });
+#pragma warning restore 612, 618
+        }
+    }
+}
+```
+## File: src\Generita.Infrustructure\Migrations\20250821173945_AddEntityInstancesRemoveCanonicalEntity.cs
+```csharp
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
+
+#nullable disable
+
+namespace Generita.Infrustructure.Migrations
+{
+    /// <inheritdoc />
+    public partial class AddEntityInstancesRemoveCanonicalEntity : Migration
+    {
+        /// <inheritdoc />
+        protected override void Up(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.DropForeignKey(
+                name: "FK_Entity_CanonicalEntity_EntityInstancesId",
+                table: "Entity");
+
+            migrationBuilder.DropForeignKey(
+                name: "FK_Entity_Paragraphs_ParagraphId",
+                table: "Entity");
+
+            migrationBuilder.DropTable(
+                name: "CanonicalEntityVariant");
+
+            migrationBuilder.DropTable(
+                name: "CanonicalEntity");
+
+            migrationBuilder.DropIndex(
+                name: "IX_Entity_EntityInstancesId",
+                table: "Entity");
+
+            migrationBuilder.DropIndex(
+                name: "IX_Entity_ParagraphId",
+                table: "Entity");
+
+            migrationBuilder.DropColumn(
+                name: "EntityInstancesId",
+                table: "Entity");
+
+            migrationBuilder.DropColumn(
+                name: "ParagraphId",
+                table: "Entity");
+
+            migrationBuilder.DropColumn(
+                name: "Position",
+                table: "Entity");
+
+            migrationBuilder.DropColumn(
+                name: "sample",
+                table: "Entity");
+
+            migrationBuilder.RenameColumn(
+                name: "Music",
+                table: "Songs",
+                newName: "MusicSense");
+
+            migrationBuilder.CreateTable(
+                name: "EntityInstances",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    sample = table.Column<string>(type: "text", nullable: false),
+                    EntityId = table.Column<Guid>(type: "uuid", nullable: false),
+                    ParagraphId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Position = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EntityInstances", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_EntityInstances_Entity_EntityId",
+                        column: x => x.EntityId,
+                        principalTable: "Entity",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_EntityInstances_Paragraphs_ParagraphId",
+                        column: x => x.ParagraphId,
+                        principalTable: "Paragraphs",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EntityInstances_EntityId",
+                table: "EntityInstances",
+                column: "EntityId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EntityInstances_ParagraphId",
+                table: "EntityInstances",
+                column: "ParagraphId");
+        }
+
+        /// <inheritdoc />
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.DropTable(
+                name: "EntityInstances");
+
+            migrationBuilder.RenameColumn(
+                name: "MusicSense",
+                table: "Songs",
+                newName: "Music");
+
+            migrationBuilder.AddColumn<Guid>(
+                name: "EntityInstancesId",
+                table: "Entity",
+                type: "uuid",
+                nullable: false,
+                defaultValue: new Guid("00000000-0000-0000-0000-000000000000"));
+
+            migrationBuilder.AddColumn<Guid>(
+                name: "ParagraphId",
+                table: "Entity",
+                type: "uuid",
+                nullable: false,
+                defaultValue: new Guid("00000000-0000-0000-0000-000000000000"));
+
+            migrationBuilder.AddColumn<int>(
+                name: "Position",
+                table: "Entity",
+                type: "integer",
+                nullable: false,
+                defaultValue: 0);
+
+            migrationBuilder.AddColumn<string>(
+                name: "sample",
+                table: "Entity",
+                type: "text",
+                nullable: false,
+                defaultValue: "");
+
+            migrationBuilder.CreateTable(
+                name: "CanonicalEntity",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Type = table.Column<string>(type: "text", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CanonicalEntity", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CanonicalEntityVariant",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    CanonicalEntityId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Value = table.Column<string>(type: "text", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CanonicalEntityVariant", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_CanonicalEntityVariant_CanonicalEntity_CanonicalEntityId",
+                        column: x => x.CanonicalEntityId,
+                        principalTable: "CanonicalEntity",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Entity_EntityInstancesId",
+                table: "Entity",
+                column: "EntityInstancesId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Entity_ParagraphId",
+                table: "Entity",
+                column: "ParagraphId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CanonicalEntityVariant_CanonicalEntityId",
+                table: "CanonicalEntityVariant",
+                column: "CanonicalEntityId");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_Entity_CanonicalEntity_EntityInstancesId",
+                table: "Entity",
+                column: "EntityInstancesId",
+                principalTable: "CanonicalEntity",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Cascade);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_Entity_Paragraphs_ParagraphId",
+                table: "Entity",
+                column: "ParagraphId",
+                principalTable: "Paragraphs",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Cascade);
+        }
+    }
+}
+```
+## File: src\Generita.Infrustructure\Migrations\20250821173945_AddEntityInstancesRemoveCanonicalEntity.Designer.cs
+```csharp
+﻿// <auto-generated />
+using System;
+using Generita.Infrustructure.Persistance;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
+
+#nullable disable
+
+namespace Generita.Infrustructure.Migrations
+{
+    [DbContext(typeof(GeneritaDbContext))]
+    [Migration("20250821173945_AddEntityInstancesRemoveCanonicalEntity")]
+    partial class AddEntityInstancesRemoveCanonicalEntity
+    {
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -7043,16 +8253,6 @@ namespace Generita.Infrustructure.Migrations
                     b.Property<Guid>("MusicId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("ParagraphId")
-                        .HasColumnType("uuid");
-
-                    b.Property<int>("Position")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("sample")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<string>("type")
                         .IsRequired()
                         .HasColumnType("text");
@@ -7063,9 +8263,60 @@ namespace Generita.Infrustructure.Migrations
 
                     b.HasIndex("MusicId");
 
+                    b.ToTable("Entity", (string)null);
+                });
+
+            modelBuilder.Entity("Generita.Domain.Models.EntityInstances", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("EntityId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("ParagraphId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("Position")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("sample")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EntityId");
+
                     b.HasIndex("ParagraphId");
 
-                    b.ToTable("Entity", (string)null);
+                    b.ToTable("EntityInstances", (string)null);
+                });
+
+            modelBuilder.Entity("Generita.Domain.Models.Jobs", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("AuthorId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("BookId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("JobStatus")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AuthorId");
+
+                    b.HasIndex("BookId");
+
+                    b.ToTable("Jobs", (string)null);
                 });
 
             modelBuilder.Entity("Generita.Domain.Models.Paragraph", b =>
@@ -7159,13 +8410,24 @@ namespace Generita.Infrustructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<string>("AgeClasses")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<DateTime>("CreateAt")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<TimeSpan>("Duration")
                         .HasColumnType("interval");
 
+                    b.Property<string>("EntityType")
+                        .HasColumnType("text");
+
                     b.Property<string>("FilePath")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("MusicSense")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -7392,15 +8654,45 @@ namespace Generita.Infrustructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("Songs");
+                });
+
+            modelBuilder.Entity("Generita.Domain.Models.EntityInstances", b =>
+                {
+                    b.HasOne("Generita.Domain.Models.Entity", "Entity")
+                        .WithMany("Instances")
+                        .HasForeignKey("EntityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Generita.Domain.Models.Paragraph", "Paragraph")
-                        .WithMany("Entities")
+                        .WithMany("EntityInstances")
                         .HasForeignKey("ParagraphId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Paragraph");
+                    b.Navigation("Entity");
 
-                    b.Navigation("Songs");
+                    b.Navigation("Paragraph");
+                });
+
+            modelBuilder.Entity("Generita.Domain.Models.Jobs", b =>
+                {
+                    b.HasOne("Generita.Domain.Models.Author", "Author")
+                        .WithMany("jobs")
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Generita.Domain.Models.Book", "Book")
+                        .WithMany("Jobs")
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Author");
+
+                    b.Navigation("Book");
                 });
 
             modelBuilder.Entity("Generita.Domain.Models.Paragraph", b =>
@@ -7495,11 +8787,15 @@ namespace Generita.Infrustructure.Migrations
                     b.Navigation("Books");
 
                     b.Navigation("Entities");
+
+                    b.Navigation("jobs");
                 });
 
             modelBuilder.Entity("Generita.Domain.Models.Book", b =>
                 {
                     b.Navigation("BookLikes");
+
+                    b.Navigation("Jobs");
 
                     b.Navigation("Paragraphs");
 
@@ -7513,9 +8809,770 @@ namespace Generita.Infrustructure.Migrations
                     b.Navigation("Books");
                 });
 
+            modelBuilder.Entity("Generita.Domain.Models.Entity", b =>
+                {
+                    b.Navigation("Instances");
+                });
+
             modelBuilder.Entity("Generita.Domain.Models.Paragraph", b =>
                 {
+                    b.Navigation("EntityInstances");
+                });
+
+            modelBuilder.Entity("Generita.Domain.Models.Plans", b =>
+                {
+                    b.Navigation("Transactions");
+                });
+
+            modelBuilder.Entity("Generita.Domain.Models.Songs", b =>
+                {
+                    b.Navigation("Entity");
+
+                    b.Navigation("Paragraphs");
+                });
+
+            modelBuilder.Entity("Generita.Domain.Models.User", b =>
+                {
+                    b.Navigation("BookLikes");
+
+                    b.Navigation("RefreshTokens");
+
+                    b.Navigation("Transactions");
+
+                    b.Navigation("UserBooks");
+
+                    b.Navigation("Views");
+                });
+#pragma warning restore 612, 618
+        }
+    }
+}
+```
+## File: src\Generita.Infrustructure\Migrations\GeneritaDbContextModelSnapshot.cs
+```csharp
+﻿// <auto-generated />
+using System;
+using Generita.Infrustructure.Persistance;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
+
+#nullable disable
+
+namespace Generita.Infrustructure.Migrations
+{
+    [DbContext(typeof(GeneritaDbContext))]
+    partial class GeneritaDbContextModelSnapshot : ModelSnapshot
+    {
+        protected override void BuildModel(ModelBuilder modelBuilder)
+        {
+#pragma warning disable 612, 618
+            modelBuilder
+                .HasAnnotation("ProductVersion", "9.0.7")
+                .HasAnnotation("Relational:MaxIdentifierLength", 63);
+
+            NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+
+            modelBuilder.Entity("BookSongs", b =>
+                {
+                    b.Property<Guid>("BooksId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("SongsId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("BooksId", "SongsId");
+
+                    b.HasIndex("SongsId");
+
+                    b.ToTable("BookSongs");
+                });
+
+            modelBuilder.Entity("Generita.Domain.Models.Author", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Nationality")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("age")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Authors", (string)null);
+                });
+
+            modelBuilder.Entity("Generita.Domain.Models.Book", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Access")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("AuthorId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("CategoryId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Cover")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("FilePath")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("ImagePath")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateOnly>("PublishedDate")
+                        .HasColumnType("date");
+
+                    b.Property<string>("Synopsis")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AuthorId");
+
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("Books", (string)null);
+                });
+
+            modelBuilder.Entity("Generita.Domain.Models.BookCategory", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("CategoryName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("BookCategories", (string)null);
+                });
+
+            modelBuilder.Entity("Generita.Domain.Models.BookLikes", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("BookId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreateAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BookId");
+
+                    b.HasIndex("UserId", "BookId")
+                        .IsUnique();
+
+                    b.ToTable("BookLikes", (string)null);
+                });
+
+            modelBuilder.Entity("Generita.Domain.Models.Entity", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid?>("AuthorId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("MusicId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("type")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AuthorId");
+
+                    b.HasIndex("MusicId");
+
+                    b.ToTable("Entity", (string)null);
+                });
+
+            modelBuilder.Entity("Generita.Domain.Models.EntityInstances", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("EntityId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("ParagraphId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("Position")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("sample")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EntityId");
+
+                    b.HasIndex("ParagraphId");
+
+                    b.ToTable("EntityInstances", (string)null);
+                });
+
+            modelBuilder.Entity("Generita.Domain.Models.Jobs", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("AuthorId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("BookId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("JobStatus")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AuthorId");
+
+                    b.HasIndex("BookId");
+
+                    b.ToTable("Jobs", (string)null);
+                });
+
+            modelBuilder.Entity("Generita.Domain.Models.Paragraph", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("AgeClass")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("BookId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("MusicSense")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("SongId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BookId");
+
+                    b.HasIndex("SongId");
+
+                    b.ToTable("Paragraphs", (string)null);
+                });
+
+            modelBuilder.Entity("Generita.Domain.Models.Plans", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("Duration")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int>("Price")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Plans", (string)null);
+                });
+
+            modelBuilder.Entity("Generita.Domain.Models.RefreshTokens", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("ExpiresOnUtc")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Token")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Token")
+                        .IsUnique();
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("RefreshTokens", (string)null);
+                });
+
+            modelBuilder.Entity("Generita.Domain.Models.Songs", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("AgeClasses")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreateAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<TimeSpan>("Duration")
+                        .HasColumnType("interval");
+
+                    b.Property<string>("EntityType")
+                        .HasColumnType("text");
+
+                    b.Property<string>("FilePath")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("MusicSense")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Owner")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("UpdateAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Songs", (string)null);
+                });
+
+            modelBuilder.Entity("Generita.Domain.Models.Transactions", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreateAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("PlanId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("Price")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("States")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PlanId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Transactions", (string)null);
+                });
+
+            modelBuilder.Entity("Generita.Domain.Models.User", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreateAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("UpdateAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
+
+                    b.ToTable("Users", (string)null);
+                });
+
+            modelBuilder.Entity("Generita.Domain.Models.UserBook", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("AddedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("BookId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BookId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserBook", (string)null);
+                });
+
+            modelBuilder.Entity("Generita.Domain.Models.Views", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("BookId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("ViewAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BookId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Views", (string)null);
+                });
+
+            modelBuilder.Entity("BookSongs", b =>
+                {
+                    b.HasOne("Generita.Domain.Models.Book", null)
+                        .WithMany()
+                        .HasForeignKey("BooksId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Generita.Domain.Models.Songs", null)
+                        .WithMany()
+                        .HasForeignKey("SongsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Generita.Domain.Models.Author", b =>
+                {
+                    b.OwnsOne("Generita.Domain.ValueObjects.Name", "Name", b1 =>
+                        {
+                            b1.Property<Guid>("AuthorId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<string>("LastName")
+                                .IsRequired()
+                                .HasMaxLength(30)
+                                .HasColumnType("character varying(30)");
+
+                            b1.Property<string>("firtName")
+                                .IsRequired()
+                                .HasMaxLength(30)
+                                .HasColumnType("character varying(30)");
+
+                            b1.HasKey("AuthorId");
+
+                            b1.ToTable("Authors");
+
+                            b1.WithOwner()
+                                .HasForeignKey("AuthorId");
+                        });
+
+                    b.Navigation("Name")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Generita.Domain.Models.Book", b =>
+                {
+                    b.HasOne("Generita.Domain.Models.Author", "Author")
+                        .WithMany("Books")
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Generita.Domain.Models.BookCategory", "BookCategory")
+                        .WithMany("Books")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Author");
+
+                    b.Navigation("BookCategory");
+                });
+
+            modelBuilder.Entity("Generita.Domain.Models.BookLikes", b =>
+                {
+                    b.HasOne("Generita.Domain.Models.Book", "Book")
+                        .WithMany("BookLikes")
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Generita.Domain.Models.User", "User")
+                        .WithMany("BookLikes")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Book");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Generita.Domain.Models.Entity", b =>
+                {
+                    b.HasOne("Generita.Domain.Models.Author", null)
+                        .WithMany("Entities")
+                        .HasForeignKey("AuthorId");
+
+                    b.HasOne("Generita.Domain.Models.Songs", "Songs")
+                        .WithMany("Entity")
+                        .HasForeignKey("MusicId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Songs");
+                });
+
+            modelBuilder.Entity("Generita.Domain.Models.EntityInstances", b =>
+                {
+                    b.HasOne("Generita.Domain.Models.Entity", "Entity")
+                        .WithMany("Instances")
+                        .HasForeignKey("EntityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Generita.Domain.Models.Paragraph", "Paragraph")
+                        .WithMany("EntityInstances")
+                        .HasForeignKey("ParagraphId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Entity");
+
+                    b.Navigation("Paragraph");
+                });
+
+            modelBuilder.Entity("Generita.Domain.Models.Jobs", b =>
+                {
+                    b.HasOne("Generita.Domain.Models.Author", "Author")
+                        .WithMany("jobs")
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Generita.Domain.Models.Book", "Book")
+                        .WithMany("Jobs")
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Author");
+
+                    b.Navigation("Book");
+                });
+
+            modelBuilder.Entity("Generita.Domain.Models.Paragraph", b =>
+                {
+                    b.HasOne("Generita.Domain.Models.Book", "Book")
+                        .WithMany("Paragraphs")
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Generita.Domain.Models.Songs", "Songs")
+                        .WithMany("Paragraphs")
+                        .HasForeignKey("SongId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Book");
+
+                    b.Navigation("Songs");
+                });
+
+            modelBuilder.Entity("Generita.Domain.Models.RefreshTokens", b =>
+                {
+                    b.HasOne("Generita.Domain.Models.User", "User")
+                        .WithMany("RefreshTokens")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Generita.Domain.Models.Transactions", b =>
+                {
+                    b.HasOne("Generita.Domain.Models.Plans", "Plan")
+                        .WithMany("Transactions")
+                        .HasForeignKey("PlanId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Generita.Domain.Models.User", "User")
+                        .WithMany("Transactions")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Plan");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Generita.Domain.Models.UserBook", b =>
+                {
+                    b.HasOne("Generita.Domain.Models.Book", "Book")
+                        .WithMany("UserBooks")
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Generita.Domain.Models.User", "User")
+                        .WithMany("UserBooks")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Book");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Generita.Domain.Models.Views", b =>
+                {
+                    b.HasOne("Generita.Domain.Models.Book", "Book")
+                        .WithMany("Views")
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Generita.Domain.Models.User", "User")
+                        .WithMany("Views")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Book");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Generita.Domain.Models.Author", b =>
+                {
+                    b.Navigation("Books");
+
                     b.Navigation("Entities");
+
+                    b.Navigation("jobs");
+                });
+
+            modelBuilder.Entity("Generita.Domain.Models.Book", b =>
+                {
+                    b.Navigation("BookLikes");
+
+                    b.Navigation("Jobs");
+
+                    b.Navigation("Paragraphs");
+
+                    b.Navigation("UserBooks");
+
+                    b.Navigation("Views");
+                });
+
+            modelBuilder.Entity("Generita.Domain.Models.BookCategory", b =>
+                {
+                    b.Navigation("Books");
+                });
+
+            modelBuilder.Entity("Generita.Domain.Models.Entity", b =>
+                {
+                    b.Navigation("Instances");
+                });
+
+            modelBuilder.Entity("Generita.Domain.Models.Paragraph", b =>
+                {
+                    b.Navigation("EntityInstances");
                 });
 
             modelBuilder.Entity("Generita.Domain.Models.Plans", b =>
@@ -7570,6 +9627,7 @@ namespace Generita.Infrustructure.Persistance
 
         }
         public DbSet<Author> Author { get; set; }
+        public DbSet<Jobs> Jobs { get; set; }
         public DbSet<Book> Book { get; set; }
         public DbSet<Entity> Entity { get; set; }
         public DbSet<Transactions> Transactions { get; set; }
@@ -7582,6 +9640,7 @@ namespace Generita.Infrustructure.Persistance
         public DbSet<Views> Views { get; set; }
         public DbSet<Songs> Songs { get; set; }
         public DbSet<RefreshTokens> RefreshTokens { get; set; }
+        public DbSet<EntityInstances> EntityInstances { get; set; }
         public DbSet<Plans> Plans { get; set; }
         //public DbSet<BookSong> BookSong { get; set; }
         //public DbSet<UserPlan> UserPlan { get; set; }
@@ -7791,14 +9850,75 @@ namespace Generita.Infrustructure.Persistance.Configurations
         {
             builder.ToTable("Entity");
             builder.HasKey(x => x.Id);
-            builder.HasOne(x => x.Paragraph)
-                .WithMany(x => x.Entities)
-                .HasForeignKey(x => x.ParagraphId);
             builder.HasOne(x => x.Songs)
                 .WithMany(x => x.Entity)
                 .HasForeignKey(x => x.MusicId);
 
 
+        }
+    }
+}
+```
+## File: src\Generita.Infrustructure\Persistance\Configurations\EntityInstancesConfig.cs
+```csharp
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+using Generita.Domain.Models;
+
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+
+namespace Generita.Infrustructure.Persistance.Configurations
+{
+    internal class EntityInstancesConfig : IEntityTypeConfiguration<EntityInstances>
+    {
+        public void Configure(EntityTypeBuilder<EntityInstances> builder)
+        {
+            builder.ToTable("EntityInstances");
+            builder.HasKey(x => x.Id);
+            builder.HasOne(x => x.Paragraph)
+                .WithMany(x => x.EntityInstances)
+                .HasForeignKey(x => x.ParagraphId);
+            builder.HasOne(x => x.Entity)
+                .WithMany(x => x.Instances)
+                .HasForeignKey(x => x.EntityId);
+        }
+    }
+}
+```
+## File: src\Generita.Infrustructure\Persistance\Configurations\JobConfig.cs
+```csharp
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+using Generita.Domain.Models;
+
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+
+namespace Generita.Infrustructure.Persistance.Configurations
+{
+    internal class JobConfig : IEntityTypeConfiguration<Jobs>
+    {
+        public void Configure(EntityTypeBuilder<Jobs> builder)
+        {
+            builder.ToTable("Jobs");
+            builder.HasKey(x => x.Id);
+            builder.Property(x => x.JobStatus).HasConversion<string>();
+            builder.HasOne(x => x.Author)
+                .WithMany(x => x.jobs)
+                .HasForeignKey(x => x.AuthorId);
+            builder.HasOne(x => x.Book)
+                .WithMany(x => x.Jobs)
+                .HasForeignKey(x => x.BookId);
         }
     }
 }
@@ -7831,7 +9951,7 @@ namespace Generita.Infrustructure.Persistance.Configurations
             builder.HasOne(x => x.Songs)
                 .WithMany(x => x.Paragraphs)
                 .HasForeignKey(x => x.SongId);
-            builder.HasMany(x => x.Entities)
+            builder.HasMany(x => x.EntityInstances)
                 .WithOne(x => x.Paragraph);
             builder.Property(x => x.MusicSense)
                 .HasConversion<string>();
@@ -7953,6 +10073,9 @@ namespace Generita.Infrustructure.Persistance.Configurations
                 .HasConversion<string>();
             builder.HasMany(x => x.Books)
                 .WithMany(x => x.Songs);
+            builder.Property(x => x.MusicSense)
+                .HasConversion<string>();
+            builder.Property(x=>x.AgeClasses).HasConversion<string>();
             //builder.HasOne(x => x.Category)
             //    .WithMany(x => x.Songs)
             //    .HasForeignKey(x => x.CategoryId);
@@ -8358,7 +10481,7 @@ namespace Generita.Infrustructure.Persistance.Repositories
             if (entity is null)
                 return false;
 
-             _context.Remove(id);
+             _context.Remove(entity);
             return true;
         }
 
@@ -8385,6 +10508,80 @@ namespace Generita.Infrustructure.Persistance.Repositories
         public async Task<Entity> GetByType(string type)
         {
             return await _context.Entity.Include(x => x.Songs).FirstOrDefaultAsync(x => x.type == type);
+        }
+
+        public async Task AddEntityInstancesRange(ICollection<EntityInstances> entity)
+        {
+            await _context.EntityInstances.AddRangeAsync(entity);
+        }
+    }
+}
+```
+## File: src\Generita.Infrustructure\Persistance\Repositories\JobsRepository.cs
+```csharp
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+using Generita.Application.Common.Interfaces.Repository;
+using Generita.Domain.Common.Interfaces;
+using Generita.Domain.Models;
+
+using Microsoft.EntityFrameworkCore;
+
+namespace Generita.Infrustructure.Persistance.Repositories
+{
+    public class JobsRepository : IJobRepository
+    {
+        private GeneritaDbContext _db;
+        private IUnitOfWork _unitOfWork;
+
+        public JobsRepository(IUnitOfWork unitOfWork)
+        {
+            _unitOfWork = unitOfWork;
+        }
+
+        public async Task Add(Jobs value)
+        {
+            await _db.AddAsync(value);
+        }
+
+        public async Task<bool> Delete(Guid id)
+        {
+            var job=await  GetById(id);
+            if (job == null) 
+                return false;
+            else
+            {
+                _db.Jobs.Remove(job);
+                return true;
+            }
+
+        }
+
+        public async Task<ICollection<Jobs>> GetAll()
+        {
+            return await _db.Jobs.ToListAsync();
+        }
+
+        public async Task<Jobs> GetById(Guid id)
+        {
+            return await _db.Jobs.FirstOrDefaultAsync(x => x.Id == id);
+                
+        }
+
+        public Task<bool> Update(Jobs value)
+        {
+            _db.Update(value);
+            return Task.FromResult(true);
+        }
+        public async Task<Jobs> GetByBookId(Guid bookId)
+        {
+            return await _db.Jobs.FirstOrDefaultAsync(x => x.BookId == bookId);
+
         }
     }
 }
@@ -8446,11 +10643,15 @@ namespace Generita.Infrustructure.Persistance.Repositories
         }
         public async Task<ICollection<Paragraph>> GetByBookId(Guid bookId)
         {
-            return await _context.Paragraph.Include(x=>x.Entities).Where(x=>x.BookId == bookId).ToListAsync();
+            return await _context.Paragraph.Include(x=>x.EntityInstances).Where(x=>x.BookId == bookId).ToListAsync();
         }
         public async Task<Paragraph> GetBySenseAndAge(MusicSense  sense,AgeClasses age)
         {
             return await _context.Paragraph.Include(x=>x.Songs).FirstOrDefaultAsync(x => x.AgeClass == age && x.MusicSense == sense);
+        }
+        public async Task AddList(IEnumerable<Paragraph> list)
+        {
+            await _context.Paragraph.AddRangeAsync(list);
         }
     }
 }
@@ -8638,11 +10839,13 @@ namespace Generita.Infrustructure.Persistance.Repositories
 ```csharp
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 using Generita.Application.Common.Interfaces.Repository;
+using Generita.Domain.Common.Enums;
 using Generita.Domain.Models;
 
 using Microsoft.EntityFrameworkCore;
@@ -8686,6 +10889,14 @@ namespace Generita.Infrustructure.Persistance.Repositories
         {
             _dbContext.Songs.Update(value);
             return Task.FromResult(true);
+        }
+        public async Task<Songs> GetBySenseAndAge(MusicSense musicSense,AgeClasses ageClasses)
+        {
+            return await _dbContext.Songs.FirstOrDefaultAsync(x=>x.AgeClasses==ageClasses && x.MusicSense==musicSense);
+        }
+        public async Task<Songs> GetByEntityType(string type)
+        {
+            return await _dbContext.Songs.FirstOrDefaultAsync(x=>x.EntityType==type);
         }
     }
 }
@@ -8852,6 +11063,263 @@ namespace Generita.Infrustructure.Persistance.Repositories
     }
 }
 ```
+## File: src\Generita.Infrustructure\Persistance\Services\BookServices.cs
+```csharp
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Http.Json;
+using System.Text;
+using System.Text.Json;
+using System.Threading.Tasks;
+
+using ErrorOr;
+
+using Generita.Application.Common.Dtos;
+using Generita.Application.Common.Dtos.ApiDtos;
+using Generita.Application.Common.Services;
+namespace Generita.Infrustructure.Persistance.Services
+{
+    internal class BookServices : IBookService
+    {
+        private HttpClient _httpClient;
+
+        public BookServices(HttpClient httpClient)
+        {
+            _httpClient = httpClient;
+        }
+
+        public async Task<ErrorOr<Root>> DownloadResult(Guid jobId)
+        {
+            var response = await _httpClient.GetAsync($"/results/{jobId}/download");
+            //response.EnsureSuccessStatusCode();
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                string jsonContent = await response.Content.ReadAsStringAsync();
+                try
+                {
+                    var options = new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    };
+
+                    var result = JsonSerializer.Deserialize<Root>(jsonContent, options);
+
+                    if (result is null)
+                    {
+                        return Error.Failure(
+                            code: "Job.ParseError",
+                            description: "Failed to parse JSON result."
+                        );
+                    }
+
+                    return result;
+                }
+                catch (JsonException ex)
+                {
+                    return Error.Failure(
+                        code: "Job.JsonError",
+                        description: $"Invalid JSON format: {ex.Message}"
+                    );
+                }
+            }
+            else if (response.StatusCode == HttpStatusCode.BadRequest)
+            {
+                return Error.Validation(
+                    code: "Job.BadRequest",
+                    description: "Job is not completed yet!"
+                );
+            }
+            else if (response.StatusCode == HttpStatusCode.NotFound)
+            {
+                return Error.NotFound(
+                    code: "Job.NotFound",
+                    description: "Job ID not found or result doesnt found"
+                );
+            }
+            return Error.Failure(
+                code: "Job.Unknown",
+                description: $"Unexpected status code {response.StatusCode}"
+            );
+        }
+
+        public async Task<ErrorOr<GetJobStatusResponse>> GetJobStatus(Guid jobId)
+        {
+            var response = await _httpClient.GetAsync($"/results/{jobId}");
+            //response.EnsureSuccessStatusCode();
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                var dto = await response.Content.ReadFromJsonAsync<GetJobStatusResponse>();
+                return dto!;
+            }
+            if(response.StatusCode == HttpStatusCode.NotFound)
+            {
+                return Error.NotFound(
+                    code: "Job.NotFound",
+                    description: "Job ID not found"
+                    );
+            }
+            return Error.Failure(
+                code: "Job.Unknown",
+                description: $"Unexpected status code {response.StatusCode}"
+            );
+        }
+
+
+        public async Task<ErrorOr<PostJobResponse>> PostBook(PostJobRequest request)
+        {
+            var response = await _httpClient.PostAsJsonAsync($"/process", request);
+            response.EnsureSuccessStatusCode();
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                return await response.Content.ReadFromJsonAsync<PostJobResponse>();
+
+            }
+            if (response.StatusCode == HttpStatusCode.BadRequest)
+                return Error.Custom(402, code: "Job.BadRequest", description: "File format is not correct or is not readable");
+            if (response.StatusCode == HttpStatusCode.UnprocessableEntity)
+                return Error.Custom(422, code: "Job.UnprocessableEntity", description: "File format is not correct or is not readable");
+            return Error.Failure(
+            code: "Job.Unknown",
+            description: $"Unexpected status code {response.StatusCode}"
+            );
+        }
+    }
+}
+```
+## File: src\Generita.Infrustructure\Persistance\Services\JobStatusCheckerService.cs
+```csharp
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.NetworkInformation;
+using System.Text;
+using System.Threading.Tasks;
+
+using Generita.Application.Common.Interfaces.Repository;
+using Generita.Application.Common.Services;
+using Generita.Domain.Common.Enums;
+using Generita.Domain.Common.Interfaces;
+using Generita.Domain.Models;
+
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+
+namespace Generita.Infrustructure.Persistance.Services
+{
+    public class JobStatusCheckerService : BackgroundService
+    {
+        private readonly IServiceScopeFactory _scopeFactory;
+
+        public JobStatusCheckerService(IServiceScopeFactory scopeFactory)
+        {
+            _scopeFactory = scopeFactory;
+        }
+
+        protected async override Task ExecuteAsync(CancellationToken stoppingToken)
+        {
+            while (!stoppingToken.IsCancellationRequested)
+            {
+                using (var scope = _scopeFactory.CreateScope())
+                {
+                    var _context = scope.ServiceProvider.GetRequiredService<GeneritaDbContext>();
+                    var _bookService = scope.ServiceProvider.GetRequiredService<IBookService>();
+                    var _songRepository = scope.ServiceProvider.GetRequiredService<ISongRepository>();
+                    var _jobRepository = scope.ServiceProvider.GetRequiredService<IJobRepository>();
+                    var _paragraphRepository = scope.ServiceProvider.GetRequiredService<IParagraphRepository>();
+                    var _entityRepository = scope.ServiceProvider.GetRequiredService<IEntityRepository>();
+                    var _unitOfWork = scope.ServiceProvider.GetRequiredService<IUnitOfWork>();
+
+
+
+                    var jobs = await _context.Jobs
+                        .Where(j => j.JobStatus == JobStatus.Processing)
+                        .ToListAsync(stoppingToken);
+
+                    foreach (var job in jobs)
+                    {
+                        var status = await _bookService.GetJobStatus(job.Id);
+                        var book = await _jobRepository.GetById(job.Id);
+                        if (status.Value.Status == JobStatus.Completed)
+                        {
+                            var json = await _bookService.DownloadResult(job.Id);
+
+                            var res = json.Value;
+                            //var entities = res.Paragraphs.Select(e => new Paragraph(Guid.NewGuid(){ AgeClass=Enum.Parse<AgeClasses>(e.AudioTags.Age),});
+                            var paragraphTasks = res.Paragraphs.Select(async e =>
+                            {
+                                var age = Enum.Parse<AgeClasses>(e.AudioTags.Age);
+                                var sense = Enum.Parse<MusicSense>(e.AudioTags.Sense);
+                                var song = await _songRepository.GetBySenseAndAge(sense, age);
+                                var paragraphId = Guid.NewGuid();
+
+                                var entityTasks = e.Entities.Select(async x =>
+                                {
+                                    var entitySong = await _songRepository.GetByEntityType(x.Type);
+                                    return new EntityInstances(Guid.NewGuid())
+                                    {
+                                        ParagraphId = paragraphId,
+                                        Position = x.StartPos,
+                                        sample = x.Sample,
+                                    };
+                                });
+
+                                var entities = await Task.WhenAll(entityTasks);
+
+                                return new Paragraph(paragraphId)
+                                {
+                                    BookId = book.BookId,
+                                    AgeClass = age,
+                                    MusicSense = sense,
+                                    SongId = song.Id,
+                                    Text = e.Text,
+                                    EntityInstances = entities.ToList()
+                                };
+                            });
+                            //var paragraphs = res.Paragraphs.Select(p => new Paragraph { ... });
+                            var paragraphs = await Task.WhenAll(paragraphTasks);
+                            await _paragraphRepository.AddList(paragraphs);
+                            await _unitOfWork.CommitAsync(stoppingToken);
+                            //var canonicalEntities = res.CanonicalEntityBank.Select(c =>
+                            //{
+                            //    var canonicalEntityId = Guid.NewGuid();
+
+                            //    var variants = c.Value.Select(v => new CanonicalEntityVariant(Guid.NewGuid())
+                            //    {
+                            //        Value = v,
+                            //        CanonicalEntityId = canonicalEntityId
+                            //    }).ToList();
+
+                            //    return new CanonicalEntity(canonicalEntityId)
+                            //    {
+                            //        Type = c.Key,
+                            //        Variants = variants
+                            //    };
+                            //}).ToList();
+
+                            //await _entityRepository.AddCanonicalEntityRange(canonicalEntities);
+                            //await _unitOfWork.CommitAsync(stoppingToken);
+
+                            job.JobStatus = JobStatus.Completed;
+                            await _unitOfWork.CommitAsync(stoppingToken);
+                        }
+                        else if (status.Value.Status == JobStatus.Failed)
+                        {
+                            job.JobStatus = JobStatus.Failed;
+                            await _unitOfWork.CommitAsync(stoppingToken);
+                        }
+
+                    }
+                }
+                await Task.Delay(TimeSpan.FromHours(1), stoppingToken);
+            }
+        }
+    }
+}
+```
 ## File: src\Generita.Infrustructure\Authentication\TokenGenerator\JwtSettings.cs
 ```csharp
 ﻿using System;
@@ -8953,6 +11421,7 @@ public class Author:AggregateRoot
     public DateOnly BirthDate { get;}
     public int age { get; set; }
     public string Nationality { get; set;} 
+    public virtual ICollection<Jobs> jobs { get; set; }
     public virtual ICollection<Book> Books { get; set; }
     public virtual ICollection<Entity> Entities { get; set; }
 }
@@ -8961,6 +11430,7 @@ public class Author:AggregateRoot
 ```csharp
 ﻿using Generita.Domain.Common.Abstractions;
 using Generita.Domain.Common.Enums;
+using Generita.Domain.Common.Interfaces;
 
 namespace Generita.Domain.Models;
 
@@ -8986,6 +11456,12 @@ public class Book:AggregateRoot
     public virtual ICollection<Views> Views { get; set; }
     public virtual ICollection<UserBook> UserBooks { get; set; }
     public virtual ICollection<BookLikes> BookLikes { get; set; }
+    public virtual ICollection<Jobs> Jobs { get; set; }
+
+    public void AddDomainEvent(IDomainEvent @event)
+        => _domainEvents.Add(@event);
+
+    public void ClearDomainEvents() => _domainEvents.Clear();
 }
 ```
 ## File: src\Generita.Domain\Models\BookCategory.cs
@@ -9166,14 +11642,66 @@ public class Entity:BaseEntity
     }
 
     public string type { get; set; }
-    public string sample { get; set; }
-    public int Position { get; set; }
-    public Guid ParagraphId { get; set; }
     public Guid MusicId { get; set; }
-    public virtual Paragraph Paragraph { get; set; }
     public virtual Songs Songs { get; set; }
-
+    public virtual ICollection<EntityInstances> Instances { get; set; }
     //public virtual Songs Songs { get; set; }
+}
+```
+## File: src\Generita.Domain\Models\EntityInstances.cs
+```csharp
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Cryptography.X509Certificates;
+using System.Text;
+using System.Threading.Tasks;
+
+using Generita.Domain.Common.Abstractions;
+
+namespace Generita.Domain.Models
+{
+    public class EntityInstances : BaseEntity
+    {
+        public EntityInstances(Guid id) : base(id)
+        {
+            
+        }
+        public string sample {  get; set; }
+        public Guid EntityId { get; set; }
+        public Guid ParagraphId { get; set; }
+        public int Position {  get; set; }
+        public virtual Entity Entity { get; set; }
+        public virtual Paragraph Paragraph { get; set; }
+    }
+}
+```
+## File: src\Generita.Domain\Models\Jobs.cs
+```csharp
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+using Generita.Domain.Common.Abstractions;
+using Generita.Domain.Common.Enums;
+
+namespace Generita.Domain.Models
+{
+    public class Jobs:BaseEntity
+    {
+        public Jobs(Guid id) : base(id)
+        {
+        }
+
+        public Guid AuthorId { get; set; }
+        public Guid BookId { get; set; }
+        public JobStatus JobStatus { get; set; }
+        public virtual Author Author { get; set; }
+        public virtual Book Book { get; set; }
+
+    }
 }
 ```
 ## File: src\Generita.Domain\Models\Paragraph.cs
@@ -9201,7 +11729,7 @@ namespace Generita.Domain.Models
         public Book Book { get; set; } 
         public Guid SongId { get; set; }
         public Songs Songs { get; set; }
-        public ICollection<Entity> Entities { get; set; }
+        public ICollection<EntityInstances> EntityInstances { get; set; }
     }
 }
 ```
@@ -9280,6 +11808,7 @@ using System.Runtime.InteropServices.Marshalling;
 using System.Security.AccessControl;
 
 using Generita.Domain.Common.Abstractions;
+using Generita.Domain.Common.Enums;
 using Generita.Domain.Enums;
 using Generita.Domain.ValueObjects;
 
@@ -9298,6 +11827,9 @@ public class Songs:AggregateRoot
     public DateTime UpdateAt { get; set; }
     public string FilePath { get; set; }
     public OwnerShip Owner { get; set; }
+    public MusicSense MusicSense { get; set; }
+    public AgeClasses AgeClasses { get; set; }
+    public string? EntityType { get; set; }
     public ICollection<Paragraph> Paragraphs { get; set; }
     public ICollection<Entity> Entity { get; set; }
     public virtual ICollection<Book> Books { get; set; }
@@ -9541,6 +12073,25 @@ namespace Generita.Domain.Common.Enums
     }
 }
 ```
+## File: src\Generita.Domain\Common\Enums\JobStatus.cs
+```csharp
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Generita.Domain.Common.Enums
+{
+    public enum JobStatus
+    {
+        Processing,
+        Completed,
+        Failed,
+
+    }
+}
+```
 ## File: src\Generita.Domain\Common\Enums\MusicSense.cs
 ```csharp
 ﻿using System;
@@ -9594,6 +12145,29 @@ namespace Generita.Domain.Enums
         Cancelled,
         Pending
     }
+}
+```
+## File: src\Generita.Domain\Common\Events\BookUploadedDomainEvent.cs
+```csharp
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+using Generita.Domain.Common.Interfaces;
+
+namespace Generita.Domain.Common.Events
+{
+    //public class BookUploadedDomainEvent:IDomainEvent
+    //{
+    //        public PostJobRequest Job { get; set; }
+
+    //    public BookUploadedDomainEvent(PostJobRequest job)
+    //    {
+    //        Job = job;
+    //    }
+    //}
 }
 ```
 ## File: src\Generita.Domain\Common\Interfaces\IDomainEvent.cs
@@ -10210,6 +12784,25 @@ namespace Generita.Application.Dtos
     }
 }
 ```
+## File: src\Generita.Application\Common\Dtos\GetJobStatusResponse.cs
+```csharp
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+using Generita.Domain.Common.Enums;
+
+namespace Generita.Application.Common.Dtos
+{
+    public class GetJobStatusResponse
+    {
+        public Guid Job_id { get; set; }
+        public JobStatus Status { get; set; }
+    }
+}
+```
 ## File: src\Generita.Application\Common\Dtos\HomeBookDto.cs
 ```csharp
 ﻿using System;
@@ -10270,6 +12863,54 @@ namespace Generita.Application.Common.Dtos
         public string Text { get; set; }
         public AudioTagsDto AudioTags { get; set; }
         public ICollection<EntitiesDto> Entities { get; set; }
+    }
+}
+```
+## File: src\Generita.Application\Common\Dtos\PostJobRequest.cs
+```csharp
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+using Generita.Domain.Common.Enums;
+
+namespace Generita.Application.Common.Dtos
+{
+    public class PostJobRequest
+    {
+        public string? Title { get; set; }
+        public string classifier_driver { get; set; } = "nn";
+        public string? extractor_driver { get; set; } = "llm";
+        public float? confidence_threshold { get; set; } = 0.85f;
+        public IEnumerable<MusicSense>? allowed_senses { get; set; }
+        public IEnumerable<AgeClasses>? allowed_ages { get; set; }
+        public string? nn_checkpoint_path { get; set; } = "checkpoints/best-model.ckpt";
+        public string? llm_ollama_model { get; set; } = "phi4-mini";
+        public string? roast_model_path { get; set; } = "QA_RoBERTA_SQUADv2";
+        public IEnumerable<Dictionary<string, string>>? target_abstracts { get; set; }
+
+    }
+}
+```
+## File: src\Generita.Application\Common\Dtos\PostJobResponse.cs
+```csharp
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+using Generita.Domain.Common.Enums;
+
+namespace Generita.Application.Common.Dtos
+{
+    public class PostJobResponse
+    {
+        public Guid job_id { get; set; }
+        public JobStatus Status { get; set; }
+        public string message {  get; set; }
     }
 }
 ```
@@ -10465,6 +13106,30 @@ namespace Generita.Application.Common.Messaging
     }
 }
 ```
+## File: src\Generita.Application\Common\Services\IBookService.cs
+```csharp
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+using ErrorOr;
+
+using Generita.Application.Common.Dtos;
+using Generita.Application.Common.Dtos.ApiDtos;
+using Generita.Domain.Common.Enums;
+
+namespace Generita.Application.Common.Services
+{
+    public interface IBookService
+    {
+        Task<ErrorOr<GetJobStatusResponse>> GetJobStatus(Guid jobId);
+        Task<ErrorOr<Root>> DownloadResult(Guid jobId);
+        Task<ErrorOr<PostJobResponse>> PostBook(PostJobRequest request);
+    }
+}
+```
 ## File: src\Generita.Application\Common\Interfaces\Repository\IAuthorRepository.cs
 ```csharp
 ﻿using System;
@@ -10541,6 +13206,7 @@ namespace Generita.Application.Common.Interfaces.Repository
     {
         Task<Entity> GetByType(string type);
         Task<Entity> GetEntityByBookId(int bookId);
+        Task AddEntityInstancesRange(ICollection<EntityInstances> entity);
     }
 }
 ```
@@ -10566,6 +13232,24 @@ namespace Generita.Application.Common.Interfaces.Repository
     }
 }
 ```
+## File: src\Generita.Application\Common\Interfaces\Repository\IJobRepository.cs
+```csharp
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+using Generita.Domain.Models;
+
+namespace Generita.Application.Common.Interfaces.Repository
+{
+    public interface IJobRepository : IGenericRepository<Jobs>
+    {
+        Task<Jobs> GetByBookId(Guid bookId);
+    }
+}
+```
 ## File: src\Generita.Application\Common\Interfaces\Repository\IParagraphRepository.cs
 ```csharp
 ﻿using System;
@@ -10581,6 +13265,7 @@ namespace Generita.Application.Common.Interfaces.Repository
 {
     public interface IParagraphRepository : IGenericRepository<Paragraph>
     {
+        Task AddList(IEnumerable<Paragraph> list);
         Task<ICollection<Paragraph>> GetByBookId(Guid bookId);
         Task<Paragraph> GetBySenseAndAge(MusicSense sense, AgeClasses age);
     }
@@ -10647,12 +13332,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Generita.Domain.Common.Enums;
 using Generita.Domain.Models;
 
 namespace Generita.Application.Common.Interfaces.Repository
 {
-    public interface ISongRepository:IGenericRepository<Songs>
+    public interface ISongRepository : IGenericRepository<Songs>
     {
+        Task<Songs> GetByEntityType(string type);
+        Task<Songs> GetBySenseAndAge(MusicSense musicSense, AgeClasses ageClasses);
     }
 }
 ```
@@ -10698,7 +13386,157 @@ namespace Generita.Application.Common.Interfaces.Repository
     }
 }
 ```
-## File: src\Generita.Application\Books\Queries\GetBookById\GetBookByIdHandler.cs
+## File: src\Generita.Application\Common\Dtos\ApiDtos\DownloadResultEntity.cs
+```csharp
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Text.Json.Serialization;
+using System.Threading.Tasks;
+
+namespace Generita.Application.Common.Dtos.ApiDtos
+{
+    public class DownloadResultEntity
+    {
+        public string Type { get; set; }
+        public string Sample { get; set; }
+
+        // map start_pos -> StartPos
+        [JsonPropertyName("start_pos")]
+        public int StartPos { get; set; }
+    }
+}
+```
+## File: src\Generita.Application\Common\Dtos\ApiDtos\DownloadResultParagraph.cs
+```csharp
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+using Generita.Domain.Models;
+
+namespace Generita.Application.Common.Dtos.ApiDtos
+{
+    public class DownloadResultParagraph
+    {
+        public string Text { get; set; }
+       public AudioTagsDto AudioTags { get; set; }
+        public List<DownloadResultEntity> Entities { get; set; }
+    }
+}
+```
+## File: src\Generita.Application\Common\Dtos\ApiDtos\Root.cs
+```csharp
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Text.Json.Serialization;
+using System.Threading.Tasks;
+
+using Generita.Domain.Models;
+
+namespace Generita.Application.Common.Dtos.ApiDtos
+{
+    public class Root
+    {
+        public string Title { get; set; }
+
+        public List<DownloadResultParagraph> Paragraphs { get; set; }
+
+        // map canonical_entity_bank -> Dictionary<string, List<string>>
+        [JsonPropertyName("canonical_entity_bank")]
+        public Dictionary<string, List<string>> CanonicalEntityBank { get; set; }
+
+        // map job_id
+        [JsonPropertyName("job_id")]
+        public Guid JobId { get; set; }
+    }
+}
+```
+## File: src\Generita.Application\Authors\AddBook\AddBookCommand.cs
+```csharp
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Input;
+
+using Generita.Application.Common.Messaging;
+using Generita.Application.Dtos;
+
+using ICommand = Generita.Application.Common.Messaging.ICommand;
+
+namespace Generita.Application.Authors.AddBook
+{
+    public record AddBookCommand(AuthorAddBookDto Dto) : ICommand
+    {
+    }
+}
+```
+## File: src\Generita.Application\Authors\AddBook\AddBookCommandHandler.cs
+```csharp
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+using ErrorOr;
+
+using Generita.Application.Common.Dtos;
+using Generita.Application.Common.Interfaces.Repository;
+using Generita.Application.Common.Messaging;
+using Generita.Application.Common.Services;
+using Generita.Domain.Common.Interfaces;
+
+namespace Generita.Application.Authors.AddBook
+{
+    internal class AddBookCommandHandler : ICommandHandler<AddBookCommand>
+    {
+        private IBookRepository _bookRepository;
+        private IBookService _bookService;
+        private IUnitOfWork _unitOfWork;
+
+        public AddBookCommandHandler(IBookRepository bookRepository, IBookService bookService, IUnitOfWork unitOfWork)
+        {
+            _bookRepository = bookRepository;
+            _bookService = bookService;
+            _unitOfWork = unitOfWork;
+        }
+
+        public async Task<ErrorOr<Success>> Handle(AddBookCommand request, CancellationToken cancellationToken)
+        {
+            PostJobRequest jobRequest = new() { Title = request.Dto.Title, allowed_ages = request.Dto.AgeClasses, allowed_senses = request.Dto.MusicSense, target_abstracts = request.Dto.Entities };
+            var postresponse = await _bookService.PostBook(jobRequest);
+            if (postresponse.Errors.Any())
+                return postresponse.Errors;
+            var book = postresponse.Value;
+            throw new NotImplementedException();
+        }
+    }
+}
+```
+## File: src\Generita.Application\Authors\AddBook\AuthorAddBookDto.cs
+```csharp
+﻿using Generita.Domain.Common.Enums;
+
+namespace Generita.Application.Authors.AddBook
+{
+    public class AuthorAddBookDto
+    {
+        public string Title { get; set; }
+        public IEnumerable<AgeClasses> AgeClasses { get; set; }
+        public IEnumerable<MusicSense> MusicSense { get; set; }
+        public ICollection<Dictionary<string, string>> Entities { get; set; }
+    }
+}
+```
+## File: src\Generita.Application\Authors\Books\Queries\GetBookById\GetBookByIdHandler.cs
 ```csharp
 ﻿using System;
 using System.Collections.Generic;
@@ -10753,7 +13591,7 @@ namespace Generita.Application.Books.Queries.GetBookById
     }
 }
 ```
-## File: src\Generita.Application\Books\Queries\GetBookById\GetBookByIdQuery.cs
+## File: src\Generita.Application\Authors\Books\Queries\GetBookById\GetBookByIdQuery.cs
 ```csharp
 ﻿using System;
 using System.Collections.Generic;
@@ -10771,7 +13609,7 @@ namespace Generita.Application.Books.Queries.GetBookById
     }
 }
 ```
-## File: src\Generita.Application\Books\Queries\GetBookContent\BookConentResponse.cs
+## File: src\Generita.Application\Authors\Books\Queries\GetBookContent\BookConentResponse.cs
 ```csharp
 ﻿using System;
 using System.Collections.Generic;
@@ -10790,7 +13628,7 @@ namespace Generita.Application.Books.Queries.GetBookContent
     }
 }
 ```
-## File: src\Generita.Application\Books\Queries\GetBookContent\GetBookByContentHandler.cs
+## File: src\Generita.Application\Authors\Books\Queries\GetBookContent\GetBookByContentHandler.cs
 ```csharp
 ﻿using System;
 using System.Collections.Generic;
@@ -10826,27 +13664,39 @@ namespace Generita.Application.Books.Queries.GetBookContent
         {
             var book =await _bookRepository.GetById(request.bookId);
             var paragraphs = await _paragraphRepository.GetByBookId(request.bookId);
-            var result = new BookConentResponse()
+            var result = new BookConentResponse
             {
-                Title = book.Title,
-                Paragraphs = paragraphs.Select(paragraph =>
-                    new ParagraphDto()
+                Paragraphs = await Task.WhenAll(
+                    paragraphs.Select(async paragraph =>
                     {
-                        AudioTags = new AudioTagsDto
+                        var entities = await Task.WhenAll(
+                            paragraph.EntityInstances.Select(async entity =>
+                            {
+                                var entityFromDb = await _entityRepository.GetById(entity.EntityId);
+
+                                return new EntitiesDto
+                                {
+                                    Sample = entity.sample,
+                                    Start_pos = entity.Position,
+                                    Type = entityFromDb.type
+                                };
+                            })
+                        );
+
+                        return new ParagraphDto
                         {
-                            Age = paragraph.AgeClass.ToString(),
-                            Sense = paragraph.MusicSense.ToString()
-                        },
-                        Text = paragraph.Text,
-                        Entities = paragraph.Entities.Select(entity => new EntitiesDto
-                        {
-                            Sample = entity.sample,
-                            Start_pos = entity.Position,
-                            Type = entity.type
-                        }).ToList()
-                    }
-                ).ToList()
+                            AudioTags = new AudioTagsDto
+                            {
+                                Age = paragraph.AgeClass.ToString(),
+                                Sense = paragraph.MusicSense.ToString()
+                            },
+                            Text = paragraph.Text,
+                            Entities = entities.ToList()
+                        };
+                    })
+                )
             };
+
 
             return result;
 
@@ -10856,7 +13706,7 @@ namespace Generita.Application.Books.Queries.GetBookContent
     }
 }
 ```
-## File: src\Generita.Application\Books\Queries\GetBookContent\GetBookByContentQuery.cs
+## File: src\Generita.Application\Authors\Books\Queries\GetBookContent\GetBookByContentQuery.cs
 ```csharp
 ﻿using System;
 using System.Collections.Generic;
@@ -10875,7 +13725,7 @@ namespace Generita.Application.Books.Queries.GetBookContent
     }
 }
 ```
-## File: src\Generita.Application\Books\Queries\GetBookContent\GetBookContentValidator.cs
+## File: src\Generita.Application\Authors\Books\Queries\GetBookContent\GetBookContentValidator.cs
 ```csharp
 ﻿using System;
 using System.Collections.Generic;
@@ -10896,7 +13746,7 @@ namespace Generita.Application.Books.Queries.GetBookContent
     }
 }
 ```
-## File: src\Generita.Application\Books\Queries\SearchBook\SearchBookHandler.cs
+## File: src\Generita.Application\Authors\Books\Queries\SearchBook\SearchBookHandler.cs
 ```csharp
 ﻿using System;
 using System.Collections.Generic;
@@ -11051,7 +13901,7 @@ namespace Generita.Application.Books.Queries.SearchBook
     }
 }
 ```
-## File: src\Generita.Application\Books\Queries\SearchBook\SearchBookQuery.cs
+## File: src\Generita.Application\Authors\Books\Queries\SearchBook\SearchBookQuery.cs
 ```csharp
 ﻿using System;
 using System.Collections.Generic;
@@ -11070,7 +13920,7 @@ namespace Generita.Application.Books.Queries.SearchBook
     }
 }
 ```
-## File: src\Generita.Application\Books\Queries\SearchBook\SearchBookRequest.cs
+## File: src\Generita.Application\Authors\Books\Queries\SearchBook\SearchBookRequest.cs
 ```csharp
 ﻿using System;
 using System.Collections.Generic;
@@ -11089,7 +13939,7 @@ namespace Generita.Application.Books.Queries.SearchBook
     }
 }
 ```
-## File: src\Generita.Application\Books\Queries\SearchBook\SearchBookValidator.cs
+## File: src\Generita.Application\Authors\Books\Queries\SearchBook\SearchBookValidator.cs
 ```csharp
 ﻿using System;
 using System.Collections.Generic;
@@ -11118,7 +13968,7 @@ namespace Generita.Application.Books.Queries.SearchBook
     }
 }
 ```
-## File: src\Generita.Application\Books\Queries\SearchBook\SearchMode.cs
+## File: src\Generita.Application\Authors\Books\Queries\SearchBook\SearchMode.cs
 ```csharp
 ﻿using System;
 using System.Collections.Generic;
@@ -11137,7 +13987,7 @@ namespace Generita.Application.Books.Queries.SearchBook
     }
 }
 ```
-## File: src\Generita.Application\Books\Queries\SearchBook\SearchResultOrder.cs
+## File: src\Generita.Application\Authors\Books\Queries\SearchBook\SearchResultOrder.cs
 ```csharp
 ﻿using System;
 using System.Collections.Generic;
@@ -11158,7 +14008,7 @@ namespace Generita.Application.Books.Queries.SearchBook
     }
 }
 ```
-## File: src\Generita.Application\Books\Commands\AddBook\AddBookCommand.cs
+## File: src\Generita.Application\Authors\Books\Commands\AddBook\AddBookCommand.cs
 ```csharp
 ﻿using System;
 using System.Collections.Generic;
@@ -11176,7 +14026,7 @@ namespace Generita.Application.Books.Commands.AddBook
     }
 }
 ```
-## File: src\Generita.Application\Books\Commands\AddBook\AddBookHandler.cs
+## File: src\Generita.Application\Authors\Books\Commands\AddBook\AddBookHandler.cs
 ```csharp
 ﻿using System;
 using System.Collections.Generic;
@@ -11222,7 +14072,7 @@ namespace Generita.Application.Books.Commands.AddBook
     }
 }
 ```
-## File: src\Generita.Application\Books\Commands\RemoveBook\RemoveBookCommand.cs
+## File: src\Generita.Application\Authors\Books\Commands\RemoveBook\RemoveBookCommand.cs
 ```csharp
 ﻿using System;
 using System.Collections.Generic;
@@ -11239,7 +14089,7 @@ namespace Generita.Application.Books.Commands.RemoveBook
     }
 }
 ```
-## File: src\Generita.Application\Books\Commands\RemoveBook\RemoveBookHandler.cs
+## File: src\Generita.Application\Authors\Books\Commands\RemoveBook\RemoveBookHandler.cs
 ```csharp
 ﻿using System;
 using System.Collections.Generic;
@@ -11280,7 +14130,7 @@ namespace Generita.Application.Books.Commands.RemoveBook
     }
 }
 ```
-## File: src\Generita.Application\Books\Commands\UpdateBook\UpdateBookCommand.cs
+## File: src\Generita.Application\Authors\Books\Commands\UpdateBook\UpdateBookCommand.cs
 ```csharp
 ﻿using System;
 using System.Collections.Generic;
@@ -11297,7 +14147,7 @@ namespace Generita.Application.Books.Commands.UpdateBook
     }
 }
 ```
-## File: src\Generita.Application\Books\Commands\UpdateBook\UpdateBookHandler.cs
+## File: src\Generita.Application\Authors\Books\Commands\UpdateBook\UpdateBookHandler.cs
 ```csharp
 ﻿using System;
 using System.Collections.Generic;
@@ -12009,6 +14859,7 @@ namespace Generita.Api.Controllers
 ﻿using Generita.Application.Audios.Queries.GetEntityAudioTags;
 using Generita.Application.Audios.Queries.GetParagraphAudioTags;
 using Generita.Application.Common.Dtos;
+using Generita.Application.Dtos;
 
 using MediatR;
 
@@ -12030,6 +14881,10 @@ namespace Generita.Api.Controllers
             _mediator = mediator;
         }
         [HttpGet("Audio/tags")]
+        [ProducesResponseType(typeof(AudioTagsResponse), StatusCodes.Status200OK)]
+
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+
         public async Task<IActionResult> GetAudioTags([FromQuery] string age, [FromQuery] string sense)
         {
             AudioTagsRequest model = new()
@@ -12042,6 +14897,9 @@ namespace Generita.Api.Controllers
             return result.Match(Ok, Problem);
         }
         [HttpGet("Audio/entity")]
+        [ProducesResponseType(typeof(AudioTagsResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+
         public async Task<IActionResult> GetEntityTags([FromQuery] string type)
         {
             var query=new GetEntityAudioQuery(type);
@@ -12085,6 +14943,9 @@ namespace Generita.Api.Controllers
         }
 
         [HttpPost]
+        [ProducesResponseType(typeof(RegisterResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
         public async Task<IActionResult> Register([FromBody]RegisterDto registerDto)
         {
             var command=new RegisterCommand(registerDto);
@@ -12092,6 +14953,9 @@ namespace Generita.Api.Controllers
             return result.Match(Ok, Problem);
         }
         [HttpPost]
+        [ProducesResponseType(typeof(LoginResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<IActionResult> Login([FromBody] LoginDto loginDto)
         {
             var command=new LoginCommand(loginDto);
@@ -12099,6 +14963,8 @@ namespace Generita.Api.Controllers
             return result.Match(Ok, Problem);
         }
         [HttpPost]
+        [ProducesResponseType(typeof(RefreshResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public async Task<IActionResult> Refresh(RefreshRequest refreshRequest)
         {
             var command = new RefreshCommand(refreshRequest);
@@ -12107,6 +14973,9 @@ namespace Generita.Api.Controllers
         }
         [HttpGet]
         [Authorize]
+        [ProducesResponseType(typeof(MeResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+
         public async Task<IActionResult> Me()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -12124,6 +14993,7 @@ namespace Generita.Api.Controllers
 using Generita.Application.Books.Queries.GetBookContent;
 using Generita.Application.Books.Queries.SearchBook;
 using Generita.Application.Common.Dtos;
+using Generita.Application.Dtos;
 
 using MediatR;
 
@@ -12144,8 +15014,9 @@ namespace Generita.Api.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet("search")]
+        [HttpPost("search")]
         [Authorize]
+        [ProducesResponseType(typeof(GetBookDto), StatusCodes.Status200OK)]
         public async Task<IActionResult> Search([FromQuery(Name = "q")] string Name,SearchBookDto searchBook)
         {
 
@@ -12162,7 +15033,8 @@ namespace Generita.Api.Controllers
         }
         [HttpGet("{id}")]
         [Authorize]
-
+        [ProducesResponseType(typeof(GetBookDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetBookById(Guid id) 
         {
             var query = new GetBookByIdQuery(id);
@@ -12170,6 +15042,10 @@ namespace Generita.Api.Controllers
             return result.Match(Ok,Problem);
         }
         [HttpGet("{bookId}/content")]
+        [ProducesResponseType(typeof(BookConentResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+
         public async Task<IActionResult> GetBookContent(Guid bookId)
         {
             var query = new GetBookByContentQuery(bookId);
@@ -12204,6 +15080,8 @@ namespace Generita.Api.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType(typeof(HomeResponse), StatusCodes.Status200OK)]
+
         public async Task<IActionResult> Home()
         {
             var query = new HomeQuery();
@@ -12219,6 +15097,7 @@ namespace Generita.Api.Controllers
 ﻿using System.Security.Claims;
 
 using Generita.Application.Common.Dtos;
+using Generita.Application.Dtos;
 using Generita.Application.Users.Commands.AddBookToLibrary;
 using Generita.Application.Users.Commands.RemvoeBookFromLibrary;
 using Generita.Domain.Models;
@@ -12243,6 +15122,12 @@ namespace Generita.Api.Controllers
         }
 
         [HttpPost("Library")]
+        [ProducesResponseType(typeof(AddUserLibrarayResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+
+
         [Authorize]
         public async Task<IActionResult> AddToLibrary([FromBody]AddTolibraryControllerDto dto)
         {
@@ -12258,6 +15143,10 @@ namespace Generita.Api.Controllers
 
         }
         [HttpDelete("Library/{bookId}")]
+        [ProducesResponseType(typeof(RegisterResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+
         public async Task<IActionResult> Library([FromRoute] Guid bookId)
         {
              var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);

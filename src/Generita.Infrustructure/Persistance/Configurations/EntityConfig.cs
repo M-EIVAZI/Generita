@@ -17,9 +17,6 @@ namespace Generita.Infrustructure.Persistance.Configurations
         {
             builder.ToTable("Entity");
             builder.HasKey(x => x.Id);
-            builder.HasOne(x => x.Paragraph)
-                .WithMany(x => x.Entities)
-                .HasForeignKey(x => x.ParagraphId);
             builder.HasOne(x => x.Songs)
                 .WithMany(x => x.Entity)
                 .HasForeignKey(x => x.MusicId);

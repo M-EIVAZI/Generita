@@ -5,7 +5,6 @@ using System.Net.NetworkInformation;
 using System.Text;
 using System.Threading.Tasks;
 
-using Generita.Application.Common.Interfaces;
 using Generita.Application.Common.Interfaces.Repository;
 using Generita.Application.Common.Services;
 using Generita.Domain.Common.Enums;
@@ -42,7 +41,6 @@ namespace Generita.Infrustructure.Persistance.Services
                     var _entityRepository = scope.ServiceProvider.GetRequiredService<IEntityRepository>();
                     var _unitOfWork = scope.ServiceProvider.GetRequiredService<IUnitOfWork>();
 
-                    // کل پردازش داخل scope انجام می‌شه
 
 
                     var jobs = await _context.Jobs
@@ -69,13 +67,11 @@ namespace Generita.Infrustructure.Persistance.Services
                                 var entityTasks = e.Entities.Select(async x =>
                                 {
                                     var entitySong = await _songRepository.GetByEntityType(x.Type);
-                                    return new Entity(Guid.NewGuid())
+                                    return new EntityInstances(Guid.NewGuid())
                                     {
-                                        MusicId = entitySong.Id,
                                         ParagraphId = paragraphId,
                                         Position = x.StartPos,
                                         sample = x.Sample,
-                                        type = x.Type,
                                     };
                                 });
 
@@ -88,32 +84,32 @@ namespace Generita.Infrustructure.Persistance.Services
                                     MusicSense = sense,
                                     SongId = song.Id,
                                     Text = e.Text,
-                                    Entities = entities.ToList()
+                                    EntityInstances = entities.ToList()
                                 };
                             });
                             //var paragraphs = res.Paragraphs.Select(p => new Paragraph { ... });
                             var paragraphs = await Task.WhenAll(paragraphTasks);
                             await _paragraphRepository.AddList(paragraphs);
                             await _unitOfWork.CommitAsync(stoppingToken);
-                            var canonicalEntities = res.CanonicalEntityBank.Select(c =>
-                            {
-                                var canonicalEntityId = Guid.NewGuid();
+                            //var canonicalEntities = res.CanonicalEntityBank.Select(c =>
+                            //{
+                            //    var canonicalEntityId = Guid.NewGuid();
 
-                                var variants = c.Value.Select(v => new CanonicalEntityVariant(Guid.NewGuid())
-                                {
-                                    Value = v,
-                                    CanonicalEntityId = canonicalEntityId
-                                }).ToList();
+                            //    var variants = c.Value.Select(v => new CanonicalEntityVariant(Guid.NewGuid())
+                            //    {
+                            //        Value = v,
+                            //        CanonicalEntityId = canonicalEntityId
+                            //    }).ToList();
 
-                                return new CanonicalEntity(canonicalEntityId)
-                                {
-                                    Type = c.Key,
-                                    Variants = variants
-                                };
-                            }).ToList();
+                            //    return new CanonicalEntity(canonicalEntityId)
+                            //    {
+                            //        Type = c.Key,
+                            //        Variants = variants
+                            //    };
+                            //}).ToList();
 
-                            await _entityRepository.AddCanonicalEntityRange(canonicalEntities);
-                            await _unitOfWork.CommitAsync(stoppingToken);
+                            //await _entityRepository.AddCanonicalEntityRange(canonicalEntities);
+                            //await _unitOfWork.CommitAsync(stoppingToken);
 
                             job.JobStatus = JobStatus.Completed;
                             await _unitOfWork.CommitAsync(stoppingToken);

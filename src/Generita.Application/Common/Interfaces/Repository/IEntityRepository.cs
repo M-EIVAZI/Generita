@@ -12,6 +12,6 @@ namespace Generita.Application.Common.Interfaces.Repository
     {
         Task<Entity> GetByType(string type);
         Task<Entity> GetEntityByBookId(int bookId);
-        Task AddCanonicalEntityRange(ICollection<CanonicalEntity> entity);
+        Task AddEntityInstancesRange(ICollection<EntityInstances> entity);
     }
 }

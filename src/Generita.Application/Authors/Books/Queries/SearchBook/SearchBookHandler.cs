@@ -55,7 +55,7 @@ namespace Generita.Application.Books.Queries.SearchBook
                         {
                             Id = book.Id,
                             Title = book.Title,
-                            Author = author.Name.firtName + ' ' + author.Name.LastName,
+                            Author = author.Name,
                             Cover = book.Cover,
                             access = book.Access.ToString(),
                         };
@@ -85,7 +85,7 @@ namespace Generita.Application.Books.Queries.SearchBook
                         {
                             Id = book.Id,
                             Title = book.Title,
-                            Author = author.Name.firtName + ' ' + author.Name.LastName,
+                            Author = author.Name,
                             Cover = book.Cover,
                             access = book.Access.ToString()
                         };
@@ -111,7 +111,7 @@ namespace Generita.Application.Books.Queries.SearchBook
                     {
                         return new GetBookDto()
                         {
-                            Author = authors.Name.firtName + ' ' + authors.Name.LastName,
+                            Author = authors.Name,
                             Title = book.Title,
                             Cover = book.Cover,
                             access = book.Access.ToString(),
@@ -137,7 +137,7 @@ namespace Generita.Application.Books.Queries.SearchBook
                     {
                         return new GetBookDto()
                         {
-                            Author = book.Author.Name.firtName + ' ' + book.Author.Name.LastName,
+                            Author = book.Author.Name,
                             Title = book.Title,
                             Cover = book.Cover,
                             access = book.Access.ToString(),

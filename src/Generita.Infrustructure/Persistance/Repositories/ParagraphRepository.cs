@@ -53,7 +53,7 @@ namespace Generita.Infrustructure.Persistance.Repositories
         }
         public async Task<ICollection<Paragraph>> GetByBookId(Guid bookId)
         {
-            return await _context.Paragraph.Include(x=>x.Entities).Where(x=>x.BookId == bookId).ToListAsync();
+            return await _context.Paragraph.Include(x=>x.EntityInstances).Where(x=>x.BookId == bookId).ToListAsync();
         }
         public async Task<Paragraph> GetBySenseAndAge(MusicSense  sense,AgeClasses age)
         {

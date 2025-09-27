@@ -19,15 +19,22 @@ namespace Generita.Infrustructure.Persistance.Configurations
             builder.HasKey(x => x.Id);
             builder.HasMany(x => x.Books)
                 .WithOne(x => x.Author);
-            builder.OwnsOne(x => x.Name, name =>
-            {
-                name.Property(x => x.firtName)
-                    .IsRequired()
-                    .HasMaxLength(30);
-                name.Property(x => x.LastName)
+            //builder.OwnsOne(x => x.Name, name =>
+            //{
+            //    name.Property(x => x.firtName)
+            //        .IsRequired()
+            //        .HasMaxLength(30);
+            //    name.Property(x => x.LastName)
+            //    .IsRequired()
+            //    .HasMaxLength(30);
+            //});
+            builder.Property(x => x.Name)
                 .IsRequired()
-                .HasMaxLength(30);
-            });
+                .HasMaxLength(70);
+            builder.HasIndex(x => x.Email)
+                .IsUnique();
+            builder.Property(x => x.Password)
+                .IsRequired();
         }
     }
 }

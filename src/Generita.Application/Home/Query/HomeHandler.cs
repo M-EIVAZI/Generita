@@ -43,7 +43,7 @@ namespace Generita.Application.Home.Query
 
                 bannerhomebooks.Add(new HomeBookDto
                 {
-                    AuthorName = author.Name.firtName + " " + author.Name.LastName,
+                    AuthorName = author.Name,
                     Title = x.Book.Title,
                     Access = x.Book.Access.ToString(),
                     CategoryName = category.CategoryName,
@@ -62,7 +62,7 @@ namespace Generita.Application.Home.Query
                 {
                     return new HomeBookDto()
                     {
-                        AuthorName = x.Author.Name.firtName + ' ' + x.Author.Name.LastName,
+                        AuthorName = x.Author.Name,
                         Title = x.Title,
                         Access = x.Access.ToString(),
                         CategoryName = x.BookCategory.CategoryName,
@@ -78,7 +78,7 @@ namespace Generita.Application.Home.Query
                 {
                     return new HomeBookDto()
                     {
-                        AuthorName = x.Author.Name.firtName + ' ' + x.Author.Name.LastName,
+                        AuthorName = x.Author.Name,
                         Title = x.Title,
                         Access = x.Access.ToString(),
                         CategoryName = x.BookCategory.CategoryName,
@@ -94,7 +94,7 @@ namespace Generita.Application.Home.Query
                 {
                     return new HomeBookDto()
                     {
-                        AuthorName = x.Author.Name.firtName + ' ' + x.Author.Name.LastName,
+                        AuthorName = x.Author.Name,
                         Title = x.Title,
                         Access = x.Access.ToString(),
                         CategoryName = x.BookCategory.CategoryName,

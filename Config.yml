@@ -1,0 +1,7 @@
+tunnel: e8741325-9ace-44a4-b277-43825772f695
+credentials-file: C:\Users\Asus\.cloudflared\e8741325-9ace-44a4-b277-43825772f695.json
+
+ingress:
+  - hostname: eivazi.qzz.io
+    service: http://localhost:7161
+  - service: http_status:404

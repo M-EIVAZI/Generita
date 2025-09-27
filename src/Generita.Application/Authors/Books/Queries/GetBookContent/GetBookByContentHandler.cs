@@ -32,27 +32,39 @@ namespace Generita.Application.Books.Queries.GetBookContent
         {
             var book =await _bookRepository.GetById(request.bookId);
             var paragraphs = await _paragraphRepository.GetByBookId(request.bookId);
-            var result = new BookConentResponse()
+            var result = new BookConentResponse
             {
-                Title = book.Title,
-                Paragraphs = paragraphs.Select(paragraph =>
-                    new ParagraphDto()
+                Paragraphs = await Task.WhenAll(
+                    paragraphs.Select(async paragraph =>
                     {
-                        AudioTags = new AudioTagsDto
+                        var entities = await Task.WhenAll(
+                            paragraph.EntityInstances.Select(async entity =>
+                            {
+                                var entityFromDb = await _entityRepository.GetById(entity.EntityId);
+
+                                return new EntitiesDto
+                                {
+                                    Sample = entity.sample,
+                                    Start_pos = entity.Position,
+                                    Type = entityFromDb.type
+                                };
+                            })
+                        );
+
+                        return new ParagraphDto
                         {
-                            Age = paragraph.AgeClass.ToString(),
-                            Sense = paragraph.MusicSense.ToString()
-                        },
-                        Text = paragraph.Text,
-                        Entities = paragraph.Entities.Select(entity => new EntitiesDto
-                        {
-                            Sample = entity.sample,
-                            Start_pos = entity.Position,
-                            Type = entity.type
-                        }).ToList()
-                    }
-                ).ToList()
+                            AudioTags = new AudioTagsDto
+                            {
+                                Age = paragraph.AgeClass.ToString(),
+                                Sense = paragraph.MusicSense.ToString()
+                            },
+                            Text = paragraph.Text,
+                            Entities = entities.ToList()
+                        };
+                    })
+                )
             };
+
 
             return result;
 

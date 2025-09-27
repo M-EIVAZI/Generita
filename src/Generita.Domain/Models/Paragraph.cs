@@ -21,6 +21,6 @@ namespace Generita.Domain.Models
         public Book Book { get; set; } 
         public Guid SongId { get; set; }
         public Songs Songs { get; set; }
-        public ICollection<Entity> Entities { get; set; }
+        public ICollection<EntityInstances> EntityInstances { get; set; }
     }
 }

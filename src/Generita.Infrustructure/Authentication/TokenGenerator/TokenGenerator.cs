@@ -51,7 +51,29 @@ namespace Generita.Infrustructure.Authentication.TokenGenerator
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
+        public string GenerateToken(Author author)
+        {
+            string secretKey = _configuration["JwtSettings:Secret"];
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
+            var claims = new[]
+            {
+                new Claim(JwtRegisteredClaimNames.Sub, author.Id.ToString()),
+                new Claim(JwtRegisteredClaimNames.Email, author.Email),
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+            };
+
+            var token = new JwtSecurityToken(
+                issuer: _configuration["JwtSettings:Issuer"],
+                audience: _configuration["JwtSettings:Audience"],
+                claims: claims,
+                expires: DateTime.UtcNow.AddMinutes(int.Parse(_configuration["JwtSettings:ExpiryMinutes"])),
+                signingCredentials: creds);
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
+
+        }
 
         public string RefreshToken()
         {

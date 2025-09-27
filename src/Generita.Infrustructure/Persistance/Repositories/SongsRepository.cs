@@ -53,7 +53,7 @@ namespace Generita.Infrustructure.Persistance.Repositories
         }
         public async Task<Songs> GetBySenseAndAge(MusicSense musicSense,AgeClasses ageClasses)
         {
-            return await _dbContext.Songs.FirstOrDefaultAsync(x=>x.AgeClasses==ageClasses && x.Music==musicSense);
+            return await _dbContext.Songs.FirstOrDefaultAsync(x=>x.AgeClasses==ageClasses && x.MusicSense==musicSense);
         }
         public async Task<Songs> GetByEntityType(string type)
         {
