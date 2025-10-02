@@ -17,4 +17,5 @@ public class Author:AggregateRoot
     public string Nationality { get; set;} 
     public virtual ICollection<Jobs> jobs { get; set; }
     public virtual ICollection<Book> Books { get; set; }
+    public virtual ICollection<RefreshTokens> refreshTokens { get; set; }
 }

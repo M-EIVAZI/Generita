@@ -15,8 +15,11 @@ namespace Generita.Domain.Models
         }
 
         public string Token {  get; set; }
-        public Guid UserId { get; set; }
+        public Guid? UserId { get; set; }
+        public Guid? AuthorId { get; set; }
+
         public DateTime ExpiresOnUtc {  get; set; }
         public virtual User User { get; set; }
+        public virtual Author Author { get; set; }
     }
 }

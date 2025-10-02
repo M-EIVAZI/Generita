@@ -1,5 +1,7 @@
 ﻿using Generita.Application.Authors.GetAllAuthorBooks;
 using Generita.Application.Authors.GetStatusByJobId;
+using Generita.Application.Authors.ProcessNewBook;
+using Generita.Application.Common.Dtos;
 
 using MediatR;
 
@@ -30,6 +32,14 @@ namespace Generita.Api.Controllers
         {
             var query = new GetStatusByJobIdQuery(id);
             var res = await _mediator.Send(query);
+            return res.Match(Ok, Problem);
+        }
+
+        [HttpPost("books/process")]
+        public async Task<IActionResult> ProcessNewBook(ProcessNewBookDto processNewBookDto)
+        {
+            var query = new ProcessNewBookQuery(processNewBookDto);
+            var res= await _mediator.Send(query);
             return res.Match(Ok, Problem);
         }
     }

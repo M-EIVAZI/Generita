@@ -21,7 +21,14 @@ namespace Generita.Infrustructure.Persistance.Configurations
             builder.Property(x => x.Token).HasMaxLength(200);
             builder.HasOne(x => x.User)
                 .WithMany(x => x.RefreshTokens)
-                .HasForeignKey(x => x.UserId);
+                .HasForeignKey(x => x.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+            builder.HasOne(x => x.Author)
+                .WithMany(x => x.refreshTokens)
+                .HasForeignKey(x => x.AuthorId)
+                .OnDelete(DeleteBehavior.Cascade);
+           
+
         }
     }
 }

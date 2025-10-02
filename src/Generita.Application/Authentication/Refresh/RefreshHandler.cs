@@ -17,13 +17,9 @@ namespace Generita.Application.Authentication.Refresh
         private IRefreshTokenRepository _refreshRepository;
         private ITokenGenerator _tokenGenerator;
         private IUserRepository _userRepository;
+        private IAuthorRepository _authorRepository;
 
-        public RefreshHandler(IRefreshTokenRepository refreshRepository, ITokenGenerator tokenGenerator, IUserRepository userRepository)
-        {
-            _refreshRepository = refreshRepository;
-            _tokenGenerator = tokenGenerator;
-            _userRepository = userRepository;
-        }
+
 
         public async Task<ErrorOr<RefreshResponse>> Handle(RefreshCommand request, CancellationToken cancellationToken)
         {
@@ -32,12 +28,17 @@ namespace Generita.Application.Authentication.Refresh
             {
                 return Error.Unauthorized(description: "Refresh Token is invalid");
             }
-            var  user =await _userRepository.GetById(savedtoken.UserId);
-            if (user == null)
+            var  user =await _userRepository.GetById(savedtoken.UserId ?? Guid.Empty);
+            var author=await _authorRepository.GetById(savedtoken.AuthorId ?? Guid.Empty);
+            if (user == null && author==null)
             {
                 return Error.Unauthorized(description: "User Not found");
             }
-            var newtoken=_tokenGenerator.GenerateToken(user);
+            string newtoken=string.Empty;
+            if(author == null && user!=null)
+               newtoken=_tokenGenerator.GenerateToken(user);
+            else if(author !=null && user==null)
+                newtoken=_tokenGenerator.GenerateToken(author);
             return new RefreshResponse() { accessToken = newtoken };
 
         }
