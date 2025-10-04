@@ -54,7 +54,7 @@ namespace Generita.Api.Controllers
         [ProducesResponseType(typeof(BookConentResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
-
+        [Authorize]
         public async Task<IActionResult> GetBookContent(Guid bookId)
         {
             var query = new GetBookByContentQuery(bookId);

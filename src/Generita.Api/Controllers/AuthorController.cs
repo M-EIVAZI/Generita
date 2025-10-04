@@ -5,6 +5,7 @@ using Generita.Application.Common.Dtos;
 
 using MediatR;
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Generita.Api.Controllers
@@ -20,7 +21,8 @@ namespace Generita.Api.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet("books")] 
+        [HttpGet("books")]
+        [Authorize]
         public  async Task<IActionResult> GetAllBooks()
         {
             var query = new GetAllAuthorBooksQuery();
@@ -28,6 +30,7 @@ namespace Generita.Api.Controllers
             return res.Match(Ok, Problem);
         }
         [HttpGet("jobs/{jobId}")]
+        [Authorize]
         public async Task<IActionResult> GetStatusByJobId(Guid id)
         {
             var query = new GetStatusByJobIdQuery(id);
@@ -36,6 +39,7 @@ namespace Generita.Api.Controllers
         }
 
         [HttpPost("books/process")]
+        [Authorize]
         public async Task<IActionResult> ProcessNewBook(ProcessNewBookDto processNewBookDto)
         {
             var query = new ProcessNewBookQuery(processNewBookDto);

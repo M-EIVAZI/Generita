@@ -5,6 +5,7 @@ using Generita.Application.Dtos;
 
 using MediatR;
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Mvc;
 
@@ -24,7 +25,7 @@ namespace Generita.Api.Controllers
         }
         [HttpGet("Audio/tags")]
         [ProducesResponseType(typeof(AudioTagsResponse), StatusCodes.Status200OK)]
-
+        [Authorize]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
 
         public async Task<IActionResult> GetAudioTags([FromQuery] string age, [FromQuery] string sense)
@@ -41,7 +42,7 @@ namespace Generita.Api.Controllers
         [HttpGet("Audio/entity")]
         [ProducesResponseType(typeof(AudioTagsResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-
+        [Authorize]
         public async Task<IActionResult> GetEntityTags([FromQuery] string type)
         {
             var query=new GetEntityAudioQuery(type);
