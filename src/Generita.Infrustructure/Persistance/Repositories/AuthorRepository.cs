@@ -65,5 +65,9 @@ namespace Generita.Infrustructure.Persistance.Repositories
         {
             return await _dbContext.Author.FirstOrDefaultAsync(x=>x.Email.ToLower()==email.ToLower());
         }
+        public async Task<Author> GetAuthorBooks(Guid id)
+        {
+            return await _dbContext.Author.Include(x => x.Books).FirstOrDefaultAsync(x => x.Id == id);
+        }
     }
 }

@@ -19,8 +19,9 @@ namespace Generita.Infrustructure.Persistance.Repositories
         private GeneritaDbContext _db;
         private IUnitOfWork _unitOfWork;
 
-        public JobsRepository(IUnitOfWork unitOfWork)
+        public JobsRepository(GeneritaDbContext db, IUnitOfWork unitOfWork)
         {
+            _db = db;
             _unitOfWork = unitOfWork;
         }
 

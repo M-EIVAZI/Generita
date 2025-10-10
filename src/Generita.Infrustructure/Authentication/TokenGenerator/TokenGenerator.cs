@@ -38,7 +38,8 @@ namespace Generita.Infrustructure.Authentication.TokenGenerator
             {
         new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
         new Claim(JwtRegisteredClaimNames.Email, user.Email),
-        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+        new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+        new Claim(ClaimTypes.Role,"Reader")
     };
 
             var token = new JwtSecurityToken(
@@ -61,7 +62,8 @@ namespace Generita.Infrustructure.Authentication.TokenGenerator
             {
                 new Claim(JwtRegisteredClaimNames.Sub, author.Id.ToString()),
                 new Claim(JwtRegisteredClaimNames.Email, author.Email),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                new Claim(ClaimTypes.Role,"Author")
             };
 
             var token = new JwtSecurityToken(

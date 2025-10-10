@@ -9,7 +9,7 @@ public class Entity:BaseEntity
     }
 
     public string type { get; set; }
-    public Guid MusicId { get; set; }
+    public Guid? MusicId { get; set; }
     public virtual Songs Songs { get; set; }
     public virtual ICollection<EntityInstances> Instances { get; set; }
     //public virtual Songs Songs { get; set; }

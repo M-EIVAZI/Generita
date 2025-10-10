@@ -31,9 +31,9 @@ namespace Generita.Application.Authors.GetStatusByJobId
 
             GetStatusByJobIdResponse res = new()
             {
-                JobId=bookstatus.Value.Job_id,
-                Status=bookstatus.Value.Status.ToString(),
-                errorMessage= string.Join(" | ", bookstatus.Errors.Select(e => e.Description))
+                jobId = bookstatus.Value.Job_id,
+                status=bookstatus.Value.Status.ToString(),
+                errorMessage = bookstatus.Value.error_message!
             };
             return res;
         }

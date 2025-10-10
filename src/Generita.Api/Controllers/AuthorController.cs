@@ -1,17 +1,23 @@
-﻿using Generita.Application.Authors.GetAllAuthorBooks;
+﻿using System.Security.Claims;
+
+using Generita.Application.Authors.GetAllAuthorBooks;
 using Generita.Application.Authors.GetStatusByJobId;
 using Generita.Application.Authors.ProcessNewBook;
 using Generita.Application.Common.Dtos;
+using Generita.Domain.Models;
 
 using MediatR;
 
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Generita.Api.Controllers
 {
     [Route("[controller]")]
     [ApiController]
+    [EnableCors("AllowArsemi")]
+
     public class AuthorController:ApiController
     {
         private IMediator _mediator;
@@ -22,24 +28,26 @@ namespace Generita.Api.Controllers
         }
 
         [HttpGet("books")]
-        [Authorize]
+        [Authorize(Roles = "Author")]
         public  async Task<IActionResult> GetAllBooks()
         {
-            var query = new GetAllAuthorBooksQuery();
+            var authorId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var query = new GetAllAuthorBooksQuery(Guid.Parse(authorId!));
             var res = await _mediator.Send(query);
             return res.Match(Ok, Problem);
         }
         [HttpGet("jobs/{jobId}")]
-        [Authorize]
-        public async Task<IActionResult> GetStatusByJobId(Guid id)
+        [Authorize(Roles ="Author")]
+        public async Task<IActionResult> GetStatusByJobId(Guid jobId)
         {
-            var query = new GetStatusByJobIdQuery(id);
+            var query = new GetStatusByJobIdQuery(jobId);
             var res = await _mediator.Send(query);
             return res.Match(Ok, Problem);
         }
 
         [HttpPost("books/process")]
-        [Authorize]
+        [Authorize(Roles ="Author")]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
         public async Task<IActionResult> ProcessNewBook(ProcessNewBookDto processNewBookDto)
         {
             var query = new ProcessNewBookQuery(processNewBookDto);

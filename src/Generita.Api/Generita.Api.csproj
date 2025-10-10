@@ -23,4 +23,9 @@
     <ProjectReference Include="..\Generita.Infrustructure\Generita.Infrustructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\Images\" />
+    <Folder Include="wwwroot\Files\" />
+  </ItemGroup>
+
 </Project>

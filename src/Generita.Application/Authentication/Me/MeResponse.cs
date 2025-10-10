@@ -11,6 +11,7 @@ namespace Generita.Application.Authentication.Me
         public Guid Id { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
+        public string Role { get; set; }
         public MeResponseSubscription? Subscription { get; set; }
         public ICollection<Guid> LibraryBookIds { get; set; }
     }

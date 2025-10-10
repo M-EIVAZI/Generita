@@ -8,7 +8,7 @@ using Generita.Application.Common.Messaging;
 
 namespace Generita.Application.Authors.GetAllAuthorBooks
 {
-    public class GetAllAuthorBooksQuery:IQuery<IEnumerable<GetAllBooksResponse>>
+    public record GetAllAuthorBooksQuery(Guid id):IQuery<IEnumerable<GetAllBooksResponse>>
     {
     }
 }

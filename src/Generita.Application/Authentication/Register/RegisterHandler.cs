@@ -59,7 +59,7 @@ namespace Generita.Application.Authentication.Register
                 var token = _tokenGenerator.GenerateToken(registereduser);
                 return new RegisterResponse() { Message = token };
             }
-            else if (role == RoleDto.reader)
+            else if (role == RoleDto.author)
             {
                 if(await _authorRepository.IsExistsByEmail(request.registerDto.email))
                     return Error.Conflict(code:"409",description: "Email Exists!");

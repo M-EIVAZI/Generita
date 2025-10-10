@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,8 +11,11 @@ using Generita.Application.Common.Dtos;
 using Generita.Application.Common.Interfaces.Repository;
 using Generita.Application.Common.Messaging;
 using Generita.Application.Common.Services;
+using Generita.Domain.Common.Enums;
 using Generita.Domain.Common.Interfaces;
 using Generita.Domain.Models;
+
+using Microsoft.AspNetCore.Http; // اینم میشه، ولی برای Controllerها
 
 namespace Generita.Application.Authors.ProcessNewBook
 {
@@ -20,38 +24,61 @@ namespace Generita.Application.Authors.ProcessNewBook
         private IBookRepository _bookRepository;
         private IBookService _bookService;
         private IUnitOfWork _unitOfWork;
+        private IJobRepository _jobRepository;
 
-        public ProcessNewBookHandler(IBookRepository bookRepository, IBookService bookService, IUnitOfWork unitOfWork)
+        public ProcessNewBookHandler(IBookRepository bookRepository, IBookService bookService, IUnitOfWork unitOfWork, IJobRepository jobRepository)
         {
             _bookRepository = bookRepository;
             _bookService = bookService;
             _unitOfWork = unitOfWork;
+            _jobRepository = jobRepository;
         }
 
         public async Task<ErrorOr<ProcessNewBookResponse>> Handle(ProcessNewBookQuery request, CancellationToken cancellationToken)
         {
+            string baseUrl = @"https://eivazi.qzz.io/";
             var file = request.processNewBookDto.file;
+            var image = request.processNewBookDto.Image;
             if (request.processNewBookDto.file == null || request.processNewBookDto.file.Length == 0)
                 return Error.Failure();
-            var projectRoot = Path.Combine(Directory.GetCurrentDirectory(), "..", "..", "..");
-            var filesFolder = Path.Combine(projectRoot, "Files");
+            if (request.processNewBookDto.Image == null || request.processNewBookDto.Image.Length == 0)
+                return Error.Failure();
+            var projectRoot = Directory.GetCurrentDirectory();
+            var wwwrootPath = Path.Combine(projectRoot, "wwwroot");
+            var filesFolder = Path.Combine(wwwrootPath, "files");
+            var imagesFolder = Path.Combine(wwwrootPath, "images");
             if (!Directory.Exists(filesFolder))
             {
                 Directory.CreateDirectory(filesFolder);
             }
-            var filePath = Path.Combine(filesFolder, file.FileName);
+            if (!Directory.Exists(imagesFolder))
+            {
+                Directory.CreateDirectory(imagesFolder);
+            }
+            Guid guid = Guid.NewGuid();
+            var fileName = $"{guid}_{Path.GetFileName(file.FileName)}";
+            var imageName = $"{guid}_{Path.GetFileName(image.FileName)}";
+            var filePath = Path.Combine(filesFolder, fileName);
+            var imagePath = Path.Combine(imagesFolder, imageName);
+            // مسیرهای کامل برای ذخیره در سرور
             using (var stream = new FileStream(filePath, FileMode.Create))
             {
                 await file.CopyToAsync(stream, cancellationToken);
             }
-            var book = new Book(Guid.NewGuid())
+
+            using (var stream = new FileStream(imagePath, FileMode.Create))
+            {
+                await image.CopyToAsync(stream, cancellationToken);
+            }
+            var book = new Book(guid)
             {
                 AuthorId = request.processNewBookDto.AuthorId,
                 Access = request.processNewBookDto.Access,
                 CategoryId = request.processNewBookDto.CategoryId,
-                FilePath = filePath,
+                FilePath = $"{baseUrl}files/{fileName}",
+                Synopsis = request.processNewBookDto.Synopsis,
                 PublishedDate = request.processNewBookDto.PublishedDate,
-                Cover= request.processNewBookDto.Cover,
+                Cover = $"{baseUrl}images/{imageName}",
                 Title = request.processNewBookDto.Title,
                 
             };
@@ -69,7 +96,15 @@ namespace Generita.Application.Authors.ProcessNewBook
                 JobId=response.Value.job_id,
                 Message=response.Value.message,
             };
-
+            Jobs job = new(res.JobId)
+            {
+                JobStatus = JobStatus.Processing,
+                AuthorId = book.AuthorId,
+                BookId = book.Id,
+                CreateAt = DateTime.UtcNow,
+            };
+            await _jobRepository.Add(job);
+            await _unitOfWork.CommitAsync();
             //return new ProcessNewBookResponse(file.FileName, file.Length);
             return res;
 

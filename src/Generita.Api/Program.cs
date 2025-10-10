@@ -50,9 +50,19 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowArsemi", policy =>
+    {
+        policy.WithOrigins("https://arsemi.qzz.io")
+              .AllowAnyMethod()
+              .AllowCredentials()
+              .AllowAnyHeader();
+    });
+});
 
 var app = builder.Build();
-
+app.UseCors("AllowArsemi");
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -60,6 +70,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseStaticFiles();
+
 app.UseAuthentication();
 app.UseAuthorization();
 

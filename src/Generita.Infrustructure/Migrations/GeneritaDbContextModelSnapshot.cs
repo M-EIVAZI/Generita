@@ -53,14 +53,13 @@ namespace Generita.Infrustructure.Migrations
                         .HasColumnType("character varying(70)");
 
                     b.Property<string>("Nationality")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("age")
+                    b.Property<int?>("age")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
@@ -92,10 +91,6 @@ namespace Generita.Infrustructure.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("FilePath")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("ImagePath")
                         .IsRequired()
                         .HasColumnType("text");
 
@@ -167,7 +162,7 @@ namespace Generita.Infrustructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("MusicId")
+                    b.Property<Guid?>("MusicId")
                         .HasColumnType("uuid");
 
                     b.Property<string>("type")
@@ -301,6 +296,9 @@ namespace Generita.Infrustructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<Guid?>("AuthorId")
+                        .HasColumnType("uuid");
+
                     b.Property<DateTime>("ExpiresOnUtc")
                         .HasColumnType("timestamp with time zone");
 
@@ -309,10 +307,12 @@ namespace Generita.Infrustructure.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("character varying(200)");
 
-                    b.Property<Guid>("UserId")
+                    b.Property<Guid?>("UserId")
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AuthorId");
 
                     b.HasIndex("Token")
                         .IsUnique();
@@ -535,9 +535,7 @@ namespace Generita.Infrustructure.Migrations
                 {
                     b.HasOne("Generita.Domain.Models.Songs", "Songs")
                         .WithMany("Entity")
-                        .HasForeignKey("MusicId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("MusicId");
 
                     b.Navigation("Songs");
                 });
@@ -601,11 +599,17 @@ namespace Generita.Infrustructure.Migrations
 
             modelBuilder.Entity("Generita.Domain.Models.RefreshTokens", b =>
                 {
+                    b.HasOne("Generita.Domain.Models.Author", "Author")
+                        .WithMany("refreshTokens")
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("Generita.Domain.Models.User", "User")
                         .WithMany("RefreshTokens")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.Navigation("Author");
 
                     b.Navigation("User");
                 });
@@ -672,6 +676,8 @@ namespace Generita.Infrustructure.Migrations
                     b.Navigation("Books");
 
                     b.Navigation("jobs");
+
+                    b.Navigation("refreshTokens");
                 });
 
             modelBuilder.Entity("Generita.Domain.Models.Book", b =>

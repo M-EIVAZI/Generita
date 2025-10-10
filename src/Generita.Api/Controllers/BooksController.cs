@@ -1,4 +1,5 @@
-﻿using Generita.Application.Books.Queries.GetBookById;
+﻿using Generita.Application.Books.Queries.GetAllBookCategories;
+using Generita.Application.Books.Queries.GetBookById;
 using Generita.Application.Books.Queries.GetBookContent;
 using Generita.Application.Books.Queries.SearchBook;
 using Generita.Application.Common.Dtos;
@@ -7,6 +8,7 @@ using Generita.Application.Dtos;
 using MediatR;
 
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,6 +16,8 @@ namespace Generita.Api.Controllers
 {
     [ApiController]
     [Route("books")]
+    [EnableCors("AllowArsemi")]
+
     public class BooksController : ApiController
     {
         private IMediator _mediator;
@@ -24,7 +28,7 @@ namespace Generita.Api.Controllers
         }
 
         [HttpPost("search")]
-        [Authorize]
+        [Authorize(Roles = "Reader")]
         [ProducesResponseType(typeof(GetBookDto), StatusCodes.Status200OK)]
         public async Task<IActionResult> Search([FromQuery(Name = "q")] string Name,SearchBookDto searchBook)
         {
@@ -41,7 +45,7 @@ namespace Generita.Api.Controllers
             return result.Match(Ok,Problem);
         }
         [HttpGet("{id}")]
-        [Authorize]
+        [Authorize(Roles = "Reader")]
         [ProducesResponseType(typeof(GetBookDto), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetBookById(Guid id) 
@@ -54,14 +58,23 @@ namespace Generita.Api.Controllers
         [ProducesResponseType(typeof(BookConentResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
-        [Authorize]
+        [Authorize(Roles = "Reader")]
         public async Task<IActionResult> GetBookContent(Guid bookId)
         {
             var query = new GetBookByContentQuery(bookId);
             var result=await _mediator.Send(query);
             return result.Match(Ok,Problem);
         }
-
+        [HttpGet("Categories/GetAll")]
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [Authorize]
+        [ProducesResponseType(typeof(ICollection<GetAllBookCategoriesResponse>), StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetAllCategories()
+        {
+            var query = new GetAllBookCategoriesQuery();
+            var res=await _mediator.Send(query);
+            return res.Match(Ok,Problem);
+        }
 
     }
 }

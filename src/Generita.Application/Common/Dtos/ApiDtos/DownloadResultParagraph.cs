@@ -11,7 +11,8 @@ namespace Generita.Application.Common.Dtos.ApiDtos
     public class DownloadResultParagraph
     {
         public string Text { get; set; }
-       public AudioTagsDto AudioTags { get; set; }
+        public TagsDto sense_prediction { get; set; }
+        public TagsDto age_prediction { get; set; }
         public List<DownloadResultEntity> Entities { get; set; }
     }
 }

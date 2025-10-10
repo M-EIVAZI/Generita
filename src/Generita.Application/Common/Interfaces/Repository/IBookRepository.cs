@@ -17,5 +17,6 @@ namespace Generita.Application.Common.Interfaces.Repository
         Task<ICollection<Book>> GetNewestBooks();
         Task<ICollection<Book>> GetSubscriptionOnly();
         Task<ICollection<Book>> GetFreeOnly();
+        Task<ICollection<Book>> GetAuthorBooks(Guid id);
     }
 }

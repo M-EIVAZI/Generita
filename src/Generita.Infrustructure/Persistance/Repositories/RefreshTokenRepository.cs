@@ -46,7 +46,8 @@ namespace Generita.Infrustructure.Persistance.Repositories
 
         public async Task<RefreshTokens> GetByToken(string token)
         {
-            return await _context.RefreshTokens.FirstOrDefaultAsync(x=>x.Token==token);
+             var res=await _context.RefreshTokens.FirstOrDefaultAsync(x=>x.Token==token);
+            return res;
         }
 
         public Task<bool> Update(RefreshTokens value)

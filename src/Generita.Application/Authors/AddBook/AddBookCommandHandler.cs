@@ -29,11 +29,11 @@ namespace Generita.Application.Authors.AddBook
 
         public async Task<ErrorOr<Success>> Handle(AddBookCommand request, CancellationToken cancellationToken)
         {
-            PostJobRequest jobRequest = new() { Title = request.Dto.Title, allowed_ages = request.Dto.AgeClasses, allowed_senses = request.Dto.MusicSense, target_abstracts = request.Dto.Entities };
-            var postresponse = await _bookService.PostBook(jobRequest);
-            if (postresponse.Errors.Any())
-                return postresponse.Errors;
-            var book = postresponse.Value;
+            //PostJobRequest jobRequest = new() { Title = request.Dto.Title, allowed_ages = request.Dto.AgeClasses, allowed_senses = request.Dto.MusicSense, target_abstracts = request.Dto.Entities };
+            //var postresponse = await _bookService.PostBook(jobRequest);
+            //if (postresponse.Errors.Any())
+            //    return postresponse.Errors;
+            //var book = postresponse.Value;
             throw new NotImplementedException();
         }
     }

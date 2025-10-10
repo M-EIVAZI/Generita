@@ -88,5 +88,9 @@ namespace Generita.Infrustructure.Persistance.Repositories
         {
             return await _db.Book.Include(x => x.Author).Include(x => x.BookCategory).Where(x => x.Access == BookAccess.Free).ToListAsync();
         }
+        public async Task<ICollection<Book>> GetAuthorBooks(Guid id)
+        {
+            return await _db.Book.Where(x => x.AuthorId == id).ToListAsync();
+        }
     }
 }

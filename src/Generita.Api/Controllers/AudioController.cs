@@ -7,6 +7,7 @@ using MediatR;
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 using RouteAttribute = Microsoft.AspNetCore.Mvc.RouteAttribute;
@@ -15,6 +16,8 @@ namespace Generita.Api.Controllers
 {
     [Route("[controller]")]
     [ApiController]
+    [EnableCors("AllowArsemi")]
+
     public class AudioController:ApiController
     {
         private IMediator _mediator;

@@ -14,12 +14,11 @@ namespace Generita.Application.Common.Dtos
         public Guid Id { get; set; }
         public string Title { get; set; }
         public DateOnly PublishedDate { get; set; }
-        public string AuthorName { get; set; }
+        public string authorName { get; set; }
         public string CategoryName { get; set; }
         public string Synopsis { get; set; }
         public string Cover { get; set; }
         public string Access { get; set; }
         public string FilePath { get; set; }
-        public string ImagePath { get; set; }
     }
 }

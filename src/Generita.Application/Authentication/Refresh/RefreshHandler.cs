@@ -19,7 +19,13 @@ namespace Generita.Application.Authentication.Refresh
         private IUserRepository _userRepository;
         private IAuthorRepository _authorRepository;
 
-
+        public RefreshHandler(IRefreshTokenRepository refreshRepository, ITokenGenerator tokenGenerator, IUserRepository userRepository, IAuthorRepository authorRepository)
+        {
+            _refreshRepository = refreshRepository;
+            _tokenGenerator = tokenGenerator;
+            _userRepository = userRepository;
+            _authorRepository = authorRepository;
+        }
 
         public async Task<ErrorOr<RefreshResponse>> Handle(RefreshCommand request, CancellationToken cancellationToken)
         {

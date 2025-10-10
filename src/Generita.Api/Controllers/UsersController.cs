@@ -32,7 +32,7 @@ namespace Generita.Api.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
 
 
-        [Authorize]
+        [Authorize(Roles = "Reader")]
         public async Task<IActionResult> AddToLibrary([FromBody]AddTolibraryControllerDto dto)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);

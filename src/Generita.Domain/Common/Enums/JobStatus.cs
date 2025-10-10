@@ -8,6 +8,7 @@ namespace Generita.Domain.Common.Enums
 {
     public enum JobStatus
     {
+        Queued,
         Processing,
         Completed,
         Failed,

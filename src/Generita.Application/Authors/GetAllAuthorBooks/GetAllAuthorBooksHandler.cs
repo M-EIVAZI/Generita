@@ -31,19 +31,31 @@ namespace Generita.Application.Authors.GetAllAuthorBooks
 
         public async Task<ErrorOr<IEnumerable<GetAllBooksResponse>>> Handle(GetAllAuthorBooksQuery request, CancellationToken cancellationToken)
         {
-            var books = await _bookRepository.GetAll();
-            var jobs = await Task.WhenAll(books.Select(x => _jobRepository.GetByBookId(x.Id)));
-            var jobsstatus=await Task.WhenAll(jobs.Select(x=>_bookService.GetJobStatus(x.Id)));
- 
-            var res=books.Zip(jobs,(book,job)=>new {book,job})
-                .Zip(jobsstatus,(bj,status)=>new GetAllBooksResponse()
+            var books = await _bookRepository.GetAuthorBooks(request.id);
+            var results = new List<GetAllBooksResponse>();
+
+            foreach (var book in books)
             {
-                bookId=bj.book.Id,
-                booktitle=bj.book.Title,
-                JobId=bj.job.Id,
-                status=status.Value.Status.ToString()
-            });
-            return ErrorOrFactory.From(res);
+                var job = await _jobRepository.GetByBookId(book.Id); 
+                string statusString = "NoJob";
+
+                if (job != null)
+                {
+                    var statusResult = await _bookService.GetJobStatus(job.Id);
+                    statusString = statusResult.IsError ? "Unknown" : statusResult.Value.Status.ToString();
+                }
+
+                results.Add(new GetAllBooksResponse
+                {
+                    bookId = book.Id,
+                    bookTitle = book.Title,
+                    JobId = job?.Id,
+                    createdAt = job.CreateAt.ToString("yyyy-MM-dd"),
+                    status = statusString
+                });
+            }
+
+            return ErrorOrFactory.From(results.AsEnumerable());
 
         }
     }

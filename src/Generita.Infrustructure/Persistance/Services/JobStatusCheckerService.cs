@@ -53,22 +53,32 @@ namespace Generita.Infrustructure.Persistance.Services
                         var book = await _jobRepository.GetById(job.Id);
                         if (status.Value.Status == JobStatus.Completed)
                         {
+
                             var json = await _bookService.DownloadResult(job.Id);
 
                             var res = json.Value;
                             //var entities = res.Paragraphs.Select(e => new Paragraph(Guid.NewGuid(){ AgeClass=Enum.Parse<AgeClasses>(e.AudioTags.Age),});
                             var paragraphTasks = res.Paragraphs.Select(async e =>
                             {
-                                var age = Enum.Parse<AgeClasses>(e.AudioTags.Age);
-                                var sense = Enum.Parse<MusicSense>(e.AudioTags.Sense);
-                                var song = await _songRepository.GetBySenseAndAge(sense, age);
+                                // هر تسک scope خودش رو داره
+                                using var innerScope = _scopeFactory.CreateScope();
+                                var songRepo = innerScope.ServiceProvider.GetRequiredService<ISongRepository>();
+
+                                var age = (AgeClasses)e.age_prediction.class_id;
+                                var sense = (MusicSense)e.sense_prediction.class_id;
+                                var song = await songRepo.GetBySenseAndAge(sense, age);
+
                                 var paragraphId = Guid.NewGuid();
 
                                 var entityTasks = e.Entities.Select(async x =>
                                 {
-                                    var entitySong = await _songRepository.GetByEntityType(x.Type);
+                                    using var entityScope = _scopeFactory.CreateScope();
+                                    var entityRepository = entityScope.ServiceProvider.GetRequiredService<IEntityRepository>();
+                                    var entity = await entityRepository.GetByType(x.Type);
+
                                     return new EntityInstances(Guid.NewGuid())
                                     {
+                                        EntityId=entity.Id,
                                         ParagraphId = paragraphId,
                                         Position = x.StartPos,
                                         sample = x.Sample,
@@ -87,9 +97,16 @@ namespace Generita.Infrustructure.Persistance.Services
                                     EntityInstances = entities.ToList()
                                 };
                             });
+
                             //var paragraphs = res.Paragraphs.Select(p => new Paragraph { ... });
                             var paragraphs = await Task.WhenAll(paragraphTasks);
                             await _paragraphRepository.AddList(paragraphs);
+                            await _entityRepository.AddEntityInstancesRange(
+                                paragraphs
+                                    .Where(p => p.EntityInstances != null)
+                                    .SelectMany(p => p.EntityInstances)
+                                    .ToList()
+                            );
                             await _unitOfWork.CommitAsync(stoppingToken);
                             //var canonicalEntities = res.CanonicalEntityBank.Select(c =>
                             //{
@@ -112,6 +129,7 @@ namespace Generita.Infrustructure.Persistance.Services
                             //await _unitOfWork.CommitAsync(stoppingToken);
 
                             job.JobStatus = JobStatus.Completed;
+                            await _jobRepository.Update(job);
                             await _unitOfWork.CommitAsync(stoppingToken);
                         }
                         else if (status.Value.Status == JobStatus.Failed)

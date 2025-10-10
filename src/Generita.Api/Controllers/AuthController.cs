@@ -13,6 +13,7 @@ using Generita.Application.Dtos;
 using MediatR;
 
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,6 +21,8 @@ namespace Generita.Api.Controllers
 {
     [Route("[controller]/[action]")]
     [ApiController]
+    [EnableCors("AllowArsemi")]
+
     public class AuthController : ApiController
     {
         private IMediator _mediator;

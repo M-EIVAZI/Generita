@@ -8,8 +8,8 @@ namespace Generita.Application.Authors.GetStatusByJobId
 {
     public class GetStatusByJobIdResponse
     {
-        public Guid JobId { get; set; }
-        public string Status { get; set; }
+        public Guid jobId { get; set; }
+        public string status { get; set; }
         public string errorMessage {  get; set; }
     }
 }
