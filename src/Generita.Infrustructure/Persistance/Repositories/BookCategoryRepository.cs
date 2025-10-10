@@ -55,6 +55,25 @@ namespace Generita.Infrustructure.Persistance.Repositories
                 .Where(x => EF.Functions.Like(x.CategoryName, $"%{name}%"))
                 .ToListAsync();
         }
+        public async Task<ICollection<BookCategory>> GetByName(string name, DateOnly? fromDate)
+        {
+            var query = _dbContext.BookCategory.AsQueryable();
+
+            if (fromDate is not null)
+            {
+                query = query.Include(c => c.Books
+                    .Where(b => b.PublishedDate >= fromDate));
+            }
+            else
+            {
+                query = query.Include(c => c.Books);
+            }
+
+            return await query
+                .Where(c => EF.Functions.Like(c.CategoryName, $"%{name}%"))
+                .ToListAsync();
+        }
+
 
 
     }

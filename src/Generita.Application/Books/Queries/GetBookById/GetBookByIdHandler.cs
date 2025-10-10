@@ -38,12 +38,12 @@ namespace Generita.Application.Books.Queries.GetBookById
             var bookcategory=await _bookCategoryRepository.GetById(book.CategoryId);
             var res = new GetBookDto()
             {
-                Id = book.Id,
-                Title = book.Title,
-                Author = author.Name,
+                id = book.Id,
+                title = book.Title,
+                authorName = author.Name,
                 synopsis = book.Synopsis,
-                Category = bookcategory.CategoryName,
-                Cover=book.Cover,
+                categoryName = bookcategory.CategoryName,
+                cover=book.Cover,
                 access=book.Access.ToString(),
             };
             return res;

@@ -18,5 +18,9 @@ namespace Generita.Application.Common.Interfaces.Repository
         Task<ICollection<Book>> GetSubscriptionOnly();
         Task<ICollection<Book>> GetFreeOnly();
         Task<ICollection<Book>> GetAuthorBooks(Guid id);
+        Task<ICollection<Book>> GetBySynopsis(string synopsis);
+        Task<ICollection<Book>> GetBySynopsis(string synopsis, DateOnly? dateOnly);
+        Task<ICollection<Book>> SearchBook(string bookName, DateOnly? dateOnly);
+        Task<List<Book>> SearchAllFields(string keyword, DateOnly? fromDate=null);
     }
 }

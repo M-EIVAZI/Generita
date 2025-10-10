@@ -63,6 +63,38 @@ namespace Generita.Infrustructure.Persistance.Repositories
                 .Where(b => EF.Functions.Like(b.Title.ToLower(), $"%{bookName.ToLower()}%"))
                 .ToListAsync();
         }
+        public async Task<ICollection<Book>> SearchBook(string bookName,DateOnly? dateOnly)
+        {
+            return await _db.Book
+                .Where(b => EF.Functions.Like(b.Title.ToLower(), $"%{bookName.ToLower()}%") && b.PublishedDate >=dateOnly)
+                .ToListAsync();
+        }
+        public async Task<List<Book>> SearchAllFields(string keyword, DateOnly? fromDate=null)
+        {
+            var query = _db.Book
+                .Include(b => b.Author)
+                .Include(b => b.BookCategory)
+                .AsQueryable();
+
+            // شرط AllFields
+            if (!string.IsNullOrEmpty(keyword))
+            {
+                query = query.Where(b =>
+                    EF.Functions.ILike(b.Title, $"%{keyword}%") ||
+                    EF.Functions.ILike(b.Synopsis, $"%{keyword}%") ||
+                    EF.Functions.ILike(b.Author.Name, $"%{keyword}%") ||
+                    EF.Functions.ILike(b.BookCategory.CategoryName, $"%{keyword}%")
+                );
+            }
+
+
+            // شرط تاریخ
+            if (fromDate.HasValue)
+                query = query.Where(b => b.PublishedDate >= fromDate);
+
+            return await query.ToListAsync();
+        }
+
 
         public Task<bool> Update(Book value)
         {
@@ -91,6 +123,14 @@ namespace Generita.Infrustructure.Persistance.Repositories
         public async Task<ICollection<Book>> GetAuthorBooks(Guid id)
         {
             return await _db.Book.Where(x => x.AuthorId == id).ToListAsync();
+        }
+        public async Task<ICollection<Book>> GetBySynopsis(string synopsis)
+        {
+            return await _db.Book.Where(b => b.Synopsis.Contains(synopsis)).ToListAsync();
+        }
+        public async Task<ICollection<Book>> GetBySynopsis(string synopsis, DateOnly? dateOnly)
+        {
+            return await _db.Book.Where(b=>b.Synopsis.Contains(synopsis) && b.PublishedDate >=dateOnly).ToListAsync();
         }
     }
 }

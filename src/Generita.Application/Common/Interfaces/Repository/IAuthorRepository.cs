@@ -13,6 +13,7 @@ namespace Generita.Application.Common.Interfaces.Repository
         Task<Author> GetAuthorBooks(Guid id);
         Task<Author> GetAuthorByEmail(string email);
         Task<Author?> GetByAuthorName(string authorName);
+        Task<Author?> GetByAuthorName(string authorName, DateOnly? dateOnly);
         Task<bool> IsExistsByEmail(string email);
     }
 }

@@ -57,6 +57,26 @@ namespace Generita.Infrustructure.Persistance.Repositories
                     EF.Functions.Like((x.Name).ToLower(), $"%{authorName.ToLower()}%"))
                 .FirstOrDefaultAsync();
         }
+        public async Task<Author?> GetByAuthorName(string authorName, DateOnly? dateOnly)
+        {
+            var query = _dbContext.Author
+                .AsQueryable();
+
+            if (dateOnly is not null)
+            {
+                query = query
+                    .Include(a => a.Books
+                        .Where(b => b.PublishedDate >= dateOnly));
+            }
+            else
+            {
+                query = query.Include(a => a.Books);
+            }
+
+            return await query
+                .Where(a => EF.Functions.Like(a.Name.ToLower(), $"%{authorName.ToLower()}%"))
+                .FirstOrDefaultAsync();
+        }
         public async Task<bool> IsExistsByEmail(string email)
         {
             return await _dbContext.Author.AnyAsync(x => x.Email.ToLower() == email.ToLower());

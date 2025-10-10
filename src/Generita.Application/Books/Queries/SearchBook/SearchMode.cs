@@ -9,7 +9,6 @@ namespace Generita.Application.Books.Queries.SearchBook
     public enum SearchMode
     {
         ByAllFields,
-        ByPublishedDate,
         ByTitle,
         ByAuthorName,
         ByCategory,

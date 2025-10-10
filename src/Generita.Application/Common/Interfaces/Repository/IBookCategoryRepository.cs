@@ -11,5 +11,6 @@ namespace Generita.Application.Common.Interfaces.Repository
     public interface IBookCategoryRepository : IGenericRepository<BookCategory>
     {
         public Task<ICollection<BookCategory>> GetByName(string name);
+        Task<ICollection<BookCategory>> GetByName(string name, DateOnly? fromDate);
     }
 }
