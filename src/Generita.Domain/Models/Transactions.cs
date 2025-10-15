@@ -9,7 +9,7 @@ using Generita.Domain.Enums;
 
 namespace Generita.Domain.Models
 {
-    public class Transactions:BaseEntity
+    public class Transactions : BaseEntity
     {
         public Transactions(Guid Id) : base(Id)
         {
@@ -17,6 +17,10 @@ namespace Generita.Domain.Models
 
         public Guid UserId { get; set; }
         public Guid PlanId { get; set; }
+        public string Authority { get; set; }
+        public long? RefId {  get; set; }
+        public string? car_pan { get; set; }
+        public DateTime PaidAt { get; set; }
         public DateTime CreateAt {  get; set; }
         public int Price { get; set; }
         public States States { get; set; }

@@ -23,6 +23,8 @@ namespace Generita.Infrustructure.Persistance.Configurations
             builder.HasOne(x => x.Plan)
                 .WithMany(x => x.Transactions)
                 .HasForeignKey(x => x.PlanId);
+            builder.HasIndex(x => x.Authority)
+                .IsUnique();
             builder.Property(x => x.States)
                 .HasConversion<string>();
         }

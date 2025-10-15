@@ -18,6 +18,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Generita.Infrustructure
@@ -46,6 +47,10 @@ namespace Generita.Infrustructure
             services.AddHttpClient<IBookService, BookServices>();
             services.AddSingleton<IPasswordHasher, PasswordHasher>();
             services.AddSingleton<ITokenGenerator, TokenGenerator>();
+            services.Configure<ZarinPalOptions>(
+                configuration.GetSection("ZarinPal"));
+            services.AddHttpClient<IPaymentService, PaymentService>();
+
             services.AddHostedService<JobStatusCheckerService>();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

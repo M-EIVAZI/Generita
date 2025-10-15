@@ -1,0 +1,10 @@
+﻿namespace Generita.Application.Common.Dtos.ApiDtos
+{
+    public class CreatePaymentDate
+    {
+        public int code { get; set; }
+        public string authority { get; set; }
+        public string fee_type { get; set; }
+        public int fee { get; set; }
+    }
+}

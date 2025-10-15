@@ -56,6 +56,7 @@ namespace Generita.Infrustructure.Persistance.Repositories
             return Trans;
 
         }
+        public async Task<Transactions> GetByAuthority(string authority) => await _context.Transactions.FirstOrDefaultAsync(x => x.Authority == authority);
 
     }
 }

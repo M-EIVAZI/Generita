@@ -10,7 +10,6 @@ namespace Generita.Domain.Enums
     {
         Success,
         Failed,
-        Cancelled,
         Pending
     }
 }
