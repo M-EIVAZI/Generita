@@ -49,7 +49,7 @@ namespace Generita.Application.Authentication.Me
                 if (trans is not null)
                 {
 
-                    if (trans.CreateAt.AddDays(trans.Plan.Duration) > DateTime.UtcNow)
+                    if (trans.CreateAt.AddDays(trans.Plan.Duration) < DateTime.UtcNow)
                         Subscriptionstatus = "InActive";
                     else
                         Subscriptionstatus = "Active";

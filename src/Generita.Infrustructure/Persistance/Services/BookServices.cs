@@ -16,6 +16,9 @@ using Generita.Application.Common.Interfaces.Repository;
 using Generita.Domain.Models;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Generita.Domain.Common.Interfaces;
+using System.Text.RegularExpressions;
+using Generita.Domain.Common.Enums;
+using System.Threading;
 namespace Generita.Infrustructure.Persistance.Services
 {
     internal class BookServices : IBookService
@@ -119,6 +122,8 @@ namespace Generita.Infrustructure.Persistance.Services
 
         public async Task<ErrorOr<PostJobResponse>> PostBook(PostJobRequest request)
         {
+            var abstractRegex = new Regex(@"^abstract_audio_(.+)$");
+            string baseUrl = @"https://eivazi.qzz.io/";
             var url = "https://arsemi.qzz.io/process";
             var configDict = JsonSerializer.Deserialize<Dictionary<string, object>>(request.config_json);
 
@@ -146,16 +151,45 @@ namespace Generita.Infrustructure.Persistance.Services
                 //    var randomSong = songs.ElementAt(random.Next(songs.Count));
                 //    selectedSongId = randomSong.Id;
                 //}
-                foreach (var key in allKeys)
+                #region AddEntity&Song
+                foreach (var (key, file) in request.abstract_audio)
                 {
-                    Entity entity = new(Guid.NewGuid())
+                    var match = abstractRegex.Match(key);
+                    if (match.Success)
                     {
-                        type = key
-                    };
-                    await _entityRepository.Add(entity);
-                    // ذخیره یا اضافه کردن به DbContext
+                        string abstractName = match.Groups[1].Value;
+                        Entity entity = new(Guid.NewGuid())
+                        {
+                            type = abstractName,
+                        };
+                        await _entityRepository.Add(entity);
+                        await _unitOfWork.CommitAsync();
+                        Songs song = new(Guid.NewGuid())
+                        {
+                            Name = key,
+                            EntityType = abstractName,
+                            Owner = Domain.Enums.OwnerShip.Author,
+                            AuthorId = request.AuthorId,
+                            FilePath = $"{baseUrl}files/{request.AuthorId}{key}"
+                        };
+                        var projectRoot = Directory.GetCurrentDirectory();
+                        var wwwrootPath = Path.Combine(projectRoot, "wwwroot");
+                        var songFolder = Path.Combine(wwwrootPath, "Musics");
+                        if (!Directory.Exists(songFolder))
+                        {
+                            Directory.CreateDirectory(songFolder);
+                        }
+                        var songName = $"{song.Id}_{Path.GetFileName(file.FileName)}";
+                        var songPath = Path.Combine(songFolder, songName);
+                        using (var stream = new FileStream(songPath, FileMode.Create))
+                        {
+                            await file.CopyToAsync(stream);
+                        }
+                        await _songRepository.Add(song);
+                        await _unitOfWork.CommitAsync();
+                    }
                 }
-                await _unitOfWork.CommitAsync();
+                #endregion
                 configDict["target_abstracts"] = targetDict;
             }
             using var form = new MultipartFormDataContent();

@@ -18,7 +18,7 @@ namespace Generita.Infrustructure.Authentication
         public ErrorOr<string> HashPassword(string password)
         {
             return !PasswordRegex.IsMatch(password)
-                ? Error.Validation(description: "Password too weak")
+                ? Error.Validation(description: "Password's too weak,Must contain at least one word and one number ant be at least 6 characters")
                 : BCrypt.Net.BCrypt.EnhancedHashPassword(password);
         }
 
@@ -27,7 +27,7 @@ namespace Generita.Infrustructure.Authentication
             return BCrypt.Net.BCrypt.EnhancedVerify(password, hash);
         }
 
-        [GeneratedRegex("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$", RegexOptions.Compiled)]
+        [GeneratedRegex("^(?=.*[A-Za-z])(?=.*\\d).{6,}$", RegexOptions.Compiled)]
         private static partial Regex StrongPasswordRegex();
     }
 }

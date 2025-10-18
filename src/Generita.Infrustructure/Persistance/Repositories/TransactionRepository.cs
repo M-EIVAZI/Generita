@@ -57,6 +57,9 @@ namespace Generita.Infrustructure.Persistance.Repositories
 
         }
         public async Task<Transactions> GetByAuthority(string authority) => await _context.Transactions.FirstOrDefaultAsync(x => x.Authority == authority);
-
+        public async Task<Transactions> GetByPlanIdUserId(Guid planId, Guid userId) => await _context.Transactions
+        .Where(x => x.PlanId == planId && x.UserId == userId)
+        .OrderByDescending(x => x.CreateAt) // یا TransactionDate
+        .FirstOrDefaultAsync();
     }
 }

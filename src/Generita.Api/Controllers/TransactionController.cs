@@ -43,6 +43,7 @@ namespace Generita.Api.Controllers
         {
             var command =new VerifyPaymentQuery(new VeriftyPaymentDto() {Authority = Authority, Status = Status});
             var res = await _mediator.Send(command);
+            return Redirect(res.Value);
             return res.Match(Ok, Problem);
         }
     }

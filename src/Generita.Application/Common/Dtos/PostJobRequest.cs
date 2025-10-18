@@ -22,6 +22,8 @@ namespace Generita.Application.Common.Dtos
         //public string? llm_ollama_model { get; set; } = "phi4-mini";
         //public string? roast_model_path { get; set; } = "QA_RoBERTA_SQUADv2";
         //public IEnumerable<Dictionary<string, string>>? target_abstracts { get; set; }
+        public Dictionary<string, IFormFile> abstract_audio { get; set; }
+        public Guid AuthorId { get; set; }
         public string config_json { get; set; }
         public IFormFile file { get; set; }
 

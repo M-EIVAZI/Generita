@@ -37,7 +37,7 @@ namespace Generita.Application.Transactions.Commands.VeriftyPayment
             var res=await _paymentService.VerifyPaymentAsync(request.VeriftyPaymentDto.Authority,plan.Price);
             if (res.Value.IsSuccess)
             {
-                return "Payment completed";
+                return "https://arsemi.qzz.io/";
             }
             else
                 return "Payment Failed";

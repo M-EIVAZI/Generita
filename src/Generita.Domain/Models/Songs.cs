@@ -17,14 +17,16 @@ public class Songs:AggregateRoot
 
     public string Name { get; set; }
     //public Guid CategoryId { get; set; }
-    public TimeSpan Duration { get; set; }
+    public TimeSpan? Duration { get; set; }
+    public Guid? AuthorId { get; set; }
     public DateTime CreateAt { get; set; }
     public DateTime UpdateAt { get; set; }
     public string FilePath { get; set; }
     public OwnerShip Owner { get; set; }
-    public MusicSense MusicSense { get; set; }
-    public AgeClasses AgeClasses { get; set; }
+    public MusicSense? MusicSense { get; set; }
+    public AgeClasses? AgeClasses { get; set; }
     public string? EntityType { get; set; }
+    public Author Author { get; set; }
     public ICollection<Paragraph> Paragraphs { get; set; }
     public ICollection<Entity> Entity { get; set; }
     public virtual ICollection<Book> Books { get; set; }

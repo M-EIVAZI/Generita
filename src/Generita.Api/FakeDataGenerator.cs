@@ -179,6 +179,8 @@ namespace Generita.Api
                     song.MusicSense = (MusicSense)sense;
                     song.AgeClasses = (AgeClasses)age;
                     song.EntityType = $"{song.MusicSense}_{song.AgeClasses}";
+                    song.FilePath = $"https://eivazi.qzz.io/Musics/testmusic.mp3";
+                    song.Name=$"testmusic_{song.MusicSense}_{song.AgeClasses}";
                     songs.Add(song);
                 }
             }

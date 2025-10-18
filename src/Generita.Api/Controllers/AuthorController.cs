@@ -4,6 +4,7 @@ using Generita.Application.Authors.GetAllAuthorBooks;
 using Generita.Application.Authors.GetStatusByJobId;
 using Generita.Application.Authors.ProcessNewBook;
 using Generita.Application.Common.Dtos;
+using Generita.Domain.Common.Enums;
 using Generita.Domain.Models;
 
 using MediatR;
@@ -48,9 +49,13 @@ namespace Generita.Api.Controllers
         [HttpPost("books/process")]
         [Authorize(Roles ="Author")]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
-        public async Task<IActionResult> ProcessNewBook(ProcessNewBookDto processNewBookDto)
+        [DisableRequestSizeLimit]
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> ProcessNewBook([ModelBinder(BinderType = typeof(ProcessNewBookBinder))] ProcessNewBookCommand processNewBookCommand)
         {
-            var query = new ProcessNewBookQuery(processNewBookDto);
+           
+                var command = processNewBookCommand.ToCommand();
+                var query = new ProcessNewBookQuery(command);
             var res= await _mediator.Send(query);
             return res.Match(Ok, Problem);
         }

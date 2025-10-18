@@ -35,6 +35,9 @@ namespace Generita.Infrustructure.Persistance.Configurations
                 .IsUnique();
             builder.Property(x => x.Password)
                 .IsRequired();
+            builder.HasMany(x => x.Songs)
+                .WithOne(x => x.Author)
+                .HasForeignKey(x => x.AuthorId);
         }
     }
 }

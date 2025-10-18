@@ -11,6 +11,7 @@ namespace Generita.Application.Common.Interfaces.Repository
     public interface ITransactionsRepository : IGenericRepository<Domain.Models.Transactions>
     {
         Task<Domain.Models.Transactions> GetByAuthority(string authority);
+        Task<Domain.Models.Transactions> GetByPlanIdUserId(Guid planId, Guid userId);
         Task<Domain.Models.Transactions> GetByUserId(Guid userId);
     }
 }

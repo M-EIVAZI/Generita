@@ -18,6 +18,8 @@ namespace Generita.Application.Common.Dtos
         public string Synopsis { get; set; }
         public BookAccess Access {  get; set; }
         public DateOnly PublishedDate { get; set; }
+        public IDictionary<string,IFormFile> situational_audio { get; set; }
+        public Dictionary<string, IFormFile> abstract_audio { get; set; }
         public Guid AuthorId { get; set; }
         public Guid CategoryId { get; set; }
         public IFormFile Image {  get; set; }

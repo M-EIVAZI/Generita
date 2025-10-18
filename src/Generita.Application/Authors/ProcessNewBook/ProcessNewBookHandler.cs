@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 using ErrorOr;
@@ -15,8 +16,7 @@ using Generita.Domain.Common.Enums;
 using Generita.Domain.Common.Interfaces;
 using Generita.Domain.Models;
 
-using Microsoft.AspNetCore.Http; // اینم میشه، ولی برای Controllerها
-
+using Microsoft.AspNetCore.Http; 
 namespace Generita.Application.Authors.ProcessNewBook
 {
     public class ProcessNewBookHandler : IQueryHandler<ProcessNewBookQuery, ProcessNewBookResponse>
@@ -25,18 +25,21 @@ namespace Generita.Application.Authors.ProcessNewBook
         private IBookService _bookService;
         private IUnitOfWork _unitOfWork;
         private IJobRepository _jobRepository;
+        private ISongRepository _songRepository;
 
-        public ProcessNewBookHandler(IBookRepository bookRepository, IBookService bookService, IUnitOfWork unitOfWork, IJobRepository jobRepository)
+        public ProcessNewBookHandler(IBookRepository bookRepository, IBookService bookService, IUnitOfWork unitOfWork, IJobRepository jobRepository, ISongRepository songRepository)
         {
             _bookRepository = bookRepository;
             _bookService = bookService;
             _unitOfWork = unitOfWork;
             _jobRepository = jobRepository;
+            _songRepository = songRepository;
         }
 
         public async Task<ErrorOr<ProcessNewBookResponse>> Handle(ProcessNewBookQuery request, CancellationToken cancellationToken)
         {
             string baseUrl = @"https://eivazi.qzz.io/";
+            #region processingfile
             var file = request.processNewBookDto.file;
             var image = request.processNewBookDto.Image;
             if (request.processNewBookDto.file == null || request.processNewBookDto.file.Length == 0)
@@ -70,6 +73,55 @@ namespace Generita.Application.Authors.ProcessNewBook
             {
                 await image.CopyToAsync(stream, cancellationToken);
             }
+            #endregion
+            #region processing song
+
+            var dic = request.processNewBookDto.situational_audio;
+            var situationalRegex = new Regex(@"^situational_audio_(\d+)_(\d+)$");
+            foreach (var kvp in dic)
+            {
+                var key = kvp.Key;
+                var songfile = kvp.Value;
+
+                var match = situationalRegex.Match(key);
+                if (match.Success)
+                {
+                    int senseId = int.Parse(match.Groups[1].Value);
+                    int ageId = int.Parse(match.Groups[2].Value);
+
+                    Songs song = new(Guid.NewGuid())
+                    {
+
+                        AgeClasses = (AgeClasses)ageId,
+                        MusicSense = (MusicSense)senseId,
+                        CreateAt = DateTime.UtcNow,
+                        Name = key,
+                        Owner = Domain.Enums.OwnerShip.Author,
+                        FilePath = $"{baseUrl}Musics/{songfile}",
+                        AuthorId=request.processNewBookDto.AuthorId
+                    };
+                    var songFolder = Path.Combine(wwwrootPath, "Musics");
+                    if (!Directory.Exists(songFolder))
+                    {
+                        Directory.CreateDirectory(songFolder);
+                    }
+                    var songName = $"{song.Id}_{Path.GetFileName(songfile.FileName)}";
+                    var songPath = Path.Combine(songFolder, songName);
+                    using (var stream = new FileStream(songPath, FileMode.Create))
+                    {
+                        await file.CopyToAsync(stream, cancellationToken);
+                    }
+                    await _songRepository.Add(song);
+                    await _unitOfWork.CommitAsync();
+
+                }
+                else
+                {
+                    return Error.Conflict("The age or sense id is incorrect");
+                }
+            }
+
+            #endregion
             var book = new Book(guid)
             {
                 AuthorId = request.processNewBookDto.AuthorId,
@@ -88,6 +140,9 @@ namespace Generita.Application.Authors.ProcessNewBook
             {
                     file=file,
                     config_json=request.processNewBookDto.config_json,
+                    abstract_audio=request.processNewBookDto.abstract_audio,
+                    AuthorId=request.processNewBookDto.AuthorId,
+                    
             };
 
             var response = await _bookService.PostBook(req);

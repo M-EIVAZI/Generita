@@ -329,13 +329,15 @@ namespace Generita.Infrustructure.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<string>("AgeClasses")
-                        .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<Guid?>("AuthorId")
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime>("CreateAt")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<TimeSpan>("Duration")
+                    b.Property<TimeSpan?>("Duration")
                         .HasColumnType("interval");
 
                     b.Property<string>("EntityType")
@@ -346,7 +348,6 @@ namespace Generita.Infrustructure.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("MusicSense")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Name")
@@ -361,6 +362,8 @@ namespace Generita.Infrustructure.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AuthorId");
 
                     b.ToTable("Songs", (string)null);
                 });
@@ -630,6 +633,15 @@ namespace Generita.Infrustructure.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Generita.Domain.Models.Songs", b =>
+                {
+                    b.HasOne("Generita.Domain.Models.Author", "Author")
+                        .WithMany("Songs")
+                        .HasForeignKey("AuthorId");
+
+                    b.Navigation("Author");
+                });
+
             modelBuilder.Entity("Generita.Domain.Models.Transactions", b =>
                 {
                     b.HasOne("Generita.Domain.Models.Plans", "Plan")
@@ -690,6 +702,8 @@ namespace Generita.Infrustructure.Migrations
             modelBuilder.Entity("Generita.Domain.Models.Author", b =>
                 {
                     b.Navigation("Books");
+
+                    b.Navigation("Songs");
 
                     b.Navigation("jobs");
 
