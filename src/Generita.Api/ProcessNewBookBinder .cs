@@ -21,7 +21,6 @@ public class ProcessNewBookBinder : IModelBinder
             return;
         }
 
-        // بخوان فرم (اینجا ReadFormAsync امنه؛ binder اینو می‌خونه و مدل را پر می‌کنه)
         var form = await request.ReadFormAsync();
 
         var dto = new ProcessNewBookCommand
@@ -39,7 +38,6 @@ public class ProcessNewBookBinder : IModelBinder
 
         foreach (var file in form.Files)
         {
-            // توجه: Name ممکنه شامل فاصله یا encode باشه؛ sanitize/trim quotes
             var name = file.Name?.Trim('"') ?? string.Empty;
 
             // اگر abstract

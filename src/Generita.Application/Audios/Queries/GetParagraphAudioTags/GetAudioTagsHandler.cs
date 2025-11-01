@@ -29,10 +29,11 @@ namespace Generita.Application.Audios.Queries.GetParagraphAudioTags
         {
             AgeClasses age =(AgeClasses) Enum.Parse(typeof(AgeClasses), request.AudioTagsRequest.Age);
             MusicSense sense=(MusicSense) Enum.Parse(typeof(MusicSense), request.AudioTagsRequest.Sense);
-            var res=await _paragraphRepository.GetBySenseAndAge(sense,age);
+            //var res=await _paragraphRepository.GetBySenseAndAge(sense,age);
+            var res = await _songRepository.GetBySenseAndAge(sense, age);
             if (res is null)
                 return Error.NotFound(description: "Age Or Sense doesn't found");
-            AudioTagsResponse response= new AudioTagsResponse() { Url=res.Songs.FilePath };
+            AudioTagsResponse response= new AudioTagsResponse() { Url=res.FilePath };
             return response;
 
         }

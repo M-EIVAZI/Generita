@@ -170,7 +170,7 @@ namespace Generita.Infrustructure.Persistance.Services
                             EntityType = abstractName,
                             Owner = Domain.Enums.OwnerShip.Author,
                             AuthorId = request.AuthorId,
-                            FilePath = $"{baseUrl}files/{request.AuthorId}{key}"
+                            FilePath = $"{baseUrl}Musics/{request.AuthorId}{key}.mp3"
                         };
                         var projectRoot = Directory.GetCurrentDirectory();
                         var wwwrootPath = Path.Combine(projectRoot, "wwwroot");
@@ -186,6 +186,9 @@ namespace Generita.Infrustructure.Persistance.Services
                             await file.CopyToAsync(stream);
                         }
                         await _songRepository.Add(song);
+                        await _unitOfWork.CommitAsync();
+                        entity.MusicId = song.Id;
+                        await _entityRepository.Update(entity);
                         await _unitOfWork.CommitAsync();
                     }
                 }

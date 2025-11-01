@@ -29,7 +29,7 @@ namespace Generita.Infrustructure.Persistance.Repositories
 
         public async Task<bool> Delete(Guid id)
         {
-            var book = await _db.Book.FindAsync(id);
+            var book = await GetById(id);
             if (book is null)
                 return false;
 

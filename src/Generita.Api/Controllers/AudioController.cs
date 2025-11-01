@@ -1,4 +1,6 @@
-﻿using Generita.Application.Audios.Queries.GetEntityAudioTags;
+﻿using System.Security.Claims;
+
+using Generita.Application.Audios.Queries.GetEntityAudioTags;
 using Generita.Application.Audios.Queries.GetParagraphAudioTags;
 using Generita.Application.Common.Dtos;
 using Generita.Application.Dtos;
@@ -38,7 +40,7 @@ namespace Generita.Api.Controllers
                 Age=age,
                 Sense=sense
             };
-            
+            var userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var query = new GetAudioTagsQuery(model);
             var result = await _mediator.Send(query);
             return result.Match(Ok, Problem);

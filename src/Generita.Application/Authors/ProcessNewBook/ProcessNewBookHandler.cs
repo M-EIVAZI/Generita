@@ -97,7 +97,7 @@ namespace Generita.Application.Authors.ProcessNewBook
                         CreateAt = DateTime.UtcNow,
                         Name = key,
                         Owner = Domain.Enums.OwnerShip.Author,
-                        FilePath = $"{baseUrl}Musics/{songfile}",
+                        FilePath = $"{baseUrl}Musics/{songfile}.mp3",
                         AuthorId=request.processNewBookDto.AuthorId
                     };
                     var songFolder = Path.Combine(wwwrootPath, "Musics");
@@ -105,7 +105,7 @@ namespace Generita.Application.Authors.ProcessNewBook
                     {
                         Directory.CreateDirectory(songFolder);
                     }
-                    var songName = $"{song.Id}_{Path.GetFileName(songfile.FileName)}";
+                    var songName = $"{song.AgeClasses}_{song.MusicSense}_{songfile.FileName}";
                     var songPath = Path.Combine(songFolder, songName);
                     using (var stream = new FileStream(songPath, FileMode.Create))
                     {

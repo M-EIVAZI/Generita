@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.Intrinsics.X86;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,6 +10,7 @@ using Generita.Application.Common.Interfaces.Repository;
 using Generita.Domain.Common.Enums;
 using Generita.Domain.Models;
 
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
 namespace Generita.Infrustructure.Persistance.Repositories
@@ -53,7 +55,21 @@ namespace Generita.Infrustructure.Persistance.Repositories
         }
         public async Task<Songs> GetBySenseAndAge(MusicSense musicSense,AgeClasses ageClasses)
         {
-            return await _dbContext.Songs.FirstOrDefaultAsync(x=>x.AgeClasses==ageClasses && x.MusicSense==musicSense);
+            //var authorSong = await _dbContext.Songs
+            //.Where(x => x.AgeClasses == ageClasses && x.MusicSense == musicSense && x.Owner == Domain.Enums.OwnerShip.Author)
+            //.OrderBy(x => Guid.NewGuid())
+            //.FirstOrDefaultAsync();
+
+            //if (authorSong != null)
+            //    return authorSong;
+
+            var generatedSong = await _dbContext.Songs
+            .Where(x => x.AgeClasses == ageClasses && x.MusicSense == musicSense)
+                .OrderBy(x => Guid.NewGuid())
+                .FirstOrDefaultAsync();
+
+            return generatedSong!;
+            //return await _dbContext.Songs.FirstOrDefaultAsync(x=>x.AgeClasses==ageClasses && x.MusicSense==musicSense);
         }
         public async Task<Songs> GetByEntityType(string type)
         {

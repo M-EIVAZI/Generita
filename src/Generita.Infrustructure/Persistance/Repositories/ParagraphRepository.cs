@@ -57,6 +57,8 @@ namespace Generita.Infrustructure.Persistance.Repositories
         }
         public async Task<Paragraph> GetBySenseAndAge(MusicSense  sense,AgeClasses age)
         {
+            // اولویت اول: owner = "author"
+
             return await _context.Paragraph.Include(x=>x.Songs).FirstOrDefaultAsync(x => x.AgeClass == age && x.MusicSense == sense);
         }
         public async Task AddList(IEnumerable<Paragraph> list)

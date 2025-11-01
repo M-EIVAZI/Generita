@@ -1,4 +1,5 @@
-﻿using Generita.Application.Books.Queries.GetAllBookCategories;
+﻿using Generita.Application.Books.Commands.RemoveBook;
+using Generita.Application.Books.Queries.GetAllBookCategories;
 using Generita.Application.Books.Queries.GetBookById;
 using Generita.Application.Books.Queries.GetBookContent;
 using Generita.Application.Books.Queries.SearchBook;
@@ -75,6 +76,13 @@ namespace Generita.Api.Controllers
             var res=await _mediator.Send(query);
             return res.Match(Ok,Problem);
         }
-
+        [HttpDelete("{id}")]
+        [Authorize(Roles ="Author")]
+        public async Task<IActionResult> RemoveBook(Guid id)
+        {
+            var command = new RemoveBookCommand(id);
+            var res = await _mediator.Send(command);
+            return res.Match(_ => Ok(), Problem);
+        }
     }
 }

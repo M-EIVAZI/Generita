@@ -18,8 +18,7 @@ namespace Generita.Infrustructure.Persistance.Configurations
         {
             builder.ToTable("Books");
             builder.HasKey(x => x.Id);
-            builder.Property(x=>x.Title).IsRequired()
-                .HasMaxLength(30);
+            builder.Property(x => x.Title).IsRequired();
             builder.HasOne(x => x.Author)
                 .WithMany(x => x.Books)
                 .HasForeignKey(x=>x.AuthorId);

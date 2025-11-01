@@ -43,13 +43,13 @@ namespace Generita.Infrustructure.Persistance.Services
             {
                 PlanId=planid,
                 CreateAt=DateTime.UtcNow,
-                Price=amount,
+                Price=amount*100000,
                 States=Domain.Enums.States.Pending,
                 UserId=userid,
             };
             var request = new CreatePaymentRequest()
             {
-                amount=amount,
+                amount=amount*100000,
                 callback_url=_callbackUrl,
                 description=description,
                 merchant_id=_merchantId,
@@ -81,7 +81,7 @@ namespace Generita.Infrustructure.Persistance.Services
             {
                 merchant_id = _merchantId,
                 authority = authority,
-                amount = amount
+                amount = amount*100000
             };
             var response = await _httpClient.PostAsJsonAsync("https://sandbox.zarinpal.com/pg/v4/payment/verify.json", request);
             var result = await response.Content.ReadFromJsonAsync<VerifyPaymentResonse>();

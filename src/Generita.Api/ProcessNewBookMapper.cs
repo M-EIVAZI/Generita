@@ -5,7 +5,6 @@ public static class ProcessNewBookMapper
 {
     public static ProcessNewBookDto ToCommand(this ProcessNewBookCommand dto)
     {
-        // Parsing fail-safe
         if (!DateOnly.TryParse(dto.PublishedDate, out var publishedDate))
             throw new ArgumentException("Invalid PublishedDate");
 
