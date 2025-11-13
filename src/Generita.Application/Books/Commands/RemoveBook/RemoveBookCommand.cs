@@ -8,7 +8,7 @@ using Generita.Application.Common.Messaging;
 
 namespace Generita.Application.Books.Commands.RemoveBook
 {
-    public record RemoveBookCommand(Guid Id):ICommand
+    public record RemoveBookCommand(Guid Id) : ICommand
     {
     }
 }

@@ -9,7 +9,10 @@ using Generita.Application.Dtos;
 
 namespace Generita.Application.Books.Queries.GetBookById
 {
-    public record GetBookByIdQuery(Guid Id):IQuery<GetBookDto>
+    public record GetBookByIdQuery(Guid Id) : ICachedQuery<GetBookDto>
     {
+        public string Key => $"BookById-{Id}";
+
+        public TimeSpan? Time => TimeSpan.FromMinutes(60);
     }
 }

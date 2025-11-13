@@ -8,7 +8,10 @@ using Generita.Application.Common.Messaging;
 
 namespace Generita.Application.Authors.GetAllAuthorBooks
 {
-    public record GetAllAuthorBooksQuery(Guid id):IQuery<IEnumerable<GetAllBooksResponse>>
+    public record GetAllAuthorBooksQuery(Guid id) : ICachedQuery<IEnumerable<GetAllBooksResponse>>
     {
+        public string Key => $"AuthorBook-{id}";
+
+        public TimeSpan? Time => TimeSpan.FromHours(2);
     }
 }

@@ -14,5 +14,7 @@ namespace Generita.Application.Authors.AddBook
 {
     public record AddBookCommand(AuthorAddBookDto Dto) : ICommand
     {
+
+
     }
 }

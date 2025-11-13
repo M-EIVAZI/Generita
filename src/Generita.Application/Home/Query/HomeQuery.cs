@@ -8,7 +8,10 @@ using Generita.Application.Common.Messaging;
 
 namespace Generita.Application.Home.Query
 {
-    public record HomeQuery:IQuery<HomeResponse>
+    public record HomeQuery : ICachedQuery<HomeResponse>
     {
+        public string Key => "Home";
+
+        public TimeSpan? Time =>TimeSpan.FromMinutes(30);
     }
 }

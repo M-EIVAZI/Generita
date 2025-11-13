@@ -8,9 +8,11 @@ using System.Transactions;
 
 using ErrorOr;
 
+using Generita.Application.Common.Dtos;
 using Generita.Application.Common.Dtos.ApiDtos;
 using Generita.Application.Common.Interfaces;
 using Generita.Application.Common.Interfaces.Repository;
+using Generita.Application.Transactions.Commands.CreatePayment;
 using Generita.Domain.Common.Interfaces;
 using Generita.Domain.Models;
 
@@ -37,7 +39,7 @@ namespace Generita.Infrustructure.Persistance.Services
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<ErrorOr<string>> CreatePaymentAsync(Guid userid, Guid planid, int amount, string description)
+        public async Task<ErrorOr<CreatePaymentForEvent>> CreatePaymentAsync(Guid userid, Guid planid, int amount, string description)
         {
             var payment = new Transactions(Guid.NewGuid())
             {
@@ -64,14 +66,14 @@ namespace Generita.Infrustructure.Persistance.Services
                 payment.Authority=result.data.authority;
                 await _transactionsRepository.Add(payment);
                 await _unitOfWork.CommitAsync();
-                return $"https://sandbox.zarinpal.com/pg/StartPay/{payment.Authority}";
+                return new CreatePaymentForEvent() { url = $"https://sandbox.zarinpal.com/pg/StartPay/{payment.Authority}",transactions= payment };
 
             }
             else
                 payment.States=Domain.Enums.States.Failed;
                 await _transactionsRepository.Add(payment);
                 await _unitOfWork.CommitAsync();
-            return "";
+            return  new CreatePaymentForEvent() { url = "", transactions = payment }; ;
 
         }
 
@@ -110,7 +112,8 @@ namespace Generita.Infrustructure.Persistance.Services
             return new PaymentVerifyResult
             {
                 IsSuccess = false,
-                Message = result?.data?.message ?? "پرداخت ناموفق بود"
+                Message = result?.data?.message ?? "پرداخت ناموفق بود",
+                Transactions=payment
             };
         }
     }

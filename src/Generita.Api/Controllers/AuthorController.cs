@@ -51,11 +51,11 @@ namespace Generita.Api.Controllers
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
         [DisableRequestSizeLimit]
         [Consumes("multipart/form-data")]
-        public async Task<IActionResult> ProcessNewBook([ModelBinder(BinderType = typeof(ProcessNewBookBinder))] ProcessNewBookCommand processNewBookCommand)
+        public async Task<IActionResult> ProcessNewBook([ModelBinder(BinderType = typeof(ProcessNewBookBinder))] Application.Common.Dtos.ProcessNewBookCommand processNewBookCommand)
         {
            
                 var command = processNewBookCommand.ToCommand();
-                var query = new ProcessNewBookQuery(command);
+                var query = new Application.Authors.ProcessNewBook.ProcessNewBookCommand(command);
             var res= await _mediator.Send(query);
             return res.Match(Ok, Problem);
         }

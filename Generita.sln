@@ -17,7 +17,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Generita.Application", "src
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Generita.Infrustructure", "src\Generita.Infrustructure\Generita.Infrustructure.csproj", "{7601B534-E2B0-4494-B520-5CA9AD64ABDC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Generita.Api", "src\Generita.Api\Generita.Api.csproj", "{A9840CED-47DE-49D9-9CC2-3BFC42041DF0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Generita.Api", "src\Generita.Api\Generita.Api.csproj", "{A9840CED-47DE-49D9-9CC2-3BFC42041DF0}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{B2AFF10B-E15E-41AC-B948-BBC93A2117E9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +43,10 @@ Global
 		{A9840CED-47DE-49D9-9CC2-3BFC42041DF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A9840CED-47DE-49D9-9CC2-3BFC42041DF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A9840CED-47DE-49D9-9CC2-3BFC42041DF0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2AFF10B-E15E-41AC-B948-BBC93A2117E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2AFF10B-E15E-41AC-B948-BBC93A2117E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2AFF10B-E15E-41AC-B948-BBC93A2117E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2AFF10B-E15E-41AC-B948-BBC93A2117E9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -44,15 +44,20 @@ namespace Generita.Infrustructure
             services.AddScoped<IRefreshTokenRepository,RefreshTokenRepository>();
             services.AddScoped<IJobRepository, JobsRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<ICachedService, CacheService>();
             services.AddHttpClient<IBookService, BookServices>();
             services.AddSingleton<IPasswordHasher, PasswordHasher>();
             services.AddSingleton<ITokenGenerator, TokenGenerator>();
             services.Configure<ZarinPalOptions>(
                 configuration.GetSection("ZarinPal"));
+            services.AddDistributedMemoryCache();
             services.AddHttpClient<IPaymentService, PaymentService>();
-
             services.AddHostedService<JobStatusCheckerService>();
-
+            services.AddStackExchangeRedisCache(options =>
+            {
+                string connection = configuration.GetConnectionString("Redis");
+            options.Configuration = connection;
+            });
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(o =>
                 {

@@ -14,29 +14,34 @@ using Generita.Application.Common.Messaging;
 using Generita.Application.Common.Services;
 using Generita.Domain.Common.Enums;
 using Generita.Domain.Common.Interfaces;
+using Generita.Domain.Events;
 using Generita.Domain.Models;
+
+using MediatR;
 
 using Microsoft.AspNetCore.Http; 
 namespace Generita.Application.Authors.ProcessNewBook
 {
-    public class ProcessNewBookHandler : IQueryHandler<ProcessNewBookQuery, ProcessNewBookResponse>
+    public class ProcessNewBookHandler : ICommandHandler<ProcessNewBookCommand, ProcessNewBookResponse>
     {
         private IBookRepository _bookRepository;
         private IBookService _bookService;
         private IUnitOfWork _unitOfWork;
         private IJobRepository _jobRepository;
         private ISongRepository _songRepository;
+        private IPublisher _publisher;
 
-        public ProcessNewBookHandler(IBookRepository bookRepository, IBookService bookService, IUnitOfWork unitOfWork, IJobRepository jobRepository, ISongRepository songRepository)
+        public ProcessNewBookHandler(IBookRepository bookRepository, IBookService bookService, IUnitOfWork unitOfWork, IJobRepository jobRepository, ISongRepository songRepository, IPublisher publisher)
         {
             _bookRepository = bookRepository;
             _bookService = bookService;
             _unitOfWork = unitOfWork;
             _jobRepository = jobRepository;
             _songRepository = songRepository;
+            _publisher = publisher;
         }
 
-        public async Task<ErrorOr<ProcessNewBookResponse>> Handle(ProcessNewBookQuery request, CancellationToken cancellationToken)
+        public async Task<ErrorOr<ProcessNewBookResponse>> Handle(ProcessNewBookCommand request, CancellationToken cancellationToken)
         {
             string baseUrl = @"https://eivazi.qzz.io/";
             #region processingfile
@@ -98,7 +103,7 @@ namespace Generita.Application.Authors.ProcessNewBook
                         Name = key,
                         Owner = Domain.Enums.OwnerShip.Author,
                         FilePath = $"{baseUrl}Musics/{songfile}.mp3",
-                        AuthorId=request.processNewBookDto.AuthorId
+                        AuthorId = request.processNewBookDto.AuthorId
                     };
                     var songFolder = Path.Combine(wwwrootPath, "Musics");
                     if (!Directory.Exists(songFolder))
@@ -132,24 +137,24 @@ namespace Generita.Application.Authors.ProcessNewBook
                 PublishedDate = request.processNewBookDto.PublishedDate,
                 Cover = $"{baseUrl}images/{imageName}",
                 Title = request.processNewBookDto.Title,
-                
+
             };
             await _bookRepository.Add(book);
             await _unitOfWork.CommitAsync(cancellationToken);
             var req = new PostJobRequest()
             {
-                    file=file,
-                    config_json=request.processNewBookDto.config_json,
-                    abstract_audio=request.processNewBookDto.abstract_audio,
-                    AuthorId=request.processNewBookDto.AuthorId,
-                    
+                file = file,
+                config_json = request.processNewBookDto.config_json,
+                abstract_audio = request.processNewBookDto.abstract_audio,
+                AuthorId = request.processNewBookDto.AuthorId,
+
             };
 
             var response = await _bookService.PostBook(req);
             var res = new ProcessNewBookResponse()
-            { 
-                JobId=response.Value.job_id,
-                Message=response.Value.message,
+            {
+                JobId = response.Value.job_id,
+                Message = response.Value.message,
             };
             Jobs job = new(res.JobId)
             {
@@ -158,6 +163,13 @@ namespace Generita.Application.Authors.ProcessNewBook
                 BookId = book.Id,
                 CreateAt = DateTime.UtcNow,
             };
+            BookAddedEvent event1 = new()
+            {
+                BookId = book.Id,
+                Title = book.Title,
+                AuthorId= book.AuthorId,
+            };
+            await _publisher.Publish(event1);
             await _jobRepository.Add(job);
             await _unitOfWork.CommitAsync();
             //return new ProcessNewBookResponse(file.FileName, file.Length);

@@ -2,6 +2,7 @@
 
 # This stage is used when running from VS in fast mode (Default for Debug configuration)
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
+USER app
 WORKDIR /app
 EXPOSE 8080
 EXPOSE 8081
@@ -12,9 +13,6 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["src/Generita.Api/Generita.Api.csproj", "src/Generita.Api/"]
-COPY ["src/Generita.Infrustructure/Generita.Infrustructure.csproj", "src/Generita.Infrustructure/"]
-COPY ["src/Generita.Application/Generita.Application.csproj", "src/Generita.Application/"]
-COPY ["src/Generita.Domain/Generita.Domain.csproj", "src/Generita.Domain/"]
 RUN dotnet restore "./src/Generita.Api/Generita.Api.csproj"
 COPY . .
 WORKDIR "/src/src/Generita.Api"

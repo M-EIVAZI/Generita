@@ -8,7 +8,10 @@ using Generita.Application.Common.Messaging;
 
 namespace Generita.Application.Books.Queries.GetAllBookCategories
 {
-    public class GetAllBookCategoriesQuery:IQuery<ICollection<GetAllBookCategoriesResponse>>
+    public class GetAllBookCategoriesQuery : ICachedQuery<ICollection<GetAllBookCategoriesResponse>>
     {
+        public string Key => "GetAllBooks";
+
+        public TimeSpan? Time => TimeSpan.FromMinutes(15);
     }
 }

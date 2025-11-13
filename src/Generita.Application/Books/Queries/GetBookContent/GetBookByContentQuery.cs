@@ -10,7 +10,10 @@ using MediatR;
 
 namespace Generita.Application.Books.Queries.GetBookContent
 {
-    public record GetBookByContentQuery(Guid bookId):IQuery<BookConentResponse>
+    public record GetBookByContentQuery(Guid bookId) : ICachedQuery<BookConentResponse>
     {
+        public string Key =>$"GetBookContent-{bookId}";
+
+        public TimeSpan? Time => TimeSpan.FromMinutes(5);
     }
 }
