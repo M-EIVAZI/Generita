@@ -59,6 +59,11 @@ The API uses these non-secret local defaults in `appsettings.json`:
 - Book processor: `http://localhost:8000`
 - Seq server: `http://localhost:5341`
 
+The Visual Studio `Container (Dockerfile)` profile sends logs to Seq through
+`http://host.docker.internal:5341`, because `localhost` inside that container is
+the API container itself. The Docker Compose profile uses `http://seq:80` on the
+Compose network.
+
 When the API runs in the `Development` environment without
 `JwtSettings__Secret`, it generates an in-memory signing key automatically. This
 keeps Visual Studio/local startup convenient without committing a credential;

@@ -16,7 +16,8 @@
       "launchBrowser": true,
       "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/swagger",
       "environmentVariables": {
-        "ASPNETCORE_HTTP_PORTS": "8080"
+        "ASPNETCORE_HTTP_PORTS": "8080",
+        "Serilog__WriteTo__1__Args__serverUrl": "http://host.docker.internal:5341"
       },
       "publishAllPorts": true,
       "useSSL": false

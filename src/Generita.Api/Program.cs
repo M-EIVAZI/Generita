@@ -18,6 +18,12 @@ try
 
     var builder = WebApplication.CreateBuilder(args);
 
+    if (builder.Environment.IsDevelopment())
+    {
+        Serilog.Debugging.SelfLog.Enable(message =>
+            Console.Error.WriteLine($"[Serilog SelfLog] {message}"));
+    }
+
     // A checked-in JWT signing key would expose a credential. For local
     // development, create one for this process when no user-secret/environment
     // variable was supplied. Tokens are intentionally invalid after a restart.
@@ -106,6 +112,11 @@ try
     });
 
     var app = builder.Build();
+
+    Log.Information(
+        "Generita API configured in {EnvironmentName}; Seq endpoint is {SeqEndpoint}",
+        app.Environment.EnvironmentName,
+        builder.Configuration["Serilog:WriteTo:1:Args:serverUrl"]);
 
     // Keep a correlation identifier on every log emitted while handling a request,
     // including EF Core SQL command logs and MediatR command/query logs.
