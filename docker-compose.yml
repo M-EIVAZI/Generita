@@ -68,7 +68,10 @@ services:
       ASPNETCORE_URLS: "http://+:8080"
       ConnectionStrings__DefaultConnection: "Host=postgres;Port=5432;Database=generita_db;Username=Mahdi;Password=${POSTGRES_PASSWORD}"
       ConnectionStrings__Redis: "redis:6379"
-      JwtSettings__Secret: ${JWT_SECRET:?Create a .env file from .env.example}
+      # Optional in Development: Program.cs creates an ephemeral signing key
+      # when this value is empty. Set JWT_SECRET for tokens that must survive
+      # container restarts.
+      JwtSettings__Secret: ${JWT_SECRET:-}
       ZarinPal__MerchantId: ${ZARINPAL_MERCHANT_ID:-}
       Cache__DefaultExpirationMinutes: "30"
       Cache__InstanceName: "generita:"
