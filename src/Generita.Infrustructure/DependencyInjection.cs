@@ -22,6 +22,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using StackExchange.Redis;
+using JwtOptions = Generita.Infrustructure.Authentication.TokenGenerator.JwtSettings;
 
 namespace Generita.Infrustructure
 {
@@ -31,8 +32,8 @@ namespace Generita.Infrustructure
         {
             string connectionString = configuration.GetConnectionString("DefaultConnection");
             var jwtSettings = configuration
-                .GetRequiredSection(JwtSettings.SectionName)
-                .Get<JwtSettings>()
+                .GetRequiredSection("JwtSettings")
+                .Get<JwtOptions>()
                 ?? throw new InvalidOperationException("JwtSettings configuration is required.");
 
             if (string.IsNullOrWhiteSpace(jwtSettings.Secret))
@@ -57,8 +58,8 @@ namespace Generita.Infrustructure
                     "JwtSettings:ExpiryMinutes are required.");
             }
 
-            services.Configure<JwtSettings>(
-                configuration.GetRequiredSection(JwtSettings.SectionName));
+            services.Configure<JwtOptions>(
+                configuration.GetRequiredSection("JwtSettings"));
 
             services.AddDbContext<GeneritaDbContext>(options =>
             {
