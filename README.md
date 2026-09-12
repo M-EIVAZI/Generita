@@ -58,6 +58,12 @@ The API uses these non-secret local defaults in `appsettings.json`:
 - Book processor: `http://localhost:8000`
 - Seq server: `http://localhost:5341`
 
+When the API runs in the `Development` environment without
+`JwtSettings__Secret`, it generates an in-memory signing key automatically. This
+keeps Visual Studio/local startup convenient without committing a credential;
+JWTs issued this way become invalid whenever the API restarts. Configure a
+persistent secret through user-secrets or an environment variable when needed.
+
 All values can be overridden with ASP.NET Core environment variables. For
 example:
 

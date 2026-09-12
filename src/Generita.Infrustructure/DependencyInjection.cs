@@ -30,6 +30,36 @@ namespace Generita.Infrustructure
         public static IServiceCollection AddInfrustructure(this IServiceCollection services, IConfiguration configuration)
         {
             string connectionString = configuration.GetConnectionString("DefaultConnection");
+            var jwtSettings = configuration
+                .GetRequiredSection(JwtSettings.SectionName)
+                .Get<JwtSettings>()
+                ?? throw new InvalidOperationException("JwtSettings configuration is required.");
+
+            if (string.IsNullOrWhiteSpace(jwtSettings.Secret))
+            {
+                throw new InvalidOperationException(
+                    "JwtSettings:Secret is required. Configure it through an " +
+                    "environment variable or secret store.");
+            }
+
+            if (Encoding.UTF8.GetByteCount(jwtSettings.Secret) < 32)
+            {
+                throw new InvalidOperationException(
+                    "JwtSettings:Secret must contain at least 32 bytes.");
+            }
+
+            if (string.IsNullOrWhiteSpace(jwtSettings.Issuer) ||
+                string.IsNullOrWhiteSpace(jwtSettings.Audience) ||
+                jwtSettings.ExpiryMinutes <= 0)
+            {
+                throw new InvalidOperationException(
+                    "JwtSettings:Issuer, JwtSettings:Audience, and a positive " +
+                    "JwtSettings:ExpiryMinutes are required.");
+            }
+
+            services.Configure<JwtSettings>(
+                configuration.GetRequiredSection(JwtSettings.SectionName));
+
             services.AddDbContext<GeneritaDbContext>(options =>
             {
                 options.UseNpgsql(connectionString);
@@ -107,10 +137,10 @@ namespace Generita.Infrustructure
                         ValidateLifetime = true,
                         ValidateIssuerSigningKey = true,
 
-                        ValidIssuer = configuration["JwtSettings:Issuer"],
-                        ValidAudience = configuration["JwtSettings:Audience"],
+                        ValidIssuer = jwtSettings.Issuer,
+                        ValidAudience = jwtSettings.Audience,
                         IssuerSigningKey = new SymmetricSecurityKey(
-                            Encoding.UTF8.GetBytes(configuration["JwtSettings:Secret"])),
+                            Encoding.UTF8.GetBytes(jwtSettings.Secret)),
 
                         ClockSkew = TimeSpan.Zero
                     };

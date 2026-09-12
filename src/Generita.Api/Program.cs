@@ -18,6 +18,31 @@ try
 
     var builder = WebApplication.CreateBuilder(args);
 
+    // A checked-in JWT signing key would expose a credential. For local
+    // development, create one for this process when no user-secret/environment
+    // variable was supplied. Tokens are intentionally invalid after a restart.
+    if (string.IsNullOrWhiteSpace(builder.Configuration["JwtSettings:Secret"]))
+    {
+        if (!builder.Environment.IsDevelopment())
+        {
+            throw new InvalidOperationException(
+                "JwtSettings:Secret is required outside Development. " +
+                "Set it through an environment variable or secret store.");
+        }
+
+        var developmentJwtSecret = Convert.ToBase64String(
+            System.Security.Cryptography.RandomNumberGenerator.GetBytes(64));
+
+        builder.Configuration.AddInMemoryCollection(new Dictionary<string, string?>
+        {
+            ["JwtSettings:Secret"] = developmentJwtSecret
+        });
+
+        Log.Warning(
+            "JwtSettings:Secret was not configured. Using an ephemeral " +
+            "development key; issued tokens will be invalid after restart");
+    }
+
     builder.Services.AddSerilog((services, loggerConfiguration) => loggerConfiguration
         .ReadFrom.Configuration(builder.Configuration)
         .ReadFrom.Services(services)
