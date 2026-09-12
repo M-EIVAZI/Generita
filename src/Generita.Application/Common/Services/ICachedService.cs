@@ -2,10 +2,10 @@
 {
     public interface ICachedService
     {
-        Task<T> GetOrCreateAsync<T>
+        Task<ErrorOr.ErrorOr<T>> GetOrCreateAsync<T>
             (string key,
-            Func<CancellationToken, Task<T>> factory,
-            TimeSpan? expitration = null,
+            Func<CancellationToken, Task<ErrorOr.ErrorOr<T>>> factory,
+            TimeSpan? expiration = null,
             CancellationToken cancellationToken = default
             )
             where T: class;
@@ -13,8 +13,7 @@
             where T : class;
 
         Task RemoveAsync(string key, CancellationToken cancellationToken = default);
-        Task SetAsync<T>(string key, T value, TimeSpan? expitration = null, CancellationToken cancellationToken = default)
+        Task SetAsync<T>(string key, T value, TimeSpan? expiration = null, CancellationToken cancellationToken = default)
                         where T : class;
-        Task RemoveByPrefixAsync(string prefixKey, CancellationToken cancellationToken = default);
     }
 }

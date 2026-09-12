@@ -4,11 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Generita.Application.Common.Caching;
 using Generita.Application.Common.Messaging;
 
 namespace Generita.Application.Users.Commands.AddBookToLibrary
 {
-    public record AddUserLibraryQuery(AddUserLibraryRequest GetUserLibraryRequest) : IQuery<AddUserLibrarayResponse>
+    public record AddUserLibraryQuery(AddUserLibraryRequest GetUserLibraryRequest)
+        : IQuery<AddUserLibrarayResponse>, ICacheInvalidationCommand
     {
+        public IEnumerable<string> KeysToInvalidate => [CacheKeys.Home];
     }
 }

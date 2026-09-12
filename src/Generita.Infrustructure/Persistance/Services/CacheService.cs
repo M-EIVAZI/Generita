@@ -1,75 +1,198 @@
-﻿using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.Json;
-using System.Text.Json.Nodes;
-using System.Threading.Tasks;
-
+using ErrorOr;
+using Generita.Application.Common.Options;
 using Generita.Application.Common.Services;
-
 using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using StackExchange.Redis;
 
-namespace Generita.Infrustructure.Persistance.Repositories
+namespace Generita.Infrustructure.Persistance.Repositories;
+
+internal sealed class CacheService : ICachedService
 {
-    internal class CacheService : ICachedService
+    private static readonly JsonSerializerOptions SerializerOptions = new(JsonSerializerDefaults.Web);
+
+    private readonly IDistributedCache _distributedCache;
+    private readonly ILogger<CacheService> _logger;
+    private readonly TimeSpan _defaultExpiration;
+
+    public CacheService(
+        IDistributedCache distributedCache,
+        IOptions<DistributedCacheOptions> options,
+        ILogger<CacheService> logger)
     {
-        private static ConcurrentDictionary<string, bool> _cache = new ConcurrentDictionary<string, bool>();
-        private readonly IDistributedCache _distributedCache;
+        _distributedCache = distributedCache;
+        _logger = logger;
 
-        public CacheService(IDistributedCache distributedCache)
+        var expirationMinutes = options.Value.DefaultExpirationMinutes;
+        _defaultExpiration = expirationMinutes > 0
+            ? TimeSpan.FromMinutes(expirationMinutes)
+            : TimeSpan.FromMinutes(30);
+    }
+
+    public async Task<T?> GetAsync<T>(
+        string key,
+        CancellationToken cancellationToken = default)
+        where T : class
+    {
+        try
         {
-            _distributedCache = distributedCache;
-        }
-        public async Task<T?> GetAsync<T>(string key, CancellationToken cancellationToken = default)
-            where T : class
-        {
-            string? value = await _distributedCache.GetStringAsync(key,cancellationToken );
+            var value = await _distributedCache.GetStringAsync(key, cancellationToken);
             if (value is null)
+            {
+                _logger.LogInformation("Cache {CacheOperation} for {CacheKey}", "Miss", key);
                 return null;
-            var res=JsonSerializer.Deserialize<T>(value);
-            return res;
-        }
+            }
 
-        public async Task<T> GetOrCreateAsync<T>(string key, Func<CancellationToken, Task<T>> factory, TimeSpan? expitration = null, CancellationToken cancellationToken = default)
-            where T : class
+            var result = JsonSerializer.Deserialize<T>(value, SerializerOptions);
+            if (result is null)
+            {
+                _logger.LogWarning(
+                    "Cache {CacheOperation} for {CacheKey}: value could not be deserialized",
+                    "Invalid",
+                    key);
+                await RemoveAsync(key, cancellationToken);
+                return null;
+            }
+
+            _logger.LogInformation("Cache {CacheOperation} for {CacheKey}", "Hit", key);
+            return result;
+        }
+        catch (JsonException exception)
         {
-            var res=await GetAsync<T>(key, cancellationToken);
-            if (res is not null)
-                return res;
-            var value = await factory(cancellationToken);
-            await SetAsync(key, value, expitration, cancellationToken);
-            return value;
-
+            _logger.LogWarning(
+                exception,
+                "Cache {CacheOperation} for {CacheKey}: invalid JSON; removing the entry",
+                "Invalid",
+                key);
+            await RemoveAsync(key, cancellationToken);
+            return null;
         }
-
-
-        public async Task RemoveAsync(string key, CancellationToken cancellationToken = default)
+        catch (RedisException exception)
         {
-            await  _distributedCache.RemoveAsync(key, cancellationToken);
-            _cache.TryRemove(key, out _);
+            _logger.LogWarning(
+                exception,
+                "Cache {CacheOperation} for {CacheKey}; continuing without cache",
+                "ReadFailure",
+                key);
+            return null;
         }
+    }
 
-        public async  Task RemoveByPrefixAsync(string prefixKey, CancellationToken cancellationToken = default)
+    public async Task<ErrorOr<T>> GetOrCreateAsync<T>(
+        string key,
+        Func<CancellationToken, Task<ErrorOr<T>>> factory,
+        TimeSpan? expiration = null,
+        CancellationToken cancellationToken = default)
+        where T : class
+    {
+        var cachedValue = await GetAsync<T>(key, cancellationToken);
+        if (cachedValue is not null)
         {
-
-            var res=_cache.Keys.Where(x => x.StartsWith(prefixKey))
-                .Select(x => RemoveAsync(x, cancellationToken));
-            await Task.WhenAll(res);
-
+            return cachedValue;
         }
 
-        public async Task SetAsync<T>(string key, T value, TimeSpan? expitration = null, CancellationToken cancellationToken = default)
-             where T : class
+        var lazyRequest = InflightRequests<T>.Requests.GetOrAdd(
+            key,
+            _ => new Lazy<Task<ErrorOr<T>>>(
+                () => CreateAndCacheAsync(key, factory, expiration, cancellationToken),
+                LazyThreadSafetyMode.ExecutionAndPublication));
+
+        try
         {
-            var cachevalue=JsonSerializer.Serialize(value);
-            var option =new DistributedCacheEntryOptions();
-            if (expitration.HasValue)
-                option.SlidingExpiration = expitration;
-            await _distributedCache.SetStringAsync(key, cachevalue, cancellationToken);
-            _cache.TryAdd(key, true);
+            return await lazyRequest.Value;
         }
+        finally
+        {
+            ((ICollection<KeyValuePair<string, Lazy<Task<ErrorOr<T>>>>>)InflightRequests<T>.Requests)
+                .Remove(new KeyValuePair<string, Lazy<Task<ErrorOr<T>>>>(key, lazyRequest));
+        }
+    }
+
+    public async Task SetAsync<T>(
+        string key,
+        T value,
+        TimeSpan? expiration = null,
+        CancellationToken cancellationToken = default)
+        where T : class
+    {
+        var cacheValue = JsonSerializer.Serialize(value, SerializerOptions);
+        var options = new DistributedCacheEntryOptions
+        {
+            AbsoluteExpirationRelativeToNow = expiration ?? _defaultExpiration
+        };
+
+        try
+        {
+            await _distributedCache.SetStringAsync(key, cacheValue, options, cancellationToken);
+            _logger.LogInformation(
+                "Cache {CacheOperation} for {CacheKey} with TTL {CacheDurationSeconds} seconds",
+                "Set",
+                key,
+                options.AbsoluteExpirationRelativeToNow?.TotalSeconds);
+        }
+        catch (RedisException exception)
+        {
+            _logger.LogWarning(
+                exception,
+                "Cache {CacheOperation} for {CacheKey}; response was not cached",
+                "WriteFailure",
+                key);
+        }
+    }
+
+    public async Task RemoveAsync(
+        string key,
+        CancellationToken cancellationToken = default)
+    {
+        try
+        {
+            await _distributedCache.RemoveAsync(key, cancellationToken);
+            _logger.LogInformation("Cache {CacheOperation} for {CacheKey}", "Remove", key);
+        }
+        catch (RedisException exception)
+        {
+            _logger.LogWarning(
+                exception,
+                "Cache {CacheOperation} for {CacheKey}",
+                "RemoveFailure",
+                key);
+        }
+    }
+
+    private async Task<ErrorOr<T>> CreateAndCacheAsync<T>(
+        string key,
+        Func<CancellationToken, Task<ErrorOr<T>>> factory,
+        TimeSpan? expiration,
+        CancellationToken cancellationToken)
+        where T : class
+    {
+        // A request may have populated the cache while this request was waiting.
+        var cachedValue = await GetAsync<T>(key, cancellationToken);
+        if (cachedValue is not null)
+        {
+            return cachedValue;
+        }
+
+        var response = await factory(cancellationToken);
+        if (response.IsError)
+        {
+            _logger.LogInformation(
+                "Cache {CacheOperation} for unsuccessful response {CacheKey}",
+                "Skip",
+                key);
+            return response;
+        }
+
+        await SetAsync(key, response.Value, expiration, cancellationToken);
+        return response;
+    }
+
+    private static class InflightRequests<T>
+        where T : class
+    {
+        internal static readonly ConcurrentDictionary<string, Lazy<Task<ErrorOr<T>>>> Requests = new();
     }
 }

@@ -21,7 +21,7 @@ namespace Generita.Api.Controllers
 {
     [Route("[controller]/[action]")]
     [ApiController]
-    [EnableCors("AllowArsemi")]
+    [EnableCors("AllowedClients")]
 
     public class AuthController : ApiController
     {

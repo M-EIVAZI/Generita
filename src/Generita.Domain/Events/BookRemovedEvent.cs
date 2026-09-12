@@ -11,5 +11,6 @@ namespace Generita.Domain.Events
     public class BookRemovedEvent:INotification
     {
         public Guid BookId { get; set; }
+        public Guid AuthorId { get; set; }
     }
 }

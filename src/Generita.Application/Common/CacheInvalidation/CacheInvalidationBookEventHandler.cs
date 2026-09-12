@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Generita.Application.Common.Caching;
 using Generita.Application.Common.Services;
 using Generita.Domain.Events;
 
@@ -15,7 +16,7 @@ namespace Generita.Application.Common.CacheInvalidation
         INotificationHandler<BookAddedEvent>,
         INotificationHandler<BookRemovedEvent>
     {
-        private ICachedService _cachedService;
+        private readonly ICachedService _cachedService;
 
         public CacheInvalidationBookEventHandler(ICachedService cachedService)
         {
@@ -24,25 +25,21 @@ namespace Generita.Application.Common.CacheInvalidation
 
         public async Task Handle(BookAddedEvent notification, CancellationToken cancellationToken)
         {
-            await HandlerInternal(notification.AuthorId, cancellationToken,true);
-            await HandlerInternal(notification.BookId, cancellationToken);
+            await InvalidateBookAsync(notification.BookId, notification.AuthorId, cancellationToken);
         }
 
-        public Task Handle(BookRemovedEvent notification, CancellationToken cancellationToken)
+        public async Task Handle(BookRemovedEvent notification, CancellationToken cancellationToken)
         {
-            return HandlerInternal(notification.BookId, cancellationToken);
+            await InvalidateBookAsync(notification.BookId, notification.AuthorId, cancellationToken);
         }
-        private async Task HandlerInternal(Guid Id, CancellationToken cancellationToken)
-        {
-            await _cachedService.RemoveAsync("GetAllBooks");
-            await _cachedService.RemoveAsync("Home");
-            await _cachedService.RemoveAsync($"GetBookContent-{Id}");
-            await _cachedService.RemoveAsync($"BookById-{Id}", cancellationToken);
-        }
-        private async Task HandlerInternal(Guid Id, CancellationToken cancellationToken,bool Author)
-        {
-            await _cachedService.RemoveAsync($"AuthorBook-{Id}");
 
+        private Task InvalidateBookAsync(Guid bookId, Guid authorId, CancellationToken cancellationToken)
+        {
+            return Task.WhenAll(
+                _cachedService.RemoveAsync(CacheKeys.Home, cancellationToken),
+                _cachedService.RemoveAsync(CacheKeys.AuthorBooks(authorId), cancellationToken),
+                _cachedService.RemoveAsync(CacheKeys.BookContent(bookId), cancellationToken),
+                _cachedService.RemoveAsync(CacheKeys.BookById(bookId), cancellationToken));
         }
     }
 }

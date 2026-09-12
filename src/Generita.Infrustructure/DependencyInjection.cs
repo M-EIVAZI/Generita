@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 using Generita.Application.Common.Interfaces;
 using Generita.Application.Common.Interfaces.Repository;
+using Generita.Application.Common.Options;
 using Generita.Application.Common.Services;
 using Generita.Domain.Common.Interfaces;
 using Generita.Infrustructure.Authentication;
@@ -20,6 +21,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using StackExchange.Redis;
 
 namespace Generita.Infrustructure
 {
@@ -31,6 +33,21 @@ namespace Generita.Infrustructure
             services.AddDbContext<GeneritaDbContext>(options =>
             {
                 options.UseNpgsql(connectionString);
+
+                // EF Core writes executed SQL through the normal
+                // Microsoft.Extensions.Logging pipeline. The Serilog category override in
+                // appsettings.json enables these command events at Information level.
+                if (configuration.GetValue<bool>("Database:EnableDetailedErrors"))
+                {
+                    options.EnableDetailedErrors();
+                }
+
+                // Do not include parameter values by default. SQL text and execution metadata
+                // are useful for diagnostics, while request/user data must stay out of Seq.
+                if (configuration.GetValue<bool>("Database:EnableSensitiveDataLogging"))
+                {
+                    options.EnableSensitiveDataLogging();
+                }
             });
             services.AddScoped<IUserRepository,UserRepository>();
             services.AddScoped<ISongRepository,SongsRepository>();
@@ -45,18 +62,39 @@ namespace Generita.Infrustructure
             services.AddScoped<IJobRepository, JobsRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<ICachedService, CacheService>();
-            services.AddHttpClient<IBookService, BookServices>();
+            services.Configure<DistributedCacheOptions>(
+                configuration.GetSection(DistributedCacheOptions.SectionName));
+            services.AddHttpClient<IBookService, BookServices>((serviceProvider, httpClient) =>
+            {
+                var urlOptions = serviceProvider
+                    .GetRequiredService<IOptions<ApplicationUrlOptions>>()
+                    .Value;
+
+                httpClient.BaseAddress = new Uri(
+                    $"{urlOptions.BookProcessorBaseUrl.TrimEnd('/')}/");
+            });
             services.AddSingleton<IPasswordHasher, PasswordHasher>();
             services.AddSingleton<ITokenGenerator, TokenGenerator>();
             services.Configure<ZarinPalOptions>(
                 configuration.GetSection("ZarinPal"));
-            services.AddDistributedMemoryCache();
             services.AddHttpClient<IPaymentService, PaymentService>();
             services.AddHostedService<JobStatusCheckerService>();
+
+            var redisConnection = configuration.GetConnectionString("Redis")
+                ?? throw new InvalidOperationException("ConnectionStrings:Redis is required.");
+            var cacheInstanceName = configuration[$"{DistributedCacheOptions.SectionName}:InstanceName"]
+                ?? "generita:";
+
             services.AddStackExchangeRedisCache(options =>
             {
-                string connection = configuration.GetConnectionString("Redis");
-            options.Configuration = connection;
+                var redisOptions = ConfigurationOptions.Parse(redisConnection);
+                redisOptions.AbortOnConnectFail = false;
+                redisOptions.ConnectRetry = 3;
+                redisOptions.ConnectTimeout = 5000;
+                redisOptions.SyncTimeout = 5000;
+
+                options.ConfigurationOptions = redisOptions;
+                options.InstanceName = cacheInstanceName;
             });
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(o =>

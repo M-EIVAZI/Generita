@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using ErrorOr;
 using Generita.Application.Common.Messaging;
 using Generita.Application.Common.Services;
 
@@ -11,24 +12,26 @@ using MediatR;
 
 namespace Generita.Application.Common.Behaviors
 {
-    internal class QueryCachingPipelineBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+    internal sealed class QueryCachingPipelineBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, ErrorOr<TResponse>>
         where TRequest : ICachedQuery<TResponse>
-        where TResponse:class
+        where TResponse : class
     {
-        private ICachedService _cachedService;
+        private readonly ICachedService _cachedService;
         public QueryCachingPipelineBehavior(ICachedService cachedService)
         {
             _cachedService = cachedService;
         }
 
-        public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
+        public Task<ErrorOr<TResponse>> Handle(
+            TRequest request,
+            RequestHandlerDelegate<ErrorOr<TResponse>> next,
+            CancellationToken cancellationToken)
         {
-            return await _cachedService.GetOrCreateAsync<TResponse>
-                (request.Key,
-                _ =>  next(),
+            return _cachedService.GetOrCreateAsync(
+                request.Key,
+                token => next(token),
                 request.Time,
-                cancellationToken
-                );
+                cancellationToken);
         }
     }
 }

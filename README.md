@@ -1,1 +1,91 @@
 # Generita
+
+ASP.NET Core 8 Web API with PostgreSQL, Redis, Serilog, and Seq.
+
+## Run everything in Docker
+
+From the repository root:
+
+```bash
+cp .env.example .env
+# Edit .env and replace the placeholder values.
+docker compose up --build
+```
+
+Docker Compose reads the PostgreSQL password, JWT signing secret, and optional
+ZarinPal merchant ID from the ignored `.env` file. Real credentials are not kept
+in tracked configuration files.
+
+`Config.yml` is an old optional Cloudflare Tunnel configuration and is not used
+for local execution.
+
+Open:
+
+- API Swagger: <http://localhost:7161/swagger>
+- Seq logs: <http://localhost:5341>
+- PostgreSQL: `localhost:5432`
+- Redis: `localhost:6379`
+
+The separate book-processing API is not part of this repository. Docker expects it
+to be running on the host at `http://localhost:8000` and reaches it through
+`http://host.docker.internal:8000`. Change
+`ApplicationUrls__BookProcessorBaseUrl` in `docker-compose.yml` if that service
+uses another port.
+
+Stop the containers with:
+
+```bash
+docker compose down
+```
+
+## Run the API directly
+
+Start only its dependencies:
+
+```bash
+cp .env.example .env
+# Edit .env and replace the placeholder values.
+docker compose up -d postgres redis seq
+ConnectionStrings__DefaultConnection="Host=localhost;Port=5432;Database=generita_db;Username=Mahdi;Password=<your-local-password>" \
+JwtSettings__Secret="<your-random-secret-of-at-least-32-characters>" \
+dotnet run --project src/Generita.Api --launch-profile http
+```
+
+The API uses these non-secret local defaults in `appsettings.json`:
+
+- Public API URL: `http://localhost:7161`
+- Frontend URL: `http://localhost:3000`
+- Book processor: `http://localhost:8000`
+- Seq server: `http://localhost:5341`
+
+All values can be overridden with ASP.NET Core environment variables. For
+example:
+
+```bash
+ApplicationUrls__ClientBaseUrl=http://localhost:5173 \
+ApplicationUrls__BookProcessorBaseUrl=http://localhost:9000 \
+dotnet run --project src/Generita.Api --launch-profile http
+```
+
+## Logging
+
+Serilog writes structured logs to both the console and Seq. HTTP requests are
+logged once with their status and elapsed time. Every MediatR command and query
+logs its kind, request type, duration, and exceptions. Every EF Core SQL command
+(including `SELECT`, `INSERT`, `UPDATE`, and `DELETE`) is also sent to Seq. SQL
+logs share a `CorrelationId` with the HTTP request and application request logs.
+Request payloads and database parameter values are deliberately not logged because
+they can contain passwords, tokens, payment data, or uploaded content.
+
+## Redis cache
+
+Successful cached-query values are stored in Redis; `ErrorOr` failures are never
+cached. Each query supplies an absolute TTL and `Cache:DefaultExpirationMinutes`
+is used as a safe fallback. Cache hits, misses, writes, removals, and Redis
+failures are emitted as structured logs and can be filtered in Seq by
+`CacheOperation` or `CacheKey`.
+
+The Redis container is intentionally ephemeral and capped at 256 MB with an LRU
+eviction policy because Redis is used as a cache, not as the system of record.
+If Redis is temporarily unavailable, reads continue through the original query
+handler and the API response is returned without caching.

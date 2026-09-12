@@ -34,11 +34,19 @@ namespace Generita.Application.Books.Commands.RemoveBook
         {
             try
             {
-                //var job = await _jobRepository.GetById(request.Id);
+                var book = await _bookRepository.GetById(request.Id);
+                if (book is null)
+                {
+                    return Error.NotFound(description: "Book not found");
+                }
+
                 await _bookRepository.Delete(request.Id);
-                await _unitOfWork.CommitAsync();
+                await _unitOfWork.CommitAsync(cancellationToken);
                 BookRemovedEvent BookRemoved=new()
-                { BookId = request.Id };
+                {
+                    BookId = request.Id,
+                    AuthorId = book.AuthorId
+                };
                 await _publisher.Publish(BookRemoved, cancellationToken);
                 return Result.Success;
             }

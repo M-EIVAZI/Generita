@@ -10,7 +10,7 @@ namespace Generita.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [EnableCors("AllowArsemi")]
+    [EnableCors("AllowedClients")]
 
     public class HomeController : ApiController
     {
