@@ -9,9 +9,11 @@ using ErrorOr;
 using Generita.Application.Common.Interfaces;
 using Generita.Application.Common.Interfaces.Repository;
 using Generita.Application.Common.Messaging;
+using Generita.Application.Common.Options;
 using Generita.Domain.Events;
 
 using MediatR;
+using Microsoft.Extensions.Options;
 
 namespace Generita.Application.Transactions.Commands.VeriftyPayment
 {
@@ -21,13 +23,15 @@ namespace Generita.Application.Transactions.Commands.VeriftyPayment
         private IPaymentService _paymentService;
         private IPlansRepository _plansRepository;
         private IPublisher _publisher;
+        private readonly ApplicationUrlOptions _urlOptions;
 
-        public VerifyPaymentHandler(ITransactionsRepository transactionsRepository, IPaymentService paymentService, IPlansRepository plansRepository, IPublisher publisher)
+        public VerifyPaymentHandler(ITransactionsRepository transactionsRepository, IPaymentService paymentService, IPlansRepository plansRepository, IPublisher publisher, IOptions<ApplicationUrlOptions> urlOptions)
         {
             _transactionsRepository = transactionsRepository;
             _paymentService = paymentService;
             _plansRepository = plansRepository;
             _publisher = publisher;
+            _urlOptions = urlOptions.Value;
         }
 
         public async Task<ErrorOr<string>> Handle(VerifyPaymentQuery request, CancellationToken cancellationToken)
@@ -41,11 +45,17 @@ namespace Generita.Application.Transactions.Commands.VeriftyPayment
             var plan=await _plansRepository.GetById(transaction.PlanId);
 
             var res=await _paymentService.VerifyPaymentAsync(request.VeriftyPaymentDto.Authority,plan.Price);
-            VerifyPaymentEvent event1 = new()
-            { Id = res.Value.Transactions.Id };
+            if (res.IsError)
+            {
+                return res.Errors;
+            }
+
             if (res.Value.IsSuccess)
             {
-                return "https://arsemi.qzz.io/";
+                VerifyPaymentEvent event1 = new()
+                { Id = res.Value.Transactions.Id };
+                await _publisher.Publish(event1, cancellationToken);
+                return _urlOptions.ClientBaseUrl;
             }
             else
                 return "Payment Failed";

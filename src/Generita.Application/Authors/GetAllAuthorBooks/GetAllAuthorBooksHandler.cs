@@ -50,7 +50,7 @@ namespace Generita.Application.Authors.GetAllAuthorBooks
                     bookId = book.Id,
                     bookTitle = book.Title,
                     JobId = job?.Id,
-                    createdAt = job.CreateAt.ToString("yyyy-MM-dd"),
+                    createdAt = job is null ? string.Empty : job.CreateAt.ToString("yyyy-MM-dd"),
                     status = statusString
                 });
             }

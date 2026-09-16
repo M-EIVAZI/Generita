@@ -4,7 +4,6 @@
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 WORKDIR /app
 EXPOSE 8080
-EXPOSE 8081
 
 
 # This stage is used to build the service project
@@ -27,6 +26,10 @@ RUN dotnet publish "./Generita.Api.csproj" -c $BUILD_CONFIGURATION -o /app/publi
 
 # This stage is used in production or when running from VS in regular mode (Default when not using the Debug configuration)
 FROM base AS final
+USER root
 WORKDIR /app
-COPY --from=publish /app/publish .
+COPY --from=publish --chown=app:app /app/publish .
+RUN mkdir -p /app/wwwroot/files /app/wwwroot/images /app/wwwroot/Musics \
+    && chown -R app:app /app/wwwroot
+USER app
 ENTRYPOINT ["dotnet", "Generita.Api.dll"]

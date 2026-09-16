@@ -9,12 +9,5 @@ using Generita.Application.Common.Messaging;
 
 namespace Generita.Application.Authors.ProcessNewBook
 {
-    public record ProcessNewBookCommand(ProcessNewBookDto processNewBookDto) : ICommand<ProcessNewBookResponse>, ICacheInvalidationCommand
-    {
-        public IEnumerable<string> KeysToInvalidate => new List<string>
-        {
-            $"book-{processNewBookDto.Title}"
-        };
-
-    }
+    public record ProcessNewBookCommand(ProcessNewBookDto processNewBookDto) : ICommand<ProcessNewBookResponse>;
 }

@@ -13,12 +13,15 @@ using Generita.Application.Common.Dtos;
 using Generita.Application.Common.Dtos.ApiDtos;
 using Generita.Application.Common.Services;
 using Generita.Application.Common.Interfaces.Repository;
+using Generita.Application.Common.Options;
 using Generita.Domain.Models;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Generita.Domain.Common.Interfaces;
 using System.Text.RegularExpressions;
 using Generita.Domain.Common.Enums;
 using System.Threading;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 namespace Generita.Infrustructure.Persistance.Services
 {
     internal class BookServices : IBookService
@@ -27,18 +30,28 @@ namespace Generita.Infrustructure.Persistance.Services
         private IEntityRepository _entityRepository;
         private ISongRepository _songRepository;
         private IUnitOfWork _unitOfWork;
+        private readonly ApplicationUrlOptions _urlOptions;
+        private readonly ILogger<BookServices> _logger;
 
-        public BookServices(HttpClient httpClient, IEntityRepository entityRepository, ISongRepository songRepository, IUnitOfWork unitOfWork)
+        public BookServices(
+            HttpClient httpClient,
+            IEntityRepository entityRepository,
+            ISongRepository songRepository,
+            IUnitOfWork unitOfWork,
+            IOptions<ApplicationUrlOptions> urlOptions,
+            ILogger<BookServices> logger)
         {
             _httpClient = httpClient;
             _entityRepository = entityRepository;
             _songRepository = songRepository;
             _unitOfWork = unitOfWork;
+            _urlOptions = urlOptions.Value;
+            _logger = logger;
         }
 
         public async Task<ErrorOr<Root>> DownloadResult(Guid jobId)
         {
-            var response = await _httpClient.GetAsync($"https://arsemi.qzz.io/results/{jobId}/download");
+            var response = await _httpClient.GetAsync($"results/{jobId}/download");
             //response.EnsureSuccessStatusCode();
             if (response.StatusCode == HttpStatusCode.OK)
             {
@@ -92,11 +105,14 @@ namespace Generita.Infrustructure.Persistance.Services
 
         public async Task<ErrorOr<GetJobStatusResponse>> GetJobStatus(Guid jobId)
         {
-            var response = await _httpClient.GetAsync($"https://arsemi.qzz.io/results/{jobId}");
+            var response = await _httpClient.GetAsync($"results/{jobId}");
             //response.EnsureSuccessStatusCode();
             var content = await response.Content.ReadAsStringAsync();
 
-            Console.WriteLine(content);
+            _logger.LogDebug(
+                "Book processor returned {StatusCode} for job {JobId}",
+                (int)response.StatusCode,
+                jobId);
             if (response.StatusCode == HttpStatusCode.OK)
             {
                
@@ -123,17 +139,28 @@ namespace Generita.Infrustructure.Persistance.Services
         public async Task<ErrorOr<PostJobResponse>> PostBook(PostJobRequest request)
         {
             var abstractRegex = new Regex(@"^abstract_audio_(.+)$");
-            string baseUrl = @"https://eivazi.qzz.io/";
-            var url = "https://arsemi.qzz.io/process";
             var configDict = JsonSerializer.Deserialize<Dictionary<string, object>>(request.config_json);
+
+            if (configDict is null)
+            {
+                return Error.Validation(
+                    code: "Job.InvalidConfiguration",
+                    description: "The book-processing configuration is not valid JSON.");
+            }
 
             // ⚠️ نکته: فیلدهایی که خودشان دیکشنری هستند (مثل target_abstracts) 
             // به JsonElement تبدیل می‌شوند و باید به Dictionary تبدیل شوند:
-            configDict.Add("roast_model_path", configDict.GetValueOrDefault("llm_ollama_model"));
-            if (configDict != null && configDict.ContainsKey("target_abstracts"))
+            configDict["roast_model_path"] = configDict.GetValueOrDefault("llm_ollama_model") ?? string.Empty;
+            if (configDict.ContainsKey("target_abstracts"))
             {
                 var targetJson = (JsonElement)configDict["target_abstracts"];
                 var targetDict = JsonSerializer.Deserialize<Dictionary<string, string>>(targetJson.GetRawText());
+                if (targetDict is null)
+                {
+                    return Error.Validation(
+                        code: "Job.InvalidTargetAbstracts",
+                        description: "The target_abstracts configuration is not valid.");
+                }
                 var allKeys = targetDict.Keys.ToList(); // یا string.Join(",", targetDict.Keys)
                                                         //var song = await _songRepository.GetByEntityType(type);
 
@@ -170,7 +197,6 @@ namespace Generita.Infrustructure.Persistance.Services
                             EntityType = abstractName,
                             Owner = Domain.Enums.OwnerShip.Author,
                             AuthorId = request.AuthorId,
-                            FilePath = $"{baseUrl}Musics/{request.AuthorId}{key}.mp3"
                         };
                         var projectRoot = Directory.GetCurrentDirectory();
                         var wwwrootPath = Path.Combine(projectRoot, "wwwroot");
@@ -180,6 +206,7 @@ namespace Generita.Infrustructure.Persistance.Services
                             Directory.CreateDirectory(songFolder);
                         }
                         var songName = $"{song.Id}_{Path.GetFileName(file.FileName)}";
+                        song.FilePath = BuildPublicUrl($"Musics/{Uri.EscapeDataString(songName)}");
                         var songPath = Path.Combine(songFolder, songName);
                         using (var stream = new FileStream(songPath, FileMode.Create))
                         {
@@ -214,9 +241,11 @@ namespace Generita.Infrustructure.Persistance.Services
             }
 
             // 3️⃣ ارسال درخواست
-            var response = await _httpClient.PostAsync(url, form);
+            var response = await _httpClient.PostAsync("process", form);
             var responseContent = await response.Content.ReadAsStringAsync();
-            Console.WriteLine($"Response content: {responseContent}");
+            _logger.LogInformation(
+                "Book processor returned {StatusCode} when starting a job",
+                (int)response.StatusCode);
 
             // 4️⃣ پردازش پاسخ
             if (response.StatusCode == HttpStatusCode.Accepted)
@@ -232,6 +261,11 @@ namespace Generita.Infrustructure.Persistance.Services
                 return Error.Custom(400, code: "Job.BadRequest", description: responseContent);
 
             return Error.Failure(code: "Job.Unknown", description: $"Unexpected status {response.StatusCode}");
+        }
+
+        private string BuildPublicUrl(string relativePath)
+        {
+            return $"{_urlOptions.PublicBaseUrl.TrimEnd('/')}/{relativePath.TrimStart('/')}";
         }
     }
 }

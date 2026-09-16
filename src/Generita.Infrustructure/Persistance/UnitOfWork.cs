@@ -22,7 +22,7 @@ namespace Generita.Infrustructure.Persistance
 
         public async Task CommitAsync(CancellationToken cancellationToken = default)
         {
-            await _dbContext.SaveChangesAsync();
+            await _dbContext.SaveChangesAsync(cancellationToken);
         }
 
         public void Rollback()

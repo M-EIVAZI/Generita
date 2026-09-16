@@ -8,16 +8,19 @@ using ErrorOr;
 
 using Generita.Application.Common.Interfaces.Repository;
 using Generita.Application.Common.Messaging;
+using Generita.Domain.Common.Interfaces;
 
 namespace Generita.Application.Books.Commands.UpdateBook
 {
     public class UpdateBookHandler : ICommandHandler<UpdateBookCommand>
     {
-        private IBookRepository _bookRepository;
+        private readonly IBookRepository _bookRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public UpdateBookHandler(IBookRepository bookRepository)
+        public UpdateBookHandler(IBookRepository bookRepository, IUnitOfWork unitOfWork)
         {
-            this._bookRepository = bookRepository;
+            _bookRepository = bookRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<ErrorOr<Success>> Handle(UpdateBookCommand request, CancellationToken cancellationToken)
@@ -25,6 +28,7 @@ namespace Generita.Application.Books.Commands.UpdateBook
             try
             {
                 await _bookRepository.Update(request.books);
+                await _unitOfWork.CommitAsync(cancellationToken);
                 return Result.Success;
             }
             catch (Exception ex)

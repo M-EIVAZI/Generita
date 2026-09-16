@@ -1,6 +1,6 @@
-@Generita.Api_HostAddress = http://localhost:5062
+@Generita.Api_HostAddress = https://eivazi.qzz.io
 
-GET {{Generita.Api_HostAddress}}/weatherforecast/
+GET {{Generita.Api_HostAddress}}/api/Home
 Accept: application/json
 
 ###
