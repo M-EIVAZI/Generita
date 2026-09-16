@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Generita.Application.Common.Caching;
 using Generita.Application.Common.Services;
 using Generita.Domain.Events;
 
@@ -15,7 +16,7 @@ namespace Generita.Application.Common.CacheInvalidation
         : INotificationHandler<CreatePaymentEvent>,
         INotificationHandler<VerifyPaymentEvent>
     {
-        private ICachedService _service;
+        private readonly ICachedService _service;
 
         public CacheInvalidationPaymentEventHandler(ICachedService service)
         {
@@ -24,16 +25,16 @@ namespace Generita.Application.Common.CacheInvalidation
 
         public Task Handle(VerifyPaymentEvent notification, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            return HandlerInternal(notification.Id, cancellationToken);
         }
 
         public Task Handle(CreatePaymentEvent notification, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            return HandlerInternal(notification.PaymentId, cancellationToken);
         }
         private async Task HandlerInternal(Guid Id, CancellationToken cancellationToken)
         {
-            await _service.RemoveAsync($"Payment-{Id}", cancellationToken);
+            await _service.RemoveAsync(CacheKeys.Payment(Id), cancellationToken);
         }
     }
 }

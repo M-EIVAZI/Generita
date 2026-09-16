@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Generita.Application.Common.Interfaces.Repository;
+using Generita.Application.Common.Caching;
 using Generita.Application.Common.Services;
 using Generita.Domain.Common.Enums;
 using Generita.Domain.Common.Interfaces;
@@ -40,6 +41,7 @@ namespace Generita.Infrustructure.Persistance.Services
                     var _paragraphRepository = scope.ServiceProvider.GetRequiredService<IParagraphRepository>();
                     var _entityRepository = scope.ServiceProvider.GetRequiredService<IEntityRepository>();
                     var _unitOfWork = scope.ServiceProvider.GetRequiredService<IUnitOfWork>();
+                    var _cachedService = scope.ServiceProvider.GetRequiredService<ICachedService>();
 
 
 
@@ -131,17 +133,31 @@ namespace Generita.Infrustructure.Persistance.Services
                             job.JobStatus = JobStatus.Completed;
                             await _jobRepository.Update(job);
                             await _unitOfWork.CommitAsync(stoppingToken);
+                            await InvalidateProcessedBookAsync(_cachedService, job, stoppingToken);
                         }
                         else if (status.Value.Status == JobStatus.Failed)
                         {
                             job.JobStatus = JobStatus.Failed;
                             await _unitOfWork.CommitAsync(stoppingToken);
+                            await _cachedService.RemoveAsync(
+                                CacheKeys.AuthorBooks(job.AuthorId),
+                                stoppingToken);
                         }
 
                     }
                 }
                 await Task.Delay(TimeSpan.FromMinutes(1), stoppingToken);
             }
+        }
+
+        private static Task InvalidateProcessedBookAsync(
+            ICachedService cachedService,
+            Jobs job,
+            CancellationToken cancellationToken)
+        {
+            return Task.WhenAll(
+                cachedService.RemoveAsync(CacheKeys.AuthorBooks(job.AuthorId), cancellationToken),
+                cachedService.RemoveAsync(CacheKeys.BookContent(job.BookId), cancellationToken));
         }
     }
 }

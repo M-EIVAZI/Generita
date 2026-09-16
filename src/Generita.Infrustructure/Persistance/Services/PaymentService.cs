@@ -18,6 +18,7 @@ using Generita.Domain.Models;
 
 using MediatR;
 
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
 namespace Generita.Infrustructure.Persistance.Services
@@ -29,14 +30,16 @@ namespace Generita.Infrustructure.Persistance.Services
         private readonly string _callbackUrl;
         private readonly ITransactionsRepository _transactionsRepository;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly ILogger<PaymentService> _logger;
 
-        public PaymentService(HttpClient httpClient, IOptions<ZarinPalOptions> zarinPalOptions, ITransactionsRepository transactionsRepository, IUnitOfWork unitOfWork)
+        public PaymentService(HttpClient httpClient, IOptions<ZarinPalOptions> zarinPalOptions, ITransactionsRepository transactionsRepository, IUnitOfWork unitOfWork, ILogger<PaymentService> logger)
         {
             _httpClient = httpClient;
             _merchantId = zarinPalOptions.Value.MerchantId ;
             _callbackUrl = zarinPalOptions.Value.CallbackUrl;
             _transactionsRepository = transactionsRepository;
             _unitOfWork = unitOfWork;
+            _logger = logger;
         }
 
         public async Task<ErrorOr<CreatePaymentForEvent>> CreatePaymentAsync(Guid userid, Guid planid, int amount, string description)
@@ -57,8 +60,9 @@ namespace Generita.Infrustructure.Persistance.Services
                 merchant_id=_merchantId,
             };
             var response= await _httpClient.PostAsJsonAsync("https://sandbox.zarinpal.com/pg/v4/payment/request.json", request);
-            var raw = await response.Content.ReadAsStringAsync();
-            Console.WriteLine(raw);
+            _logger.LogInformation(
+                "ZarinPal payment request returned {StatusCode}",
+                (int)response.StatusCode);
             var result = await response.Content.ReadFromJsonAsync<CreatePaymentResponse>();
 
             if(result?.data.code==100)

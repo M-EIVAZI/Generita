@@ -31,6 +31,13 @@ namespace Generita.Application.Books.Queries.GetBookContent
         public async Task<ErrorOr<BookConentResponse>> Handle(GetBookByContentQuery request, CancellationToken cancellationToken)
         {
             var book =await _bookRepository.GetById(request.bookId);
+            if (book is null)
+            {
+                return Error.NotFound(
+                    code: "Book.NotFound",
+                    description: "Book with this id was not found");
+            }
+
             var paragraphs = await _paragraphRepository.GetByBookId(request.bookId);
             var result = new BookConentResponse
             {

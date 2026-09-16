@@ -17,7 +17,7 @@ namespace Generita.Api.Controllers
 {
     [ApiController]
     [Route("books")]
-    [EnableCors("AllowArsemi")]
+    [EnableCors("AllowedClients")]
 
     public class BooksController : ApiController
     {

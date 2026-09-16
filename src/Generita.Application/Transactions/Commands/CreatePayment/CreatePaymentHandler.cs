@@ -48,11 +48,14 @@ namespace Generita.Application.Transactions.Commands.CreatePayment
                     return Error.Conflict(description:"The user have already an active plan");
             }
             var res = await _paymentService.CreatePaymentAsync(user.Id, plan.Id, plan.Price, plan.Description);
+            if (res.IsError)
+            {
+                return res.Errors;
+            }
+
             CreatePaymentEvent event1 =new()
             { PaymentId = res.Value.transactions.Id};
             await _publisher.Publish(event1, cancellationToken);
-            if(res.Value is null  )
-                return Error.Conflict("there is a problem with payment");
             return res.Value.url;
         }
     }

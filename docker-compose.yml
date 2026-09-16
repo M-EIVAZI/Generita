@@ -1,39 +1,88 @@
-version: '3.9'
 services:
   postgres:
-    image: postgres:15
+    image: postgres:15-alpine
+    restart: unless-stopped
     environment:
       POSTGRES_USER: Mahdi
-      POSTGRES_PASSWORD: mahdi1382
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Create a .env file from .env.example}
       POSTGRES_DB: generita_db
     ports:
       - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U Mahdi -d generita_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
 
   redis:
-    image: redis:7
+    image: redis:7-alpine
+    restart: unless-stopped
     ports:
       - "6379:6379"
-    command: ["redis-server", "--appendonly", "yes"]
+    command:
+      - redis-server
+      - --save
+      - ""
+      - --appendonly
+      - "no"
+      - --maxmemory
+      - 256mb
+      - --maxmemory-policy
+      - allkeys-lru
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  seq:
+    image: datalust/seq:latest
+    restart: unless-stopped
+    environment:
+      ACCEPT_EULA: "Y"
+      SEQ_FIRSTRUN_NOAUTHENTICATION: "true"
+    ports:
+      - "5341:80"
+    volumes:
+      - seqdata:/data
 
   generita.api:
     build:
       context: .
       dockerfile: src/Generita.Api/Dockerfile
+    restart: unless-stopped
     depends_on:
-      - postgres
-      - redis
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      seq:
+        condition: service_started
     ports:
-      - "32769:8080"
-      - "32770:8081"
+      - "7161:8080"
     environment:
-      APPSETTINGS_JSON: |
-        {
-          "Kestrel:Certificates:Development:Password": "f70a6141-ee36-432a-8fa2-b91b9674b0ad",
-          "ConnectionStrings:DefaultConnection": "Host=postgres;Port=5432;Database=generita_db;Username=Mahdi;Password=mahdi1382",
-          "ConnectionStrings:Redis": "redis:6379"
-        }
+      ASPNETCORE_URLS: "http://+:8080"
+      ConnectionStrings__DefaultConnection: "Host=postgres;Port=5432;Database=generita_db;Username=Mahdi;Password=${POSTGRES_PASSWORD}"
+      ConnectionStrings__Redis: "redis:6379"
+      # Optional in Development: Program.cs creates an ephemeral signing key
+      # when this value is empty. Set JWT_SECRET for tokens that must survive
+      # container restarts.
+      JwtSettings__Secret: ${JWT_SECRET:-}
+      ZarinPal__MerchantId: ${ZARINPAL_MERCHANT_ID:-}
+      Cache__DefaultExpirationMinutes: "30"
+      Cache__InstanceName: "generita:"
+      Database__ApplyMigrationsOnStartup: ${APPLY_MIGRATIONS_ON_STARTUP:-false}
+      Serilog__WriteTo__1__Args__serverUrl: "http://seq:80"
+      ApplicationUrls__PublicBaseUrl: "https://eivazi.qzz.io"
+      ApplicationUrls__ClientBaseUrl: "http://localhost:5173"
+      ApplicationUrls__BookProcessorBaseUrl: "https://arsemi.qzz.io"
+      ZarinPal__CallbackUrl: "https://eivazi.qzz.io/Transaction/VerifyPayment"
+    volumes:
+      - uploads:/app/wwwroot
 
 volumes:
   pgdata:
+  seqdata:
+  uploads:

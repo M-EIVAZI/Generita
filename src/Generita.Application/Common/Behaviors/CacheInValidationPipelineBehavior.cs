@@ -11,25 +11,26 @@ using MediatR;
 
 namespace Generita.Application.Common.Behaviors
 {
-    public class CacheInValidationPipelineBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+    public sealed class CacheInvalidationPipelineBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
         where TRequest : ICacheInvalidationCommand
     {
-        private ICachedService _cachedService;
+        private readonly ICachedService _cachedService;
 
-        public CacheInValidationPipelineBehavior(ICachedService cachedService)
+        public CacheInvalidationPipelineBehavior(ICachedService cachedService)
         {
             _cachedService = cachedService;
         }
 
         public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
         {
-            var response = await next();
+            var response = await next(cancellationToken);
 
-            // ۲. حذف کش‌ها
-            foreach (var key in request.KeysToInvalidate)
-            {
-                await _cachedService.RemoveAsync(key, cancellationToken);
-            }
+            var removals = request.KeysToInvalidate
+                .Where(key => !string.IsNullOrWhiteSpace(key))
+                .Distinct(StringComparer.Ordinal)
+                .Select(key => _cachedService.RemoveAsync(key, cancellationToken));
+
+            await Task.WhenAll(removals);
 
             return response;
         }

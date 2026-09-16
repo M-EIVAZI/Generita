@@ -4,12 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using Generita.Application.Common.Caching;
 using Generita.Application.Common.Messaging;
 using Generita.Application.Users.Commands.AddBookToLibrary;
 
 namespace Generita.Application.Users.Commands.RemvoeBookFromLibrary
 {
-    public record RemoveBookFromLibraryQuery(AddUserLibraryRequest addUserLibraryRequest):IQuery<AddUserLibrarayResponse>
+    public record RemoveBookFromLibraryQuery(AddUserLibraryRequest addUserLibraryRequest)
+        : IQuery<AddUserLibrarayResponse>, ICacheInvalidationCommand
     {
+        public IEnumerable<string> KeysToInvalidate => [CacheKeys.Home];
     }
 }
