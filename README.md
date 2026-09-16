@@ -2,20 +2,6 @@
 
 ASP.NET Core 8 Web API with PostgreSQL, Redis, Serilog, and Seq.
 
-## Service URLs
-
-| Service | URL |
-| --- | --- |
-| Public backend API | `https://eivazi.qzz.io` |
-| Frontend development server | `http://localhost:5173` |
-| AI/book-processing service | `https://arsemi.qzz.io` |
-| Local Seq dashboard | `http://localhost:5341` |
-
-The backend uses `https://eivazi.qzz.io` when generating public links for books,
-covers, and audio files. CORS and successful payment redirects target the local
-Vite frontend at `http://localhost:5173`. The local Docker port remains available
-at `http://localhost:7161` for development and integration testing only.
-
 ## Run everything in Docker
 
 From the repository root:
@@ -34,7 +20,7 @@ not kept in tracked configuration files.
 `Config.yml` is an old optional Cloudflare Tunnel configuration and is not used
 for local execution.
 
-Open the local Docker services:
+Open:
 
 - API Swagger: <http://localhost:7161/swagger>
 - API health: <http://localhost:7161/health>
@@ -72,12 +58,6 @@ The API uses these non-secret application URL defaults in `appsettings.json`:
 - Frontend URL: `http://localhost:5173`
 - Book processor: `https://arsemi.qzz.io`
 - Seq server: `http://localhost:5341`
-
-The public backend endpoints are:
-
-- Swagger: <https://eivazi.qzz.io/swagger>
-- Health check: <https://eivazi.qzz.io/health>
-- Home API: <https://eivazi.qzz.io/api/Home>
 
 The Visual Studio `Container (Dockerfile)` profile sends logs to Seq through
 `http://host.docker.internal:5341`, because `localhost` inside that container is
@@ -147,9 +127,7 @@ can also be inspected in Seq at <http://localhost:5341> with the filter
 ## Health checks and full integration test
 
 `GET /health` performs real connectivity probes instead of only reporting that
-services were registered. It is available publicly at
-<https://eivazi.qzz.io/health> and locally at
-<http://localhost:7161/health> when the Docker stack is running:
+services were registered:
 
 - `postgresql` calls EF Core `CanConnectAsync` against the configured database.
 - `redis` writes, reads, and deletes a short-lived probe key through
