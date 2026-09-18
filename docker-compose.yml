@@ -60,8 +60,6 @@ services:
         condition: service_healthy
       seq:
         condition: service_started
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
     ports:
       - "7161:8080"
     environment:
@@ -76,10 +74,10 @@ services:
       Cache__DefaultExpirationMinutes: "30"
       Cache__InstanceName: "generita:"
       Serilog__WriteTo__1__Args__serverUrl: "http://seq:80"
-      ApplicationUrls__PublicBaseUrl: "http://localhost:7161"
-      ApplicationUrls__ClientBaseUrl: "http://localhost:3000"
-      ApplicationUrls__BookProcessorBaseUrl: "http://host.docker.internal:8000"
-      ZarinPal__CallbackUrl: "http://localhost:7161/Transaction/VerifyPayment"
+      ApplicationUrls__PublicBaseUrl: "https://eivazi.qzz.io"
+      ApplicationUrls__ClientBaseUrl: "http://localhost:5173"
+      ApplicationUrls__BookProcessorBaseUrl: "https://arsemi.qzz.io"
+      ZarinPal__CallbackUrl: "https://eivazi.qzz.io/Transaction/VerifyPayment"
     volumes:
       - uploads:/app/wwwroot
 

@@ -98,7 +98,7 @@ try
 
     var allowedOrigins = builder.Configuration
         .GetSection("Cors:AllowedOrigins")
-        .Get<string[]>() ?? ["http://localhost:3000", "http://localhost:5173"];
+        .Get<string[]>() ?? ["http://localhost:5173"];
 
     builder.Services.AddCors(options =>
     {

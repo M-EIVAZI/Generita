@@ -2,6 +2,20 @@
 
 ASP.NET Core 8 Web API with PostgreSQL, Redis, Serilog, and Seq.
 
+## Service URLs
+
+| Service | URL |
+| --- | --- |
+| Public backend API | `https://eivazi.qzz.io` |
+| Frontend development server | `http://localhost:5173` |
+| AI/book-processing service | `https://arsemi.qzz.io` |
+| Local Seq dashboard | `http://localhost:5341` |
+
+The backend uses `https://eivazi.qzz.io` when generating public links for books,
+covers, and audio files. CORS and successful payment redirects target the local
+Vite frontend at `http://localhost:5173`. The local Docker port remains available
+at `http://localhost:7161` for development and integration testing only.
+
 ## Run everything in Docker
 
 From the repository root:
@@ -20,18 +34,17 @@ not kept in tracked configuration files.
 `Config.yml` is an old optional Cloudflare Tunnel configuration and is not used
 for local execution.
 
-Open:
+Open the local Docker services:
 
 - API Swagger: <http://localhost:7161/swagger>
 - Seq logs: <http://localhost:5341>
 - PostgreSQL: `localhost:5432`
 - Redis: `localhost:6379`
 
-The separate book-processing API is not part of this repository. Docker expects it
-to be running on the host at `http://localhost:8000` and reaches it through
-`http://host.docker.internal:8000`. Change
+The separate book-processing API is not part of this repository. By default,
+the API reaches it through `https://arsemi.qzz.io`. Change
 `ApplicationUrls__BookProcessorBaseUrl` in `docker-compose.yml` if that service
-uses another port.
+uses another address.
 
 Stop the containers with:
 
@@ -52,12 +65,18 @@ JwtSettings__Secret="<your-random-secret-of-at-least-32-characters>" \
 dotnet run --project src/Generita.Api --launch-profile http
 ```
 
-The API uses these non-secret local defaults in `appsettings.json`:
+The API uses these non-secret application URL defaults in `appsettings.json`:
 
-- Public API URL: `http://localhost:7161`
-- Frontend URL: `http://localhost:3000`
-- Book processor: `http://localhost:8000`
+- Public API URL: `https://eivazi.qzz.io`
+- Frontend URL: `http://localhost:5173`
+- Book processor: `https://arsemi.qzz.io`
 - Seq server: `http://localhost:5341`
+
+The public backend endpoints are:
+
+- Swagger: <https://eivazi.qzz.io/swagger>
+- Health check: <https://eivazi.qzz.io/health>
+- Home API: <https://eivazi.qzz.io/api/Home>
 
 The Visual Studio `Container (Dockerfile)` profile sends logs to Seq through
 `http://host.docker.internal:5341`, because `localhost` inside that container is
