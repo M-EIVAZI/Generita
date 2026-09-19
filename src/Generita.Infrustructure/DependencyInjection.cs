@@ -63,7 +63,12 @@ namespace Generita.Infrustructure
 
             services.AddDbContext<GeneritaDbContext>(options =>
             {
-                options.UseNpgsql(connectionString);
+                options.UseNpgsql(
+                    connectionString,
+                    npgsqlOptions => npgsqlOptions.EnableRetryOnFailure(
+                        maxRetryCount: 5,
+                        maxRetryDelay: TimeSpan.FromSeconds(5),
+                        errorCodesToAdd: null));
 
                 // EF Core writes executed SQL through the normal
                 // Microsoft.Extensions.Logging pipeline. The Serilog category override in

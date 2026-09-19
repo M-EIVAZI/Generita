@@ -16,41 +16,48 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace Generita.Infrustructure.Persistance.Services
 {
     public class JobStatusCheckerService : BackgroundService
     {
         private readonly IServiceScopeFactory _scopeFactory;
+        private readonly ILogger<JobStatusCheckerService> _logger;
 
-        public JobStatusCheckerService(IServiceScopeFactory scopeFactory)
+        public JobStatusCheckerService(
+            IServiceScopeFactory scopeFactory,
+            ILogger<JobStatusCheckerService> logger)
         {
             _scopeFactory = scopeFactory;
+            _logger = logger;
         }
 
         protected async override Task ExecuteAsync(CancellationToken stoppingToken)
         {
             while (!stoppingToken.IsCancellationRequested)
             {
-                using (var scope = _scopeFactory.CreateScope())
+                try
                 {
-                    var _context = scope.ServiceProvider.GetRequiredService<GeneritaDbContext>();
-                    var _bookService = scope.ServiceProvider.GetRequiredService<IBookService>();
-                    var _songRepository = scope.ServiceProvider.GetRequiredService<ISongRepository>();
-                    var _jobRepository = scope.ServiceProvider.GetRequiredService<IJobRepository>();
-                    var _paragraphRepository = scope.ServiceProvider.GetRequiredService<IParagraphRepository>();
-                    var _entityRepository = scope.ServiceProvider.GetRequiredService<IEntityRepository>();
-                    var _unitOfWork = scope.ServiceProvider.GetRequiredService<IUnitOfWork>();
-                    var _cachedService = scope.ServiceProvider.GetRequiredService<ICachedService>();
-
-
-
-                    var jobs = await _context.Jobs
-                        .Where(j => j.JobStatus == JobStatus.Processing)
-                        .ToListAsync(stoppingToken);
-
-                    foreach (var job in jobs)
+                    using (var scope = _scopeFactory.CreateScope())
                     {
+                        var _context = scope.ServiceProvider.GetRequiredService<GeneritaDbContext>();
+                        var _bookService = scope.ServiceProvider.GetRequiredService<IBookService>();
+                        var _songRepository = scope.ServiceProvider.GetRequiredService<ISongRepository>();
+                        var _jobRepository = scope.ServiceProvider.GetRequiredService<IJobRepository>();
+                        var _paragraphRepository = scope.ServiceProvider.GetRequiredService<IParagraphRepository>();
+                        var _entityRepository = scope.ServiceProvider.GetRequiredService<IEntityRepository>();
+                        var _unitOfWork = scope.ServiceProvider.GetRequiredService<IUnitOfWork>();
+                        var _cachedService = scope.ServiceProvider.GetRequiredService<ICachedService>();
+
+
+
+                        var jobs = await _context.Jobs
+                            .Where(j => j.JobStatus == JobStatus.Processing)
+                            .ToListAsync(stoppingToken);
+
+                        foreach (var job in jobs)
+                        {
                         var status = await _bookService.GetJobStatus(job.Id);
                         var book = await _jobRepository.GetById(job.Id);
                         if (status.Value.Status == JobStatus.Completed)
@@ -144,9 +151,28 @@ namespace Generita.Infrustructure.Persistance.Services
                                 stoppingToken);
                         }
 
+                        }
                     }
                 }
-                await Task.Delay(TimeSpan.FromMinutes(1), stoppingToken);
+                catch (OperationCanceledException) when (stoppingToken.IsCancellationRequested)
+                {
+                    break;
+                }
+                catch (Exception exception)
+                {
+                    _logger.LogError(
+                        exception,
+                        "Job status check failed; the worker will retry in one minute");
+                }
+
+                try
+                {
+                    await Task.Delay(TimeSpan.FromMinutes(1), stoppingToken);
+                }
+                catch (OperationCanceledException) when (stoppingToken.IsCancellationRequested)
+                {
+                    break;
+                }
             }
         }
 
